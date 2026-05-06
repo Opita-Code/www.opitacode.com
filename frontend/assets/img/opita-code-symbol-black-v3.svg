@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title desc">
+  <title id="title">Opita Code symbol</title>
+  <desc id="desc">Concepto 01 sólido: cuatro cintas curvas alrededor de un vacío central</desc>
+  <defs>
+    <path id="blade" d="M128 24 C160 24 190 48 204 78 C182 66 155 66 128 82 C101 66 74 66 52 78 C66 48 96 24 128 24 Z"/>
+  </defs>
+  <g fill="#111111">
+    <use href="#blade"/>
+    <use href="#blade" transform="rotate(90 128 128)"/>
+    <use href="#blade" transform="rotate(180 128 128)"/>
+    <use href="#blade" transform="rotate(270 128 128)"/>
+  </g>
+  <path d="M128 92 L164 128 L128 164 L92 128 Z" fill="#ffffff"/>
+</svg>

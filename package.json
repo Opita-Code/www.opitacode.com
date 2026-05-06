@@ -1,0 +1,11 @@
+{
+  "name": "www.opitacode.com",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test backend/tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.1042.0"
+  }
+}

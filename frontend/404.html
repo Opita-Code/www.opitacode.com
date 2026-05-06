@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>404 · Página no encontrada · Opita Code</title>
+  <meta name="description" content="Página no encontrada — Opita Code">
+  <link rel="icon" href="assets/img/opita-code-favicon-32-v4.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/opita-code-favicon-180-v4.png">
+
+  <link rel="stylesheet" href="assets/css/css-variables.css">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: var(--opita-color-paper);
+      color: var(--opita-color-ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--opita-grid-system, 16px);
+    }
+    .error-code {
+      font-size: clamp(4rem, 12vw, 8rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--opita-color-muted);
+      letter-spacing: -0.03em;
+    }
+    .error-title {
+      font-size: clamp(1.25rem, 4vw, 2rem);
+      font-weight: 600;
+      margin-top: var(--opita-grid-system, 16px);
+      color: var(--opita-color-ink);
+    }
+    .error-desc {
+      font-size: clamp(0.9rem, 2.5vw, 1.125rem);
+      max-width: 32em;
+      margin-top: calc(var(--opita-grid-base, 8px) * 2);
+      color: var(--opita-color-muted);
+      line-height: 1.6;
+    }
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: calc(var(--opita-grid-system, 16px) * 2);
+      padding: 12px 28px;
+      background: var(--opita-color-ink);
+      color: var(--opita-color-inverse-ink);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      transition: background var(--opita-motion-quick, 120ms) var(--opita-ease-standard, cubic-bezier(0.2,0,0,1));
+      min-height: 44px;
+    }
+    .home-link:hover,
+    .home-link:focus-visible {
+      background: var(--opita-color-graphite);
+      outline: 2px solid var(--opita-focus-ring);
+      outline-offset: 2px;
+    }
+    .brand-mark {
+      margin-bottom: var(--opita-grid-system, 16px);
+    }
+    .brand-mark img {
+      width: 48px;
+      height: 48px;
+    }
+    /* ── Footer (base / light mode) ── */
+    .footer {
+      margin-top: 64px;
+      padding: 48px 24px 32px;
+      background: var(--opita-color-paper);
+    }
+    .footer__inner {
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      gap: 24px;
+      text-align: center;
+    }
+    .footer__lockup {
+      margin: 0 auto;
+    }
+    .footer__tagline {
+      color: var(--opita-color-muted);
+      margin: 0;
+    }
+    .footer__divider {
+      border: 0;
+      border-top: 1px solid var(--opita-color-line);
+      margin: 8px 0;
+    }
+    .footer__legal {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0;
+      margin: 0;
+    }
+    .footer__legal-link {
+      color: var(--opita-color-ink);
+    }
+    .footer__legal-link:hover {
+      color: var(--opita-color-muted);
+    }
+    .footer__copyright {
+      color: var(--opita-color-muted);
+      margin: 0;
+      font-size: 0.875rem;
+    }
+    .country { white-space: nowrap; }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: var(--opita-color-inverse-paper);
+        color: var(--opita-color-inverse-ink);
+      }
+      .error-code {
+        color: var(--opita-color-line);
+      }
+      .error-desc {
+        color: var(--opita-color-line);
+      }
+      .home-link {
+        background: var(--opita-color-inverse-ink);
+        color: var(--opita-color-inverse-paper);
+      }
+      .home-link:hover,
+      .home-link:focus-visible {
+        background: var(--opita-color-surface);
+        color: var(--opita-color-ink);
+      }
+      .brand-mark img {
+        content: url('assets/img/opita-code-symbol-white-v4.png');
+      }
+      /* Footer dark overrides */
+      .footer {
+        background: var(--opita-color-surface);
+      }
+      .footer__tagline {
+        color: var(--opita-color-line);
+      }
+      .footer__divider {
+        border-top-color: var(--opita-color-line);
+      }
+      .footer__legal-link {
+        color: var(--opita-color-line);
+      }
+      .footer__legal-link:hover {
+        color: var(--opita-color-ink);
+      }
+      .footer__copyright {
+        color: var(--opita-color-line);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="brand-mark">
+    <img src="assets/img/opita-code-symbol-black-v4.png" alt="Opita Code" width="48" height="48">
+  </div>
+  <div class="error-code">404</div>
+  <h1 class="error-title">Página no encontrada</h1>
+  <p class="error-desc">
+    La página que buscas no existe o fue movida.
+    Puede que el enlace esté desactualizado o que hayas escrito la dirección incorrectamente.
+  </p>
+   <a href="/" class="home-link">Volver al inicio</a>
+
+  <footer class="footer" aria-label="Pie de página">
+    <div class="footer__inner">
+      <img class="footer__lockup" src="assets/img/opita-code-stacked-white-v4.png" alt="Opita Code" width="120" height="166" loading="lazy">
+      <p class="footer__tagline">Software práctico para negocios reales.</p>
+      <hr class="footer__divider" role="presentation">
+      <ul class="footer__legal">
+        <li><a href="legal/terminos.html" class="footer__legal-link">Términos y Condiciones</a></li>
+        <li><a href="legal/privacidad.html" class="footer__legal-link">Política de Privacidad</a></li>
+        <li><a href="legal/cookies.html" class="footer__legal-link">Política de Cookies</a></li>
+      </ul>
+      <p class="footer__copyright">
+        &copy; 2026 Opita Code &middot; Juan Nicolás Urrutia Salcedo &middot;
+        <span class="country">Hecho en Colombia 🇨🇴</span>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

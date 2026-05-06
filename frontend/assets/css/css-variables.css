@@ -1,0 +1,57 @@
+:root {
+  --opita-color-ink: #111111;
+  --opita-color-paper: #F7F7F4;
+  --opita-color-surface: #EFEFEB;
+  --opita-color-surface-raised: #FFFFFF;
+  --opita-color-graphite: #2A2A2A;
+  --opita-color-muted: #72726D;
+  --opita-color-line: #D9D9D3;
+  --opita-color-inverse-ink: #F6F6F2;
+  --opita-color-inverse-paper: #101010;
+  --opita-focus-ring: rgba(17, 17, 17, 0.20);
+
+  /* ── Brand accent ── */
+  --opita-color-accent: oklch(0.41 0.19 46);
+  --opita-color-accent-hover: oklch(0.34 0.16 42);
+
+  /* ── Semantic (form feedback) ── */
+  --opita-color-error: #dc2626;
+  --opita-color-error-surface: #fef2f2;
+  --opita-color-success: #166534;
+  --opita-color-success-surface: #dcfce7;
+
+  /* ── Typography ── */
+  --opita-font-heading: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --opita-font-size-hero: clamp(1.75rem, 5vw, 3.5rem);
+  --opita-font-size-section-title: clamp(1.5rem, 4vw, 2.25rem);
+  --opita-font-size-body: clamp(0.95rem, 2vw, 1.1rem);
+  --opita-font-size-caption: 0.82rem;
+
+  /* ── Dev environment overrides ── */
+  --opita-dev-accent-weight: 0.12;
+  --opita-dev-surface-density: 0.92;
+
+  --opita-artboard: 256;
+  --opita-grid-base: 8px;
+  --opita-grid-system: 16px;
+
+  --opita-code-stroke: 18px;
+  --opita-os-stroke: 14px;
+  --opita-studio-stroke: 12.5px;
+
+  --opita-motion-quick: 120ms;
+  --opita-motion-standard: 180ms;
+  --opita-motion-deliberate: 240ms;
+  --opita-motion-system-reveal: 320ms;
+  --opita-ease-standard: cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --opita-ease-precise: cubic-bezier(0.16, 1.0, 0.3, 1.0);
+}
+
+/* ── Self-hosted DM Sans WOFF2 (Latin + Spanish) ── */
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../fonts/dm-sans-latin.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
