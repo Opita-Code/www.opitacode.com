@@ -47,7 +47,6 @@ www.opitacode.com/
 ## Tests
 
 ```bash
-cd backend
 npm test
 ```
 
