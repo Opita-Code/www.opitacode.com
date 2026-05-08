@@ -1,10 +1,15 @@
 # www.opitacode.com
 
-Superficie pública de **Opita Code** — página web corporativa en `opitacode.com`.
+> 🇨🇴 Superficie pública de **Opita Code** — página web corporativa en `opitacode.com`.
+>
+> 🇺🇸 Public surface of **Opita Code** — corporate website at `opitacode.com`.
 
-> **Software práctico para negocios reales.** Construido desde Colombia con identidad local y ambición global.
+**Software práctico para negocios reales.** Construido desde Colombia con identidad local y ambición global.
+*Practical software for real businesses. Built from Colombia with local identity and global ambition.*
 
-## Stack
+---
+
+## 🇨🇴 Stack
 
 | Capa | Tecnología |
 |------|-----------|
@@ -14,26 +19,37 @@ Superficie pública de **Opita Code** — página web corporativa en `opitacode.
 | **Infraestructura** | SAM (AWS Serverless Application Model) |
 | **Tests** | `node:test` + `node:assert/strict` |
 
-## Estructura
+## 🇺🇸 Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | Plain HTML + CSS (no build, no frameworks) |
+| **Hosting** | S3 + CloudFront + Route53 + ACM |
+| **Contact form** | API Gateway REST + Lambda (Node.js 20.x ESM) + SES |
+| **Infrastructure** | SAM (AWS Serverless Application Model) |
+| **Tests** | `node:test` + `node:assert/strict` |
+
+---
+
+## 🇨🇴 Estructura / 🇺🇸 Structure
 
 ```
 www.opitacode.com/
-├── frontend/                   # Sitio estático
-│   ├── index.html              # Página principal
-│   ├── 404.html                # Página de error
+├── frontend/                   # Sitio estático · Static site
+│   ├── index.html              # Página principal · Home page
+│   ├── 404.html                # Página de error · Error page
 │   ├── assets/
 │   │   ├── css/
-│   │   │   ├── css-variables.css   # Tokens de diseño
-│   │   │   └── opita-landing.css   # Estilos del landing
-│   │   ├── img/                    # SVGs y PNGs de marca
+│   │   │   ├── css-variables.css   # Tokens de diseño · Design tokens
+│   │   │   └── opita-landing.css   # Estilos del landing · Landing styles
+│   │   ├── img/                    # SVGs y PNGs de marca · Brand assets
 │   │   └── fonts/                  # DM Sans WOFF2
 │   ├── legal/
-│   │   ├── terminos.html
-│   │   ├── privacidad.html
-│   │   └── cookies.html
+│   │   ├── terminos.html       # Términos y condiciones
+│   │   ├── privacidad.html     # Política de privacidad
+│   │   └── cookies.html        # Política de cookies
 │   ├── sitemap.xml
-│   ├── robots.txt
-│   └── googlec8c8c8c8c8c8c8c.html
+│   └── robots.txt
 ├── backend/                    # Infraestructura serverless (SAM)
 │   ├── template.yaml
 │   ├── src/
@@ -44,13 +60,27 @@ www.opitacode.com/
 └── README.md
 ```
 
-## Tests
+---
+
+## 🚀 Deploy
+
+```bash
+# Build
+sam build
+
+# Deploy
+sam deploy --guided
+```
+
+## 🧪 Tests
 
 ```bash
 npm test
 ```
 
-## Licencia
+---
 
-© 2026 Opita Code · Juan Nicolás Urrutia Salcedo  
-Hecho en Colombia.
+## 📄 Licencia / License
+
+© 2026 Opita Code · Juan Nicolás Urrutia Salcedo
+Hecho en Colombia 🇨🇴 · Made in Colombia
