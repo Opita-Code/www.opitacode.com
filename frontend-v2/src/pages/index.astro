@@ -1,0 +1,35 @@
+---
+// Static redirect that avoids the white FOUC flash
+---
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opita Code</title>
+  <meta http-equiv="refresh" content="0;url=/es">
+  <script>
+    // Inmediatamente redirigir por JS para mayor velocidad
+    const userLang = navigator.language || navigator.userLanguage;
+    if (userLang.startsWith('en')) {
+      window.location.replace('/en');
+    } else {
+      window.location.replace('/es');
+    }
+  </script>
+  <style>
+    body {
+      background-color: #09090b; /* bg-bg-base for dark mode */
+      color: #09090b; /* hide text */
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  Opita Code
+</body>
+</html>

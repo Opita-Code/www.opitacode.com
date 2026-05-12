@@ -1,0 +1,82 @@
+<button id="theme-toggle" type="button" class="text-text-muted hover:text-text-base hover:bg-bg-muted rounded-lg text-sm p-2 transition-colors border border-transparent hover:border-border-base relative" aria-label="Toggle Theme">
+  <!-- Moon (Dark) -->
+  <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+  <!-- Sun (Light) -->
+  <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+  <!-- Monitor (System) -->
+  <svg id="theme-toggle-system-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18V3H3v10z"></path></svg>
+</button>
+
+<script>
+  const darkIcon = document.getElementById('theme-toggle-dark-icon');
+  const lightIcon = document.getElementById('theme-toggle-light-icon');
+  const systemIcon = document.getElementById('theme-toggle-system-icon');
+  const btn = document.getElementById('theme-toggle');
+
+  if (darkIcon && lightIcon && systemIcon && btn) {
+    const updateIcons = () => {
+      darkIcon.classList.add('hidden');
+      lightIcon.classList.add('hidden');
+      systemIcon.classList.add('hidden');
+      
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        darkIcon.classList.remove('hidden');
+      } else if (theme === 'light') {
+        lightIcon.classList.remove('hidden');
+      } else {
+        systemIcon.classList.remove('hidden');
+      }
+    };
+
+    updateIcons();
+
+    btn.addEventListener('click', () => {
+      const currentTheme = localStorage.getItem('theme');
+      let newTheme = '';
+
+      // Cycle: System -> Dark -> Light -> System
+      if (!currentTheme) {
+        newTheme = 'dark';
+      } else if (currentTheme === 'dark') {
+        newTheme = 'light';
+      } else {
+        newTheme = 'system';
+      }
+
+      if (newTheme === 'system') {
+        localStorage.removeItem('theme');
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        } else {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      } else {
+        localStorage.setItem('theme', newTheme);
+        if (newTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        } else {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      }
+      updateIcons();
+    });
+
+    // Listen for system theme changes if on system mode
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (!localStorage.getItem('theme')) {
+        if (e.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        } else {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      }
+    });
+  }
+</script>

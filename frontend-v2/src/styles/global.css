@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-corporate-900: var(--corporate-900);
+  --color-corporate-800: var(--corporate-800);
+  --color-corporate-700: var(--corporate-700);
+  --color-corporate-100: var(--corporate-100);
+  --color-corporate-50: var(--corporate-50);
+  
+  --color-bg-base: var(--bg-base);
+  --color-bg-muted: var(--bg-muted);
+  --color-text-base: var(--text-base);
+  --color-text-muted: var(--text-muted);
+  --color-border-base: var(--border-base);
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@layer base {
+  :root, :root.light {
+    /* Light Mode (Default) */
+    --corporate-900: #111111;
+    --corporate-800: #222222;
+    --corporate-700: #333333;
+    --corporate-100: #E5E7EB;
+    --corporate-50: #F9FAFB;
+    
+    --bg-base: #FFFFFF;
+    --bg-muted: #F9FAFB;
+    --text-base: #111111;
+    --text-muted: #333333;
+    --border-base: #E5E7EB;
+  }
+
+  /* Dark Mode support (Fallback if no class is set) */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+      --corporate-900: #F9FAFB;
+      --corporate-800: #E5E7EB;
+      --corporate-700: #D1D5DB;
+      --corporate-100: #374151;
+      --corporate-50: #1F2937;
+      
+      --bg-base: #111827;
+      --bg-muted: #1F2937;
+      --text-base: #F9FAFB;
+      --text-muted: #D1D5DB;
+      --border-base: #374151;
+    }
+  }
+
+  /* Dark Mode support (Forced via Toggle) */
+  :root.dark {
+    --corporate-900: #F9FAFB;
+    --corporate-800: #E5E7EB;
+    --corporate-700: #D1D5DB;
+    --corporate-100: #374151;
+    --corporate-50: #1F2937;
+    
+    --bg-base: #111827;
+    --bg-muted: #1F2937;
+    --text-base: #F9FAFB;
+    --text-muted: #D1D5DB;
+    --border-base: #374151;
+  }
+
+  body {
+    @apply bg-bg-base text-text-base antialiased selection:bg-corporate-900 selection:text-bg-base transition-colors duration-300;
+  }
+}

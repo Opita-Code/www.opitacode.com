@@ -1,0 +1,14 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { ProjectsDashboard } from '../../../components/projects/ProjectsDashboard';
+---
+
+<Layout 
+  title="Client Portal | Opita Code"
+  description="Manage your projects, review proposals, and download your deliverables securely."
+  lang="en"
+>
+  <main class="min-h-[calc(100vh-4rem)] bg-bg-base py-12 px-4 sm:px-6 lg:px-8">
+    <ProjectsDashboard client:only="react" lang="en" />
+  </main>
+</Layout>

@@ -1,0 +1,291 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { ContactForm } from '../../components/ContactForm';
+---
+
+<Layout 
+  title="Opita Code | Practical software for real businesses"
+  description="Built from Colombia with local identity and global ambition. Ecosystem of software products."
+  lang="en"
+>
+  <!-- Hero Section -->
+  <section class="py-24 sm:py-32 bg-bg-base relative overflow-hidden">
+    <!-- Subtle background pattern for depth -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border-base)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border-base)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40 pointer-events-none"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-corporate-50 border border-corporate-100 text-sm font-medium text-corporate-700 mb-8">
+        <span class="flex h-2 w-2 rounded-full bg-green-500"></span>
+        Made in Colombia 🇨🇴
+      </div>
+      <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight text-corporate-900 mb-8">
+        Practical software for<br class="hidden sm:block" /> real businesses.
+      </h1>
+      <p class="mt-4 text-xl text-corporate-700 max-w-2xl mx-auto leading-relaxed">
+        We don't build code just to build it. We develop tools, automations, and SaaS products that solve concrete problems in your daily operation.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#ecosystem" class="bg-corporate-900 text-bg-base px-8 py-4 rounded-md font-medium hover:bg-corporate-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+          Explore the Ecosystem
+        </a>
+        <a href="#contact" class="bg-transparent text-corporate-900 border border-corporate-100 px-8 py-4 rounded-md font-medium hover:bg-corporate-50 transition-all shadow-sm">
+          Let's talk about your project
+        </a>
+      </div>
+    </div>
+  </section>ction>
+
+  <!-- Services Section -->
+  <section id="services" class="py-24 bg-bg-muted border-b border-border-base">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-3">Services</h2>
+        <h3 class="text-3xl font-bold text-text-base">What we do</h3>
+        <p class="mt-4 text-text-muted max-w-2xl mx-auto text-lg">
+          We turn real needs into functional systems. These are our lines of work.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Desarrollo a Medida -->
+        <div class="bg-bg-base p-8 rounded-xl border border-border-base shadow-sm">
+          <div class="w-12 h-12 bg-bg-muted border border-border-base rounded-lg mb-6 flex items-center justify-center text-text-muted">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-bold mb-3 text-text-base">Custom Development</h4>
+          <p class="text-text-muted leading-relaxed">
+            Web applications, administrative panels, APIs, integrations, and digital platforms designed for your operation.
+          </p>
+        </div>
+
+        <!-- Automatización -->
+        <div class="bg-bg-base p-8 rounded-xl border border-border-base shadow-sm">
+          <div class="w-12 h-12 bg-bg-muted border border-border-base rounded-lg mb-6 flex items-center justify-center text-text-muted">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h4 class="text-xl font-bold mb-3 text-text-base">Automation</h4>
+          <p class="text-text-muted leading-relaxed">
+            We connect your tools, eliminate repetitive tasks, and create efficient workflows that save time and reduce errors.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section id="process" class="py-24 bg-bg-base border-b border-border-base relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-3">Process</h2>
+        <h3 class="text-3xl font-bold text-text-base">How we work</h3>
+        <p class="mt-4 text-text-muted max-w-2xl mx-auto text-lg">Three steps. From idea to working product.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <div class="hidden md:block absolute top-1/2 left-0 w-full h-px bg-border-base -translate-y-1/2 z-0"></div>
+        
+        <div class="bg-bg-base relative z-10 p-8 rounded-xl border border-border-base shadow-sm text-center">
+          <div class="w-12 h-12 bg-corporate-900 text-bg-base rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">1</div>
+          <h4 class="text-xl font-bold mb-3 text-text-base">We Listen</h4>
+          <p class="text-text-muted leading-relaxed">We understand your business and the real problem you need to solve. No tech jargon, no assumptions.</p>
+        </div>
+
+        <div class="bg-bg-base relative z-10 p-8 rounded-xl border border-border-base shadow-sm text-center">
+          <div class="w-12 h-12 bg-corporate-900 text-bg-base rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">2</div>
+          <h4 class="text-xl font-bold mb-3 text-text-base">We Build</h4>
+          <p class="text-text-muted leading-relaxed">We develop in short cycles with clear milestones. You always know where we are and what's next.</p>
+        </div>
+
+        <div class="bg-bg-base relative z-10 p-8 rounded-xl border border-border-base shadow-sm text-center">
+          <div class="w-12 h-12 bg-corporate-900 text-bg-base rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">3</div>
+          <h4 class="text-xl font-bold mb-3 text-text-base">We Deliver</h4>
+          <p class="text-text-muted leading-relaxed">Working system, documented, and ready to scale. With continuous support and no mysteries.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ecosystem Grid -->
+  <section id="ecosystem" class="py-24 bg-bg-muted border-b border-border-base">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-sm font-mono text-corporate-700 uppercase tracking-widest mb-3">Ecosystem</h2>
+        <h3 class="text-3xl font-bold text-corporate-900">Featured Products</h3>
+        <p class="mt-4 text-corporate-700 max-w-2xl mx-auto">Our core infrastructure and public platforms designed with the same quality standards we apply to our clients.</p>
+      </div>
+      
+      <!-- Developer Tools & Core -->
+      <div class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="h-px bg-border-base flex-1"></div>
+          <h4 class="text-sm font-mono text-corporate-600 uppercase tracking-widest px-4">Infrastructure & DevTools</h4>
+          <div class="h-px bg-border-base flex-1"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Vibe Studio Premium Card -->
+          <a href="https://vibe.opitacode.com" target="_blank" rel="noopener noreferrer" class="group relative overflow-hidden bg-[#09090b] p-8 rounded-xl border border-white/10 dark:border-white/20 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-purple-500/20 dark:shadow-2xl dark:shadow-black/50">
+            
+            <!-- Animated gradient background -->
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            <!-- Spinning glowing border effect on hover -->
+            <div class="absolute inset-[-100%] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,rgba(168,85,247,0.3)_50%,transparent_100%)] animate-spin opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+            <div class="absolute inset-[1px] bg-[#09090b] rounded-xl z-0 transition-colors duration-500 group-hover:bg-[#09090b]/90"></div>
+
+            <!-- Ambient blur spot in the corner -->
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl group-hover:bg-purple-500/30 transition-colors duration-700 z-0 pointer-events-none"></div>
+            
+            <!-- Card Content -->
+            <div class="relative z-10 flex flex-col h-full">
+              <div class="w-14 h-14 rounded-xl mb-6 overflow-hidden bg-black/50 border border-white/10 shadow-[0_8px_32px_rgba(168,85,247,0.15)] group-hover:shadow-[0_8px_32px_rgba(168,85,247,0.3)] group-hover:border-purple-500/40 transition-all duration-500 transform group-hover:scale-110 group-hover:-rotate-3">
+                <img src="/vibe-logo.svg" alt="Opita Vibe Studio" class="w-full h-full object-cover scale-105" />
+              </div>
+              
+              <div class="flex items-center gap-3 mb-2">
+                <h4 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 group-hover:to-white transition-colors duration-300">Opita Vibe Studio</h4>
+                <span class="text-[9px] font-bold tracking-widest bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 px-2.5 py-1 rounded-full border border-purple-500/30 backdrop-blur-md">FLAGSHIP</span>
+              </div>
+              
+              <p class="text-purple-400 font-mono text-[11px] uppercase tracking-[0.2em] mb-4 opacity-80 group-hover:opacity-100 transition-opacity">The code flows.</p>
+              
+              <p class="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors duration-300 mt-auto">
+                Vibe-coding development environment in Spanish to build production applications assisted by governed AI.
+              </p>
+            </div>
+          </a>
+
+          <!-- Opita OS Premium Card -->
+          <a href="#" class="group relative overflow-hidden bg-[#020617] p-8 rounded-xl border border-slate-800 dark:border-slate-700 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/20 dark:shadow-2xl dark:shadow-black/50">
+            
+            <!-- Subtle cyan radial glow -->
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.1),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            
+            <!-- Spinning cyan-grey glowing border -->
+            <div class="absolute inset-[-100%] bg-[conic-gradient(from_180deg_at_50%_50%,transparent_0%,rgba(6,182,212,0.4)_50%,transparent_100%)] animate-spin [animation-play-state:paused] group-hover:[animation-play-state:running] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"></div>
+            <div class="absolute inset-[1px] bg-[#020617] rounded-xl z-0 transition-colors duration-500 group-hover:bg-[#020617]/90"></div>
+
+            <!-- Ambient blur spot in opposite corner -->
+            <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-slate-600/20 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-colors duration-700 z-0 pointer-events-none"></div>
+            
+            <!-- Card Content -->
+            <div class="relative z-10 flex flex-col h-full">
+              <div class="w-14 h-14 rounded-xl mb-6 flex items-center justify-center bg-slate-900/80 border border-slate-700/50 shadow-[0_8px_32px_rgba(6,182,212,0.1)] group-hover:shadow-[0_8px_32px_rgba(6,182,212,0.25)] group-hover:border-cyan-500/40 transition-all duration-500 transform group-hover:scale-110">
+                <!-- Masking the Opita Code symbol to apply cyan-grey gradient -->
+                <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-slate-400 group-hover:from-cyan-300 group-hover:to-slate-300 transition-all duration-300" style="-webkit-mask-image: url(/opita-code-symbol-white-v4.png); mask-image: url(/opita-code-symbol-white-v4.png); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center;"></div>
+              </div>
+              
+              <div class="flex items-center gap-3 mb-2">
+                <h4 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-500 group-hover:to-slate-300 transition-colors duration-300">Opita OS</h4>
+                <span class="text-[9px] font-bold tracking-widest bg-gradient-to-r from-cyan-500/20 to-slate-500/20 text-cyan-300 px-2.5 py-1 rounded-full border border-cyan-500/30 backdrop-blur-md">CORE</span>
+              </div>
+              
+              <p class="text-cyan-400 font-mono text-[11px] uppercase tracking-[0.2em] mb-4 opacity-80 group-hover:opacity-100 transition-opacity">The foundation.</p>
+              
+              <p class="text-slate-400 text-sm leading-relaxed group-hover:text-slate-300 transition-colors duration-300 mt-auto">
+                The organization's internal operating system. It centralizes the single source of truth (OpenSpec), the Brand Engine, and ecosystem-wide SSO and billing.
+              </p>
+            </div>
+          </a>
+
+          <!-- Opita Studio -->
+          <div class="group relative overflow-hidden bg-[#0a0a0a] p-8 rounded-xl border border-neutral-800 dark:border-neutral-700 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/10 dark:shadow-2xl dark:shadow-black/50">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.15),transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            
+            <!-- Moving gold border -->
+            <div class="absolute inset-[-100%] bg-[conic-gradient(from_45deg_at_50%_50%,transparent_0%,rgba(245,158,11,0.3)_50%,transparent_100%)] animate-spin [animation-play-state:paused] group-hover:[animation-play-state:running] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" style="animation-duration: 8s;"></div>
+            <div class="absolute inset-[1px] bg-[#0a0a0a] rounded-xl z-0 transition-colors duration-500 group-hover:bg-[#0a0a0a]/95"></div>
+            
+            <div class="relative z-10 flex flex-col h-full">
+              <div class="w-14 h-14 rounded-xl mb-6 flex items-center justify-center bg-neutral-900/80 border border-neutral-700/50 shadow-[0_8px_32px_rgba(245,158,11,0.1)] group-hover:shadow-[0_8px_32px_rgba(245,158,11,0.25)] group-hover:border-amber-500/40 transition-all duration-500 transform group-hover:scale-110">
+                <span class="text-2xl font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-br from-amber-400 to-amber-600">S</span>
+              </div>
+              
+              <div class="flex items-center gap-3 mb-2">
+                <h4 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 to-neutral-500 group-hover:to-neutral-100 transition-colors duration-300">Opita Studio</h4>
+                <span class="text-[9px] font-bold tracking-widest bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 px-2.5 py-1 rounded-full border border-amber-500/30 backdrop-blur-md">ENTERPRISE</span>
+              </div>
+              
+              <p class="text-amber-500/80 font-mono text-[11px] uppercase tracking-[0.2em] mb-4 opacity-80 group-hover:opacity-100 transition-opacity">The older brother.</p>
+              
+              <p class="text-neutral-400 text-sm leading-relaxed group-hover:text-neutral-300 transition-colors duration-300 mt-auto">
+                Enterprise orchestrator for development teams. Integrates governed AI flows and CI/CD automations in the cloud.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Business & Marketplaces -->
+      <div>
+        <div class="flex items-center gap-4 mb-8">
+          <div class="h-px bg-border-base flex-1"></div>
+          <h4 class="text-sm font-mono text-corporate-600 uppercase tracking-widest px-4">Marketplaces & B2B Solutions</h4>
+          <div class="h-px bg-border-base flex-1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Opita Barber -->
+          <a href="#" class="group relative overflow-hidden bg-bg-base dark:bg-bg-muted/50 p-8 rounded-xl border border-border-base dark:border-white/10 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:border-corporate-300 dark:hover:border-corporate-700 dark:shadow-xl dark:shadow-black/40">
+            
+            <div class="absolute inset-0 bg-gradient-to-br from-corporate-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 dark:from-corporate-900/20"></div>
+            
+            <div class="relative z-10 flex flex-col h-full">
+              <div class="w-14 h-14 rounded-xl mb-6 flex items-center justify-center bg-bg-muted border border-border-base transition-all duration-500 transform group-hover:scale-110 group-hover:bg-corporate-50 dark:group-hover:bg-corporate-900/50">
+                <svg class="w-6 h-6 text-text-muted group-hover:text-corporate-600 dark:group-hover:text-corporate-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"></path></svg>
+              </div>
+              
+              <div class="flex items-center gap-3 mb-2">
+                <h4 class="text-2xl font-bold text-text-base group-hover:text-corporate-900 transition-colors duration-300 dark:group-hover:text-white">Opita Barber</h4>
+                <span class="text-[9px] font-bold tracking-widest bg-corporate-100 text-corporate-800 px-2.5 py-1 rounded-full dark:bg-corporate-900/50 dark:text-corporate-200 border border-corporate-200 dark:border-corporate-800">MARKETPLACE</span>
+              </div>
+              
+              <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-4">Connecting Styles.</p>
+              
+              <p class="text-text-muted text-sm leading-relaxed mt-auto">
+                Smart marketplace for barbershops. Discover professionals, book appointments, and let barbershops manage their business from a single app.
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Founder Section -->
+  <section id="about" class="py-24 bg-bg-muted border-b border-border-base">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-bg-base rounded-2xl border border-border-base shadow-xl shadow-corporate-900/5 p-8 sm:p-12 flex flex-col md:flex-row gap-10 items-center">
+        <div class="w-48 h-48 shrink-0 rounded-full overflow-hidden border-4 border-bg-muted">
+          <img src="/founder.jpg" alt="Juan Nicolás Urrutia Salcedo" class="w-full h-full object-cover" />
+        </div>
+        <div class="text-center md:text-left">
+          <h2 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-2">Founder</h2>
+          <h3 class="text-3xl font-bold text-text-base mb-2">Juan Nicolás Urrutia</h3>
+          <p class="text-lg font-medium text-corporate-900 mb-4 dark:text-text-muted">Lead Developer</p>
+          <p class="text-text-muted leading-relaxed text-lg">
+            Colombian, software developer, and creator of Opita Code. I build practical technology for real businesses, stream live development sessions, and share what I learn along the way.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-24 bg-bg-base relative">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="mb-12">
+        <h2 class="text-3xl font-bold mb-4 text-text-base">Let's work together</h2>
+        <p class="text-text-muted text-lg">Leave us a message about the problem you want to solve. We'll reply in less than 24 hours.</p>
+      </div>
+      
+      <div class="bg-bg-muted p-8 rounded-2xl border border-border-base shadow-xl shadow-corporate-900/5">
+        <ContactForm client:load lang="en" />
+      </div>
+    </div>
+  </section>
+</Layout>
