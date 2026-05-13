@@ -1,17 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" fill="none" viewBox="28 28 200 200">
   <defs>
-    <mask id="a" maskUnits="userSpaceOnUse"><path fill="#fff" d="M0 0h256v256H0z"/><path fill="#000" d="m128 98 30 30-30 30-30-30Z"/></mask>
+    <mask id="a" maskUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="256" height="256" fill="white" />
+      <path d="M128 98 L158 128 L128 158 L98 128 Z" fill="black" />
+    </mask>
   </defs>
   <style>
-    g { fill: #000; }
+    g.logo-group { fill: #000; }
     @media (prefers-color-scheme: dark) {
-      g { fill: #fff; }
+      g.logo-group { fill: #fff; }
     }
   </style>
-  <g mask="url(#a)">
-    <path d="M50 110c20-60 60-70 78-25 18-45 58-35 78 25-16 10-46-10-78-10s-62 20-78 10"/>
-    <path d="M146 50c60 20 70 60 25 78 45 18 35 58-25 78-10-16 10-46 10-78s-20-62-10-78"/>
-    <path d="M206 146c-20 60-60 70-78 25-18 45-58 35-78-25 16-10 46 10 78 10s62-20 78-10"/>
-    <path d="M110 206c-60-20-70-60-25-78-45-18-35-58 25-78 10 16-10 46-10 78s20 62 10 78"/>
+  <g mask="url(#a)" class="logo-group">
+    <g transform="rotate(0 128 128)">
+      <path d="M 50 110 C 70 50 110 40 128 85 C 146 40 186 50 206 110 C 190 120 160 100 128 100 C 96 100 66 120 50 110 Z" />
+    </g>
+    <g transform="rotate(90 128 128)">
+      <path d="M 50 110 C 70 50 110 40 128 85 C 146 40 186 50 206 110 C 190 120 160 100 128 100 C 96 100 66 120 50 110 Z" />
+    </g>
+    <g transform="rotate(180 128 128)">
+      <path d="M 50 110 C 70 50 110 40 128 85 C 146 40 186 50 206 110 C 190 120 160 100 128 100 C 96 100 66 120 50 110 Z" />
+    </g>
+    <g transform="rotate(270 128 128)">
+      <path d="M 50 110 C 70 50 110 40 128 85 C 146 40 186 50 206 110 C 190 120 160 100 128 100 C 96 100 66 120 50 110 Z" />
+    </g>
   </g>
 </svg>
