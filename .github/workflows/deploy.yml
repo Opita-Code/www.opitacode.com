@@ -15,13 +15,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
+          cache-dependency-path: 'frontend-v2/package-lock.json'
 
       - name: Install Dependencies
+        working-directory: frontend-v2
         run: npm ci
 
       - name: Build Astro Project
+        working-directory: frontend-v2
         run: npm run build
 
       - name: Configure AWS Credentials
@@ -32,7 +35,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy to S3
-        working-directory: dist
+        working-directory: frontend-v2/dist
         run: aws s3 sync . s3://opitacode.com --delete --cache-control "max-age=14400"
 
       - name: Invalidate CloudFront Cache
