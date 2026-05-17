@@ -45,7 +45,11 @@ export function AuthForm({ lang }: { lang: 'es' | 'en' }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          email,
+          service: 'opita-code',
+          redirectTo: 'https://opitacode.com/projects',
+        }),
       });
 
       if (!response.ok) {

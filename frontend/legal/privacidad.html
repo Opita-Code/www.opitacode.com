@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Política de Privacidad · Opita Code</title>
-  <meta name="description" content="Política de Privacidad de Opita Code, conforme a la Ley 1581 de 2012 de Colombia y el Decreto 1377 de 2013.">
+  <meta name="description" content="Política de Privacidad de Opita Code y Vibe Studio, conforme a la Ley 1581 de 2012 de Colombia y el Decreto 1377 de 2013.">
   <link rel="icon" href="../assets/img/opita-code-favicon-32-v4.png" type="image/png">
   <link rel="apple-touch-icon" href="../assets/img/opita-code-favicon-180-v4.png">
   <link rel="stylesheet" href="../assets/css/css-variables.css">
@@ -71,6 +71,7 @@
     ul { margin: 8px 0 16px 20px; }
     li { margin-bottom: 6px; color: var(--opita-color-muted); }
     strong { color: var(--opita-color-ink); font-weight: 600; }
+    a { color: inherit; }
     @media (prefers-color-scheme: dark) {
       body { background: var(--opita-color-inverse-paper); color: var(--opita-color-inverse-ink); }
       .page-header { border-color: rgba(255,255,255,0.1); }
@@ -88,11 +89,13 @@
   </header>
   <main>
     <h1>Política de Privacidad</h1>
-    <p class="last-updated">Última actualización: 1 de enero de 2026</p>
+    <p class="last-updated">Última actualización: 15 de mayo de 2026</p>
 
     <p>
       En <strong>Opita Code</strong> nos comprometemos a proteger la privacidad de los
-      usuarios de nuestro sitio web <strong>opitacode.com</strong>. Esta Política de
+      usuarios de nuestro sitio web <strong>opitacode.com</strong> y de nuestros productos
+      digitales, incluyendo <strong>Vibe Studio</strong> (disponible en
+      <strong>vibe.opitacode.com</strong> y como aplicación de escritorio). Esta Política de
       Privacidad describe cómo recopilamos, usamos, almacenamos y protegemos la
       información personal, en cumplimiento de la <strong>Ley 1581 de 2012</strong>
       y el <strong>Decreto 1377 de 2013</strong> de la República de Colombia.
@@ -107,37 +110,82 @@
     <h2>2. Datos personales que recopilamos</h2>
     <p>Podemos recopilar los siguientes datos personales:</p>
     <ul>
-      <li><strong>Datos de contacto:</strong> nombre, dirección de correo electrónico y número de teléfono proporcionados voluntariamente a través del formulario de contacto o canales directos.</li>
+      <li><strong>Datos de cuenta:</strong> dirección de correo electrónico proporcionada al registrarse o iniciar sesión mediante enlace mágico (Magic Link) o AWS Cognito.</li>
       <li><strong>Datos de navegación:</strong> dirección IP, tipo de navegador, páginas visitadas, tiempo de visita y origen del tráfico, recopilados de forma anónima a través de herramientas de análisis.</li>
+      <li><strong>Datos de uso del producto:</strong> métricas de consumo de tokens de inteligencia artificial, historial de conversaciones con el asistente de IA, preferencias de configuración y plan de suscripción activo.</li>
+      <li><strong>Datos de pago:</strong> la información de pago es procesada directamente por <strong>Wompi</strong> (pasarela de pago colombiana). Opita Code no almacena números de tarjeta de crédito ni datos financieros sensibles.</li>
     </ul>
 
     <h2>3. Finalidad del tratamiento</h2>
     <p>Los datos personales recopilados se utilizan para:</p>
     <ul>
-      <li>Responder a consultas y solicitudes de información enviadas a través del formulario de contacto o canales directos.</li>
-      <li>Enviar comunicaciones relacionadas con los servicios solicitados.</li>
-      <li>Mejorar la experiencia de navegación y el contenido del sitio web.</li>
+      <li>Autenticar al usuario y gestionar su sesión en Vibe Studio y demás productos.</li>
+      <li>Proveer los servicios de inteligencia artificial contratados, incluyendo la generación de código, respuestas del asistente y ejecución de herramientas autónomas.</li>
+      <li>Administrar cuotas de uso (tokens diarios/horarios) y planes de suscripción.</li>
+      <li>Responder a consultas y solicitudes de soporte.</li>
+      <li>Mejorar la experiencia de navegación, el contenido del sitio y la calidad de los productos.</li>
       <li>Cumplir con obligaciones legales y regulatorias.</li>
     </ul>
 
-    <h2>4. Base legal del tratamiento</h2>
+    <h2>4. Procesamiento de datos por inteligencia artificial</h2>
+    <p>
+      Vibe Studio utiliza modelos de inteligencia artificial de terceros para proporcionar
+      sus funcionalidades. Al usar el servicio, el usuario reconoce que:
+    </p>
+    <ul>
+      <li>Los mensajes enviados al asistente de IA son procesados por proveedores externos como <strong>Google (Gemini)</strong>, <strong>DeepSeek</strong>, <strong>OpenAI</strong> y <strong>OpenRouter</strong>, según el plan y la configuración del usuario.</li>
+      <li>Opita Code <strong>no entrena modelos de IA</strong> con los datos del usuario. Las conversaciones se envían a los proveedores exclusivamente para generar respuestas en tiempo real.</li>
+      <li>El procesamiento de datos por proveedores de IA se rige por las políticas de privacidad de cada proveedor. Recomendamos consultar sus términos respectivos.</li>
+      <li>Los usuarios del plan gratuito utilizan modelos gestionados por Opita Code (actualmente Google Gemini y DeepSeek). Los usuarios con llaves propias (BYOK) envían datos directamente al proveedor configurado.</li>
+    </ul>
+
+    <h2>5. Llaves de API propias (BYOK — Bring Your Own Key)</h2>
+    <p>
+      Vibe Studio permite a los usuarios autenticados conectar sus propias llaves de API
+      de proveedores de inteligencia artificial. Estas llaves se gestionan de la siguiente manera:
+    </p>
+    <ul>
+      <li>Las llaves son <strong>cifradas con AES-256</strong> antes de almacenarse en los servidores de AWS (DynamoDB).</li>
+      <li>Las llaves en texto plano <strong>nunca se almacenan</strong> en el navegador después de la configuración inicial. El frontend solo conserva una referencia cifrada.</li>
+      <li>Opita Code <strong>no utiliza las llaves del usuario</strong> para ningún propósito distinto a la ejecución de solicitudes de IA iniciadas por el propio usuario.</li>
+      <li>El usuario puede eliminar sus llaves en cualquier momento desde la configuración de Vibe Studio.</li>
+    </ul>
+
+    <h2>6. Base legal del tratamiento</h2>
     <p>
       El tratamiento de datos personales se realiza con base en el <strong>consentimiento</strong>
-      del titular, manifestado al proporcionar voluntariamente su información a través de
-      nuestros canales de contacto. El titular puede revocar su consentimiento en cualquier
-      momento.
+      del titular, manifestado al crear una cuenta o al proporcionar voluntariamente su
+      información a través de nuestros canales y productos. El titular puede revocar su
+      consentimiento en cualquier momento.
     </p>
 
-    <h2>5. Almacenamiento y seguridad</h2>
+    <h2>7. Cookies y autenticación</h2>
     <p>
-      Los datos personales se almacenan de forma segura y se conservan únicamente durante
-      el tiempo necesario para cumplir con las finalidades descritas en esta política o
-      hasta que el titular solicite su eliminación. Implementamos medidas de seguridad
-      técnicas y organizativas para proteger los datos contra acceso no autorizado,
-      pérdida o alteración.
+      Opita Code utiliza las siguientes tecnologías de almacenamiento en el navegador:
+    </p>
+    <ul>
+      <li><strong>Cookies de autenticación:</strong> cookies de sesión bajo el dominio <strong>.opitacode.com</strong> (establecidas por AWS Cognito) para mantener la sesión del usuario activa entre subdominios.</li>
+      <li><strong>LocalStorage:</strong> preferencias de interfaz (tema, posición del panel, configuración de VibeLens) y referencias a proveedores BYOK configurados.</li>
+      <li><strong>Cookies analíticas:</strong> utilizadas por herramientas de análisis para medir tráfico de forma anónima.</li>
+    </ul>
+    <p>
+      Para más información, consulte nuestra <a href="cookies.html">Política de Cookies</a>.
     </p>
 
-    <h2>6. Derechos del titular (Ley 1581/2012)</h2>
+    <h2>8. Almacenamiento y seguridad</h2>
+    <p>
+      Los datos se almacenan en infraestructura de <strong>Amazon Web Services (AWS)</strong>
+      en la región <strong>us-east-1</strong>. Implementamos las siguientes medidas de seguridad:
+    </p>
+    <ul>
+      <li>Cifrado de llaves API con AES-256-CBC.</li>
+      <li>Autenticación mediante tokens JWT firmados (RS256 vía Cognito JWKS o HMAC para enlaces mágicos).</li>
+      <li>Comunicación exclusiva por HTTPS/TLS.</li>
+      <li>Acceso restringido a bases de datos mediante políticas IAM de mínimo privilegio.</li>
+      <li>Registros de uso con TTL automático (los datos de consumo se eliminan automáticamente después de 7 días).</li>
+    </ul>
+
+    <h2>9. Derechos del titular (Ley 1581/2012)</h2>
     <p>De conformidad con la Ley 1581 de 2012, el titular de los datos tiene los siguientes derechos:</p>
     <ul>
       <li><strong>Conocer, actualizar y rectificar</strong> sus datos personales.</li>
@@ -146,9 +194,10 @@
       <li><strong>Presentar quejas</strong> ante la Superintendencia de Industria y Comercio (SIC) por infracciones a la ley.</li>
       <li><strong>Revocar la autorización</strong> y/o solicitar la <strong>eliminación</strong> de los datos cuando no se requieran para la finalidad acordada.</li>
       <li><strong>Acceder</strong> a sus datos personales de forma gratuita.</li>
+      <li><strong>Solicitar la eliminación</strong> de sus llaves API almacenadas y datos de cuenta.</li>
     </ul>
 
-    <h2>7. Ejercicio de derechos</h2>
+    <h2>10. Ejercicio de derechos</h2>
     <p>
       Para ejercer sus derechos de conocer, actualizar, rectificar, suprimir o revocar
       el consentimiento, el titular puede enviar una solicitud a:
@@ -157,29 +206,39 @@
       máximo de 15 días hábiles.
     </p>
 
-    <h2>8. Transferencia de datos a terceros</h2>
+    <h2>11. Transferencia de datos a terceros</h2>
     <p>
-      No compartimos datos personales con terceros, excepto cuando sea necesario para
-      cumplir con una obligación legal o cuando el titular haya autorizado expresamente
-      dicha transferencia. Los proveedores de servicios (como plataformas de hosting o
-      servicios de correo electrónico) pueden tener acceso limitado a los datos
-      exclusivamente para los fines contratados.
+      Opita Code puede compartir datos con los siguientes terceros, exclusivamente para
+      la prestación del servicio:
+    </p>
+    <ul>
+      <li><strong>Amazon Web Services (AWS):</strong> infraestructura de servidores, autenticación (Cognito), almacenamiento (DynamoDB, S3) y envío de correos (SES).</li>
+      <li><strong>Proveedores de IA:</strong> Google (Gemini), DeepSeek, OpenAI y OpenRouter — únicamente para procesar las solicitudes de IA del usuario.</li>
+      <li><strong>Wompi:</strong> procesamiento de pagos. Opita Code no almacena datos financieros.</li>
+      <li><strong>Cloudflare:</strong> CDN, protección contra ataques DDoS y gestión de DNS.</li>
+    </ul>
+    <p>
+      No vendemos, alquilamos ni compartimos datos personales con terceros para fines
+      de marketing o publicidad.
     </p>
 
-    <h2>9. Cookies</h2>
+    <h2>12. Menores de edad</h2>
     <p>
-      Este sitio web utiliza cookies y tecnologías similares. Para más información,
-      consulte nuestra <a href="cookies.html" style="color:inherit;">Política de Cookies</a>.
+      Los servicios de Opita Code están dirigidos a personas mayores de 14 años.
+      No recopilamos intencionalmente datos de menores de 14 años. Si un padre o tutor
+      detecta que un menor ha proporcionado datos sin autorización, puede solicitar su
+      eliminación escribiendo a <strong>owner@opitacode.com</strong>.
     </p>
 
-    <h2>10. Cambios a esta política</h2>
+    <h2>13. Cambios a esta política</h2>
     <p>
       Opita Code se reserva el derecho de modificar esta Política de Privacidad en
       cualquier momento. Los cambios se publicarán en esta página con la fecha de
-      actualización correspondiente.
+      actualización correspondiente. Se notificará a los usuarios registrados por
+      correo electrónico cuando se realicen cambios sustanciales.
     </p>
 
-    <h2>11. Contacto</h2>
+    <h2>14. Contacto</h2>
     <p>
       Para cualquier consulta relacionada con esta Política de Privacidad o el
       tratamiento de sus datos personales, contáctenos en:

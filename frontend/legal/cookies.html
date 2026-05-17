@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Política de Cookies · Opita Code</title>
-  <meta name="description" content="Política de Cookies de Opita Code. Información sobre el uso de cookies y tecnologías similares en opitacode.com.">
+  <meta name="description" content="Política de Cookies de Opita Code y Vibe Studio. Información sobre el uso de cookies y tecnologías similares en opitacode.com y vibe.opitacode.com.">
   <link rel="icon" href="../assets/img/opita-code-favicon-32-v4.png" type="image/png">
   <link rel="apple-touch-icon" href="../assets/img/opita-code-favicon-180-v4.png">
   <link rel="stylesheet" href="../assets/css/css-variables.css">
@@ -99,13 +99,13 @@
   </header>
   <main>
     <h1>Política de Cookies</h1>
-    <p class="last-updated">Última actualización: 1 de enero de 2026</p>
+    <p class="last-updated">Última actualización: 15 de mayo de 2026</p>
 
     <p>
-      En <strong>Opita Code</strong> utilizamos cookies y tecnologías similares para
-      mejorar la experiencia de navegación, analizar el tráfico del sitio y ofrecer
-      contenido relevante. Esta política explica qué son las cookies, cómo las usamos
-      y cómo puedes gestionarlas.
+      En <strong>Opita Code</strong> y <strong>Vibe Studio</strong> utilizamos cookies
+      y tecnologías similares para mejorar la experiencia de navegación, gestionar la
+      autenticación, analizar el tráfico del sitio y ofrecer contenido relevante. Esta
+      política explica qué son las cookies, cómo las usamos y cómo puedes gestionarlas.
     </p>
 
     <h2>1. ¿Qué son las cookies?</h2>
@@ -132,6 +132,16 @@
           <td>Sesión</td>
         </tr>
         <tr>
+          <td><strong>Autenticación (Cognito)</strong></td>
+          <td>Cookies bajo el dominio <strong>.opitacode.com</strong> establecidas por AWS Cognito para mantener la sesión del usuario activa entre subdominios (cuenta, vibe, etc.).</td>
+          <td>1 hora (ID token), 30 días (refresh token)</td>
+        </tr>
+        <tr>
+          <td><strong>Preferencias (LocalStorage)</strong></td>
+          <td>Vibe Studio almacena preferencias de interfaz (tema, posición del chat, configuración de VibeLens) y referencias a proveedores BYOK configurados en el almacenamiento local del navegador.</td>
+          <td>Persistentes (hasta eliminación manual)</td>
+        </tr>
+        <tr>
           <td><strong>Analíticas</strong></td>
           <td>Recopilan información anónima sobre cómo los usuarios interactúan con el sitio (páginas visitadas, tiempo de navegación).</td>
           <td>Persistentes (máx. 2 años)</td>
@@ -145,6 +155,8 @@
       cookies, incluyendo:
     </p>
     <ul>
+      <li><strong>AWS Cognito:</strong> cookies de autenticación para gestionar sesiones de usuario seguras bajo el dominio .opitacode.com.</li>
+      <li><strong>Cloudflare:</strong> cookies de seguridad (__cf_bm, cf_clearance) para protección contra bots y ataques DDoS.</li>
       <li><strong>Proveedores de análisis web</strong> para medir y analizar la audiencia (datos anónimos agregados).</li>
       <li><strong>Plataformas de contenido embebido</strong> (videos, mapas) que pueden establecer cookies propias.</li>
     </ul>
