@@ -6,9 +6,10 @@ interface Props {
   title: string;
   description: string;
   lang: 'es' | 'en';
+  schema?: Record<string, any> | Record<string, any>[];
 }
 
-const { title, description, lang } = Astro.props;
+const { title, description, lang, schema } = Astro.props;
 ---
 
 <!doctype html>
@@ -32,6 +33,11 @@ const { title, description, lang } = Astro.props;
     <link rel="alternate" hreflang="es" href={`${Astro.site || ''}/es`} />
     <link rel="alternate" hreflang="en" href={`${Astro.site || ''}/en`} />
     <link rel="alternate" hreflang="x-default" href={`${Astro.site || ''}/es`} />
+
+    <!-- JSON-LD -->
+    {schema && (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    )}
 
     <!-- Theme Manager -->
     <script is:inline>
@@ -83,5 +89,23 @@ const { title, description, lang } = Astro.props;
         </div>
       </div>
     </footer>
+
+    <!-- Opita Telemetry -->
+    <script is:inline>
+      (function(){
+        var API="https://api.opitacode.com/core/events/ingest",PID="opitacode-web";
+        var sid=sessionStorage.getItem("opita_session_id");
+        if(!sid){sid=crypto.randomUUID();sessionStorage.setItem("opita_session_id",sid)}
+        var q=[];
+        function t(type,data){q.push({type:type,source:"landing",timestamp:new Date().toISOString(),data:data||{}});if(q.length>=10)f()}
+        function f(){if(!q.length)return;var p=JSON.stringify({events:q.splice(0),sessionId:sid,productId:PID});if(navigator.sendBeacon){navigator.sendBeacon(API,p)}else{fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:p,keepalive:true}).catch(function(){})}}
+        var ps=new URLSearchParams(location.search);
+        t("page_view",{url:location.pathname,referrer:document.referrer||"",utm_source:ps.get("utm_source"),utm_medium:ps.get("utm_medium"),utm_campaign:ps.get("utm_campaign")});
+        t("session_start",{url:location.pathname});
+        document.addEventListener("click",function(e){var el=e.target.closest("a,button");if(!el)return;var text=(el.textContent||"").trim().slice(0,80);var href=el.getAttribute("href")||"";if(text.includes("Trabajemos")||text.includes("Work")||href.includes("#contacto")||href.includes("#contact")){t("cta_click",{button:text,href:href,source_section:"trabajemos_juntos"})}});
+        document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden")f()});
+        window.addEventListener("pagehide",f);
+      })();
+    </script>
   </body>
 </html>

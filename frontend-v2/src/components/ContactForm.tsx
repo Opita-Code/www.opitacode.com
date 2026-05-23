@@ -34,6 +34,33 @@ export function ContactForm({ lang }: { lang: 'es' | 'en' }) {
       if (response.ok) {
         setStatus('success');
         setFormData({ name: '', email: '', message: '' });
+
+        // ── Telemetry: track successful contact submission ──
+        try {
+          const telemetryApi = 'https://api.opitacode.com/core/events/ingest';
+          let sid = sessionStorage.getItem('opita_session_id');
+          if (!sid) { sid = crypto.randomUUID(); sessionStorage.setItem('opita_session_id', sid); }
+          fetch(telemetryApi, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              sessionId: sid,
+              productId: 'opitacode-web',
+              events: [{
+                type: 'contact_submitted',
+                source: 'landing',
+                timestamp: new Date().toISOString(),
+                data: {
+                  email: formData.email,
+                  hasMessage: formData.message.length > 0,
+                  url: window.location.pathname,
+                  referrer: document.referrer || '',
+                },
+              }],
+            }),
+            keepalive: true,
+          }).catch(() => {});
+        } catch { /* telemetry is best-effort */ }
       } else {
         const data = await response.json().catch(() => ({}));
         setErrorMessage(data.error || t.errorDefault);
