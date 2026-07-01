@@ -33,7 +33,9 @@
     "title-post": "real businesses.",
     "subtitle": "We don't build code for the sake of building. We develop tools, automations and SaaS products that solve concrete problems of your daily operation.",
     "cta-explore": "Explore the Ecosystem",
-    "cta-contact": "Let's talk"
+    "cta-contact": "Let's talk",
+    "secondary-cta-prefix": "Prefer to talk?",
+    "secondary-cta-link": "Chat on WhatsApp"
   },
   "cta": {
     "whatsapp-base": "https://wa.me/573126126085",

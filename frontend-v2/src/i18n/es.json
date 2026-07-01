@@ -33,7 +33,9 @@
     "title-post": "negocios reales.",
     "subtitle": "No construimos código por construir. Desarrollamos herramientas, automatizaciones y productos SaaS que resuelven problemas concretos de tu operación diaria.",
     "cta-explore": "Explorar el Ecosistema",
-    "cta-contact": "Conversemos"
+    "cta-contact": "Conversemos",
+    "secondary-cta-prefix": "¿Prefieres hablar?",
+    "secondary-cta-link": "Conversemos por WhatsApp"
   },
   "cta": {
     "whatsapp-base": "https://wa.me/573126126085",

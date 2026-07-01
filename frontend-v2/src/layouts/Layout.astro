@@ -1,15 +1,71 @@
 ---
 import '../styles/global.css';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import ConversionChannels from '../components/ConversionChannels.astro';
+import { t, type Lang } from '../i18n';
 
 interface Props {
   title: string;
   description: string;
-  lang: 'es' | 'en';
+  lang: Lang;
   schema?: Record<string, any> | Record<string, any>[];
 }
 
 const { title, description, lang, schema } = Astro.props;
+const year = new Date().getFullYear();
+
+// REQ-SEO-3 + REQ-SEO-7: canonical + og:url limpios (sin query params, sin trailing slash)
+const cleanPath = Astro.url.pathname.replace(/\/$/, '') || `/${lang}`;
+const canonicalUrl = new URL(cleanPath, Astro.site).href;
+
+// REQ-SEO-4: hreflang absolutos
+const baseUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://opitacode.com';
+const hreflangs = {
+  es: `${baseUrl}/es`,
+  en: `${baseUrl}/en`,
+  'x-default': `${baseUrl}`,
+};
+
+// REQ-SEO-5: JSON-LD Organization + WebSite + ContactPoint (default)
+const defaultSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${baseUrl}/#organization`,
+      name: t(lang, 'meta.organization-name'),
+      url: baseUrl,
+      logo: `${baseUrl}/logo-dark.svg`,
+      description: t(lang, 'meta.organization-tagline'),
+      foundingDate: '2022-01-01',
+      address: { '@type': 'PostalAddress', addressCountry: 'CO' },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+57-312-612-6085',
+        contactType: 'sales',
+        availableLanguage: ['Spanish', 'English'],
+        areaServed: ['CO', 'US', 'MX', 'AR', 'PE', 'EC', 'VE', 'CL'],
+      },
+      sameAs: [
+        'https://github.com/Opita-Code',
+        'https://linkedin.com/company/opita-code',
+        'https://youtube.com/@opitadeveloper',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${baseUrl}/#website`,
+      url: baseUrl,
+      name: t(lang, 'meta.organization-name'),
+      description: t(lang, 'meta.organization-tagline'),
+      publisher: { '@id': `${baseUrl}/#organization` },
+      inLanguage: ['es', 'en'],
+    },
+  ],
+};
+
+const finalSchema = schema ?? defaultSchema;
+const ogImageUrl = new URL('/og-image.jpg', Astro.site).href;
 ---
 
 <!doctype html>
@@ -21,23 +77,31 @@ const { title, description, lang, schema } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
     <!-- SEO & Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:image" content="/og-image.jpg" />
-    
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_CO' : 'en_US'} />
+    <meta property="og:site_name" content={t(lang, 'meta.organization-name')} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
     <!-- i18n Alternate Links -->
-    <link rel="alternate" hreflang="es" href={`${Astro.site || ''}/es`} />
-    <link rel="alternate" hreflang="en" href={`${Astro.site || ''}/en`} />
-    <link rel="alternate" hreflang="x-default" href={`${Astro.site || ''}/es`} />
+    <link rel="alternate" hreflang="es" href={hreflangs.es} />
+    <link rel="alternate" hreflang="en" href={hreflangs.en} />
+    <link rel="alternate" hreflang="x-default" href={hreflangs['x-default']} />
 
     <!-- JSON-LD -->
-    {schema && (
-      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-    )}
+    <script type="application/ld+json" set:html={JSON.stringify(finalSchema)} />
 
     <!-- Theme Manager -->
     <script is:inline>
@@ -52,15 +116,15 @@ const { title, description, lang, schema } = Astro.props;
     <header class="border-b border-border-base bg-bg-base/80 backdrop-blur-md sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <img src="/opita-code-horizontal-black-v4.png" alt="Opita Code" class="h-8 w-auto object-contain shrink-0 dark:hidden" />
-          <img src="/opita-code-horizontal-white-v4.png" alt="Opita Code" class="h-8 w-auto object-contain shrink-0 hidden dark:block" />
+          <img src="/opita-code-horizontal-black-v4.png" alt={t(lang, 'header.logo-alt')} class="h-8 w-auto object-contain shrink-0 dark:hidden" />
+          <img src="/opita-code-horizontal-white-v4.png" alt={t(lang, 'header.logo-alt')} class="h-8 w-auto object-contain shrink-0 hidden dark:block" />
         </div>
-        <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-          <a href={`/${lang}#ecosystem`} class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Ecosistema' : 'Ecosystem'}</a>
-          <a href={`/${lang}#about`} class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Nosotros' : 'About'}</a>
-          <a href={`/${lang}#contact`} class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Contacto' : 'Contact'}</a>
+        <nav class="hidden md:flex gap-8 text-sm font-medium items-center" aria-label={t(lang, 'header.lang-switcher')}>
+          <a href={`/${lang}#ecosystem`} class="text-text-muted hover:text-text-base transition-colors">{t(lang, 'nav.ecosystem')}</a>
+          <a href={`/${lang}#about`} class="text-text-muted hover:text-text-base transition-colors">{t(lang, 'nav.about')}</a>
+          <a href={`/${lang}#contact`} class="text-text-muted hover:text-text-base transition-colors">{t(lang, 'nav.contact')}</a>
           <div class="h-4 w-px bg-border-base"></div>
-          <a href="https://cuenta.opitacode.com" class="text-corporate-600 dark:text-corporate-400 hover:text-corporate-900 dark:hover:text-corporate-300 font-bold transition-colors">{lang === 'es' ? 'Mi Cuenta' : 'My Account'}</a>
+          <a href="https://cuenta.opitacode.com" class="text-corporate-600 dark:text-corporate-400 hover:text-corporate-900 dark:hover:text-corporate-300 font-bold transition-colors">{t(lang, 'nav.my-account')}</a>
         </nav>
         <div class="flex items-center gap-4">
           <div class="text-xs font-mono bg-bg-muted px-2 py-1 rounded text-text-muted border border-border-base flex items-center h-full">
@@ -72,20 +136,26 @@ const { title, description, lang, schema } = Astro.props;
         </div>
       </div>
     </header>
-    
+
     <main class="flex-grow">
       <slot />
     </main>
 
     <footer class="bg-bg-muted border-t border-border-base py-12 mt-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="flex items-center gap-3">
-          <img src="/opita-code-symbol-black-v4.png" alt="Opita Code" class="h-6 w-auto object-contain shrink-0 opacity-50 grayscale dark:hidden" />
-          <img src="/opita-code-symbol-white-v4.png" alt="Opita Code" class="h-6 w-auto object-contain shrink-0 opacity-50 grayscale hidden dark:block" />
-          <span class="text-sm text-text-muted font-medium">© {new Date().getFullYear()} Opita Code.</span>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div class="flex items-center gap-3">
+            <img src="/opita-code-symbol-black-v4.png" alt={t(lang, 'header.logo-alt')} class="h-6 w-auto object-contain shrink-0 opacity-50 grayscale dark:hidden" />
+            <img src="/opita-code-symbol-white-v4.png" alt={t(lang, 'header.logo-alt')} class="h-6 w-auto object-contain shrink-0 opacity-50 grayscale hidden dark:block" />
+            <span class="text-sm text-text-muted font-medium">{t(lang, 'footer.copyright', { year })}</span>
+          </div>
+          <div class="text-sm text-corporate-700 text-center md:text-right">
+            {t(lang, 'footer.tagline')}
+          </div>
         </div>
-        <div class="text-sm text-corporate-700">
-          {lang === 'es' ? 'Software práctico para negocios reales. Hecho en Colombia 🇨🇴' : 'Practical software for real businesses. Made in Colombia 🇨🇴'}
+        <div class="border-t border-border-base pt-6 flex flex-col items-center gap-4">
+          <p class="text-sm font-medium text-text-base">{t(lang, 'conversion-channels.title')}</p>
+          <ConversionChannels lang={lang} source_section="footer" variant="inline" />
         </div>
       </div>
     </footer>
