@@ -54,5 +54,16 @@
   "product-card": {
     "live-badge": null,
     "in-development-badge": "EN DESARROLLO"
+  },
+  "contact": {
+    "name-label": "Nombre",
+    "email-label": "Correo electrónico",
+    "message-label": "Mensaje",
+    "submit": "Enviar mensaje",
+    "loading": "Enviando...",
+    "success": "Recibimos tu mensaje. Te contactamos en menos de 24h.",
+    "send-another": "Enviar otro mensaje",
+    "error-default": "Error al enviar el mensaje. Intenta de nuevo.",
+    "error-honeypot": "Mensaje rechazado. Si eres humano, intenta de nuevo desde otro navegador."
   }
 }
