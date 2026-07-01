@@ -17,11 +17,15 @@ export default defineConfig({
     },
   },
 
-  trailingSlash: 'never',
+  // T1 follow-up: 'ignore' mantiene URLs con y sin trailing slash servibles
+  // (CloudFront/S3 convention usa trailing slash). Migrar a 'never' en T12
+  // cuando arreglemos Cloudflare rewrite rules.
+  trailingSlash: 'ignore',
 
   integrations: [
     react(),
     sitemap({
+      lastmod: new Date('2026-07-01'),
       i18n: {
         defaultLocale: 'es',
         locales: {
