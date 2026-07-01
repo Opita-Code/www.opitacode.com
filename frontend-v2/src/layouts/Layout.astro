@@ -10,6 +10,61 @@ interface Props {
 }
 
 const { title, description, lang, schema } = Astro.props;
+
+// REQ-SEO-3 + REQ-SEO-7: canonical + og:url limpios (sin query params)
+const cleanPath = Astro.url.pathname.replace(/\/$/, '') || `/${lang}`;
+const canonicalUrl = new URL(cleanPath, Astro.site).href;
+
+// REQ-SEO-4: hreflang absolutos
+const baseUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://opitacode.com';
+const hreflangs = {
+  es: `${baseUrl}/es`,
+  en: `${baseUrl}/en`,
+  'x-default': `${baseUrl}`,
+};
+
+// REQ-SEO-5: JSON-LD Organization + WebSite + ContactPoint por default
+const defaultSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${baseUrl}/#organization`,
+      name: 'Opita Code',
+      url: baseUrl,
+      logo: `${baseUrl}/logo-dark.svg`,
+      description: 'Software práctico para negocios reales. Hecho en Colombia 🇨🇴',
+      foundingDate: '2022-01-01',
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'CO',
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+57-312-612-6085',
+        contactType: 'sales',
+        availableLanguage: ['Spanish', 'English'],
+        areaServed: ['CO', 'US', 'MX', 'AR', 'PE', 'EC', 'VE', 'CL'],
+      },
+      sameAs: [
+        'https://github.com/Opita-Code',
+        'https://linkedin.com/company/opita-code',
+        'https://youtube.com/@opitadeveloper',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${baseUrl}/#website`,
+      url: baseUrl,
+      name: 'Opita Code',
+      publisher: { '@id': `${baseUrl}/#organization` },
+      inLanguage: ['es', 'en'],
+    },
+  ],
+};
+
+const finalSchema = schema ?? defaultSchema;
+const ogImageUrl = new URL('/og-image.jpg', Astro.site).href;
 ---
 
 <!doctype html>
@@ -21,23 +76,35 @@ const { title, description, lang, schema } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    
+
+    <!-- REQ-SEO-3: canonical -->
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- REQ-SEO-6: meta robots -->
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
     <!-- SEO & Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:image" content="/og-image.jpg" />
-    
-    <!-- i18n Alternate Links -->
-    <link rel="alternate" hreflang="es" href={`${Astro.site || ''}/es`} />
-    <link rel="alternate" hreflang="en" href={`${Astro.site || ''}/en`} />
-    <link rel="alternate" hreflang="x-default" href={`${Astro.site || ''}/es`} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_CO' : 'en_US'} />
+    <meta property="og:site_name" content="Opita Code" />
+
+    <!-- REQ-SEO-6: Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- REQ-SEO-4: i18n Alternate Links -->
+    <link rel="alternate" hreflang="es" href={hreflangs.es} />
+    <link rel="alternate" hreflang="en" href={hreflangs.en} />
+    <link rel="alternate" hreflang="x-default" href={hreflangs['x-default']} />
 
     <!-- JSON-LD -->
-    {schema && (
-      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-    )}
+    <script type="application/ld+json" set:html={JSON.stringify(finalSchema)} />
 
     <!-- Theme Manager -->
     <script is:inline>
@@ -72,7 +139,7 @@ const { title, description, lang, schema } = Astro.props;
         </div>
       </div>
     </header>
-    
+
     <main class="flex-grow">
       <slot />
     </main>
