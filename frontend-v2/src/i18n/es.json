@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "ecosystem": "Ecosistema",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "my-account": "Mi Cuenta"
+  },
+  "header": {
+    "logo-alt": "Opita Code",
+    "lang-switcher": "Cambiar idioma"
+  },
+  "footer": {
+    "tagline": "Software práctico para negocios reales. Hecho en Colombia 🇨🇴",
+    "copyright": "© {year} Opita Code."
+  },
+  "theme": {
+    "toggle-light": "Cambiar a tema claro",
+    "toggle-dark": "Cambiar a tema oscuro"
+  },
+  "meta": {
+    "organization-name": "Opita Code",
+    "organization-tagline": "Software práctico para negocios reales. Hecho en Colombia 🇨🇴"
+  },
+  "common": {
+    "coming-soon": "Próximamente",
+    "in-development": "EN DESARROLLO",
+    "learn-more": "Conocer más",
+    "coming-soon-cta": "Avísame cuando salga"
+  },
+  "hero": {
+    "eyebrow": "Hecho en Colombia 🇨🇴",
+    "title-pre": "Software práctico para",
+    "title-post": "negocios reales.",
+    "subtitle": "No construimos código por construir. Desarrollamos herramientas, automatizaciones y productos SaaS que resuelven problemas concretos de tu operación diaria.",
+    "cta-explore": "Explorar el Ecosistema",
+    "cta-contact": "Conversemos"
+  },
+  "cta": {
+    "whatsapp-base": "https://wa.me/573126126085",
+    "whatsapp-default-message": "Hola Nicolás, me interesa Opita Code. ¿Me cuentas más?",
+    "email": "owner@opitacode.com"
+  },
+  "conversion-channels": {
+    "title": "Conversemos",
+    "subtitle": "Elige el canal que prefieras. Te respondemos una persona real en menos de 24h.",
+    "whatsapp-label": "WhatsApp",
+    "email-label": "Correo",
+    "github-label": "GitHub",
+    "linkedin-label": "LinkedIn",
+    "youtube-label": "YouTube"
+  },
+  "product-card": {
+    "live-badge": null,
+    "in-development-badge": "EN DESARROLLO"
+  }
+}
