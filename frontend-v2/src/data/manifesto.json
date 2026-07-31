@@ -1,0 +1,48 @@
+{
+  "title_es": "Manifiesto Opita",
+  "title_en": "Opita Manifesto",
+  "subtitle_es": "Cinco decisiones que tomamos antes de escribir la primera línea de código",
+  "subtitle_en": "Five decisions we made before writing the first line of code",
+  "principles": [
+    {
+      "id": "orgullo-opita",
+      "number": "01",
+      "title_es": "Orgullo opita, sin complejo",
+      "title_en": "Opita pride, no complex",
+      "body_es": "Somos de Neiva, del Huila, de Colombia. No nos disculpamos por el acento ni por el origen. Construimos desde el sur global, con identidad local y ambición mundial. Macondo no es solo una referencia literaria: es la prueba de que desde aquí se pueden contar las historias más universales.",
+      "body_en": "We are from Neiva, Huila, Colombia. We don't apologize for our accent or our origin. We build from the global south, with local identity and global ambition. Macondo is not just a literary reference: it's proof that from here we can tell the most universal stories."
+    },
+    {
+      "id": "software-practico",
+      "number": "02",
+      "title_es": "Software práctico, no por construir",
+      "title_en": "Practical software, not built for the sake of it",
+      "body_es": "Cada producto resuelve un problema concreto de una operación real. Si no está resolviendo algo que alguien paga por resolver, no lo construimos. Conceptos antes que código. Impacto antes que innovación.",
+      "body_en": "Every product solves a concrete problem of a real operation. If it's not solving something someone pays to solve, we don't build it. Concepts before code. Impact before innovation."
+    },
+    {
+      "id": "open-source",
+      "number": "03",
+      "title_es": "100% código abierto, sin excepciones",
+      "title_en": "100% open source, no exceptions",
+      "body_es": "Todo lo que construimos es público. Los frameworks, las herramientas, los datos no sensibles. Si dependes de nosotros, no dependes de un vendor opaco: dependes de una comunidad que puede auditar, forkear y continuar el trabajo.",
+      "body_en": "Everything we build is public. Frameworks, tools, non-sensitive data. If you depend on us, you don't depend on an opaque vendor: you depend on a community that can audit, fork and continue the work."
+    },
+    {
+      "id": "whatsapp-primero",
+      "number": "04",
+      "title_es": "WhatsApp primero, formularios nunca",
+      "title_en": "WhatsApp first, forms never",
+      "body_es": "El canal #1 de Latinoamérica es WhatsApp. Si quieres contactarnos, te respondemos una persona real en menos de 24 horas. Sin formularios eternos, sin tickets, sin chatbots que no resuelven. Cercanía humana > fricción digital.",
+      "body_en": "The #1 channel in Latin America is WhatsApp. If you want to contact us, a real person responds in less than 24 hours. No endless forms, no tickets, no chatbots that don't solve anything. Human closeness > digital friction."
+    },
+    {
+      "id": "seriedad-compliance",
+      "number": "05",
+      "title_es": "Seriedad operativa, no solo marketing",
+      "title_en": "Operational seriousness, not just marketing",
+      "body_es": "Compliance real (Ley 1581/2012 de Habeas Data), pentests periódicos, código auditado, infraestructura con Cloudflare. Cero dark patterns, cero engaños, cero recolección de datos sin consentimiento explícito. La seriedad se demuestra, no se dice.",
+      "body_en": "Real compliance (Colombian Habeas Data Law 1581/2012), periodic pentests, audited code, Cloudflare-backed infrastructure. Zero dark patterns, zero deception, zero data collection without explicit consent. Seriousness is demonstrated, not said."
+    }
+  ]
+}

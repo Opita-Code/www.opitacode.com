@@ -1,0 +1,68 @@
+{
+  "stats": [
+    {
+      "id": "repos",
+      "value": "21",
+      "label_es": "Repositorios públicos",
+      "label_en": "Public repositories",
+      "url": "https://github.com/Opita-Code",
+      "icon": "github"
+    },
+    {
+      "id": "verticals",
+      "value": "4",
+      "label_es": "Verticales de producto",
+      "label_en": "Product verticals",
+      "url": null,
+      "icon": "layers"
+    },
+    {
+      "id": "open-source",
+      "value": "100%",
+      "label_es": "Código abierto",
+      "label_en": "Open source",
+      "url": "https://github.com/Opita-Code",
+      "icon": "lock-open"
+    },
+    {
+      "id": "years",
+      "value": "+5",
+      "label_es": "Años construyendo software",
+      "label_en": "Years building software",
+      "url": null,
+      "icon": "calendar"
+    },
+    {
+      "id": "live-products",
+      "value": "3",
+      "label_es": "Productos live",
+      "label_en": "Live products",
+      "url": null,
+      "icon": "zap"
+    },
+    {
+      "id": "in-development",
+      "value": "5",
+      "label_es": "En desarrollo",
+      "label_en": "In development",
+      "url": null,
+      "icon": "hammer"
+    },
+    {
+      "id": "colombia",
+      "value": "1",
+      "label_es": "Colombia 🇨🇴",
+      "label_en": "Colombia 🇨🇴",
+      "url": null,
+      "icon": "map-pin"
+    },
+    {
+      "id": "no-dark-patterns",
+      "value": "0",
+      "label_es": "Dark patterns",
+      "label_en": "Dark patterns",
+      "url": null,
+      "icon": "shield-check"
+    }
+  ]
+}

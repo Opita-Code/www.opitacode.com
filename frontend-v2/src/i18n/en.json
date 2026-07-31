@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "ecosystem": "Ecosystem",
+    "about": "About",
+    "contact": "Contact",
+    "my-account": "My Account"
+  },
+  "header": {
+    "logo-alt": "Opita Code",
+    "lang-switcher": "Switch language"
+  },
+  "footer": {
+    "tagline": "Practical software for real businesses. Made in Colombia 🇨🇴",
+    "copyright": "© {year} Opita Code."
+  },
+  "theme": {
+    "toggle-light": "Switch to light theme",
+    "toggle-dark": "Switch to dark theme"
+  },
+  "meta": {
+    "organization-name": "Opita Code",
+    "organization-tagline": "Practical software for real businesses. Made in Colombia 🇨🇴"
+  },
+  "common": {
+    "coming-soon": "Coming soon",
+    "in-development": "IN DEVELOPMENT",
+    "learn-more": "Learn more",
+    "coming-soon-cta": "Notify me when it launches"
+  },
+  "hero": {
+    "eyebrow": "Made in Colombia 🇨🇴",
+    "title-pre": "Practical software for",
+    "title-post": "real businesses.",
+    "subtitle": "We don't build code for the sake of building. We develop tools, automations and SaaS products that solve concrete problems of your daily operation.",
+    "cta-explore": "Explore the Ecosystem",
+    "cta-contact": "Let's talk",
+    "secondary-cta-prefix": "Prefer to talk?",
+    "secondary-cta-link": "Chat on WhatsApp"
+  },
+  "cta": {
+    "whatsapp-base": "https://wa.me/573126126085",
+    "whatsapp-default-message": "Hi Nicolás, I'm interested in Opita Code. Can you tell me more?",
+    "email": "owner@opitacode.com"
+  },
+  "conversion-channels": {
+    "title": "Let's talk",
+    "subtitle": "Pick the channel you prefer. A real person responds in less than 24h.",
+    "whatsapp-label": "WhatsApp",
+    "email-label": "Email",
+    "github-label": "GitHub",
+    "linkedin-label": "LinkedIn",
+    "youtube-label": "YouTube"
+  },
+  "product-card": {
+    "live-badge": null,
+    "in-development-badge": "IN DEVELOPMENT"
+  },
+  "contact": {
+    "name-label": "Name",
+    "email-label": "Email",
+    "message-label": "Message",
+    "submit": "Send message",
+    "loading": "Sending...",
+    "success": "We received your message. We'll get back to you in less than 24h.",
+    "send-another": "Send another message",
+    "error-default": "Error sending the message. Please try again.",
+    "error-honeypot": "Message rejected. If you're human, try again from a different browser."
+  }
+}
