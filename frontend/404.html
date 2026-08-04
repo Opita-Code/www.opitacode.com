@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>404 · Página no encontrada · Opita Code</title>
   <meta name="description" content="Página no encontrada — Opita Code">
-  <link rel="icon" href="assets/img/opita-code-favicon-32-v4.png" type="image/png">
-  <link rel="apple-touch-icon" href="assets/img/opita-code-favicon-180-v4.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22 fill=%22%238b5cf6%22 font-family=%22monospace%22 font-weight=%22bold%22>>_</text></svg>">
+  
 
   <link rel="stylesheet" href="assets/css/css-variables.css">
   <style>
@@ -82,6 +82,14 @@
       width: 48px;
       height: 48px;
     }
+    .brand-mark-text {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-weight: 800;
+      font-size: 2.2rem;
+      line-height: 1;
+      color: var(--opita-color-accent);
+      display: inline-block;
+    }
     /* ── Footer (base / light mode) ── */
     .footer {
       margin-top: 64px;
@@ -150,7 +158,7 @@
         color: var(--opita-color-ink);
       }
       .brand-mark img {
-        content: url('assets/img/opita-code-symbol-white-v4.png');
+        content: '';
       }
       /* Footer dark overrides */
       .footer {
@@ -176,7 +184,7 @@
 </head>
 <body>
   <div class="brand-mark">
-    <img src="assets/img/opita-code-symbol-black-v4.png" alt="Opita Code" width="48" height="48">
+    <span class="brand-mark-text">&gt;_</span>
   </div>
   <div class="error-code">404</div>
   <h1 class="error-title">Página no encontrada</h1>
@@ -188,7 +196,7 @@
 
   <footer class="footer" aria-label="Pie de página">
     <div class="footer__inner">
-      <img class="footer__lockup" src="assets/img/opita-code-stacked-white-v4.png" alt="Opita Code" width="120" height="166" loading="lazy">
+      <span class="footer__lockup-text">&gt;_ OPITA CODE</span>
       <p class="footer__tagline">Software práctico para negocios reales.</p>
       <hr class="footer__divider" role="presentation">
       <ul class="footer__legal">

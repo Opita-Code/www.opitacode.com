@@ -100,6 +100,18 @@ a {
   width: auto;
 }
 
+/* Brand logotype — typographic `>_ OPITA CODE` (no graphical logo) */
+.nav__logo-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 1.05rem;
+  color: var(--opita-color-ink);
+}
+.nav__logo-text::first-letter {
+  color: var(--opita-color-accent);
+}
+
 .nav__links {
   display: flex;
   align-items: center;
@@ -136,6 +148,17 @@ a {
   width: clamp(56px, 8vw, 80px);
   height: auto;
   margin-bottom: clamp(16px, 3vh, 32px);
+}
+
+.hero__symbol-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1;
+  color: var(--opita-color-accent);
+  margin-bottom: clamp(16px, 3vh, 32px);
+  display: block;
+  user-select: none;
 }
 
 .hero__tagline {
@@ -725,6 +748,15 @@ a {
 .footer__lockup {
   width: 120px;
   height: auto;
+}
+
+.footer__lockup-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 1.15rem;
+  color: var(--opita-color-ink);
+  display: inline-block;
 }
 
 .footer__tagline {
