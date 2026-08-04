@@ -168,7 +168,7 @@ jobs:
           echo "::notice::Wait for the cert to be issued (check: aws acm describe-certificate --certificate-arn $CERT_ARN --query Certificate.Status)"
           echo "::notice::Then re-run this workflow — it will detect the new cert and update CloudFront."
 
-      - name: Update CloudFront to use new ACM cert
+      - name: Update CloudFront (cert swap + add www alias)
         id: swap-cert
         if: steps.request-cert.outcome == 'success'
         run: |
@@ -193,28 +193,41 @@ jobs:
             sleep 10
           done
 
-          echo "Updating CloudFront to use new cert..."
-          aws cloudfront get-distribution-config --id "$DIST_ID" > /tmp/cf-cert-orig.json
-          ETAG=$(jq -r '.ETag' /tmp/cf-cert-orig.json)
+          echo "Updating CloudFront: swapping cert + adding www to Aliases (single ETag)..."
+          aws cloudfront get-distribution-config --id "$DIST_ID" > /tmp/cf-orig.json
+          ETAG=$(jq -r '.ETag' /tmp/cf-orig.json)
+          echo "CF ETag: $ETAG"
 
-          # Merge: replace ACM cert ARN, keep same SSL method
-          jq --arg arn "$NEW_CERT_ARN" \
-            '.DistributionConfig.ViewerCertificate.ACMCertificateArn = $arn | .DistributionConfig.ViewerCertificate.CertificateSource = "acm"' \
-            /tmp/cf-cert-orig.json > /tmp/cf-cert-swapped.json
+          # Check if www is already in Aliases
+          HAS_WWW=$(jq -r '.DistributionConfig.Aliases.Items | index("www.opitacode.com") != null' /tmp/cf-orig.json)
+          if [ "$HAS_WWW" = "true" ]; then
+            echo "www.opitacode.com already in Aliases — only swapping cert."
+            jq --arg arn "$NEW_CERT_ARN" \
+              '.DistributionConfig | .ViewerCertificate.ACMCertificateArn = $arn | .ViewerCertificate.CertificateSource = "acm"' \
+              /tmp/cf-orig.json > /tmp/cf-updated.json
+          else
+            echo "Adding www.opitacode.com to Aliases + swapping cert in one operation."
+            jq --arg arn "$NEW_CERT_ARN" --arg d www.opitacode.com \
+              '.DistributionConfig | .Aliases.Items = ([.Aliases.Items[]] + [$d] | unique) | .Aliases.Quantity = (.Aliases.Items | length) | .ViewerCertificate.ACMCertificateArn = $arn | .ViewerCertificate.CertificateSource = "acm"' \
+              /tmp/cf-orig.json > /tmp/cf-updated.json
+          fi
 
-          jq '.DistributionConfig' /tmp/cf-cert-swapped.json > /tmp/cf-dist-config.json
-
-          aws cloudfront update-distribution \
+          UPDATE=$(aws cloudfront update-distribution \
             --id "$DIST_ID" \
-            --distribution-config "file:///tmp/cf-dist-config.json" \
-            --if-match "$ETAG" > /dev/null
+            --distribution-config "file:///tmp/cf-updated.json" \
+            --if-match "$ETAG" 2>&1)
+          echo "$UPDATE" | head -5
 
-          echo "✅ CloudFront now uses new cert: $NEW_CERT_ARN"
+          echo ""
+          echo "✅ CloudFront updated: new cert + Aliases include www.opitacode.com"
+          echo "   Aliases: $(jq -r '.Aliases.Items | join(", ")' /tmp/cf-updated.json)"
+          echo "   The change takes ~5-15 minutes to propagate globally."
+
           echo "new-cert-active=true" >> "$GITHUB_OUTPUT"
 
       - name: Add www.opitacode.com to CloudFront Alternate Domain Names
         id: fix-cf
-        if: steps.acm.outputs.www-covered == 'true' || steps.swap-cert.outputs.new-cert-active == 'true'
+        if: steps.acm.outputs.www-covered == 'true' && steps.swap-cert.outputs.new-cert-active != 'true'
         run: |
           set -euo pipefail
           DIST_ID="${{ steps.cf.outputs.distribution-id }}"
