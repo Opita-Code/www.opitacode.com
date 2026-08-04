@@ -442,20 +442,46 @@ const releases = await getReleases(3);
     </div>
   </section>
 
-  <!-- About / Founder Section -->
+  <!-- About — compact -->
   <section id="about" class="py-24 bg-bg-muted border-b border-border-base">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-bg-base rounded-2xl border border-border-base shadow-xl shadow-corporate-900/5 p-8 sm:p-12 flex flex-col md:flex-row gap-10 items-center">
-        <div class="w-48 h-48 shrink-0 rounded-full overflow-hidden border-4 border-bg-muted">
-          <img src="/founder.jpg" alt="Juan Nicolás Urrutia Salcedo" class="w-full h-full object-cover" />
-        </div>
-        <div class="text-center md:text-left">
-          <h2 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-2">Fundador</h2>
-          <h3 class="text-3xl font-bold text-text-base mb-2">Juan Nicolás Urrutia</h3>
-          <p class="text-lg font-medium text-corporate-900 mb-4 dark:text-text-muted">Desarrollador Principal</p>
-          <p class="text-text-muted leading-relaxed text-lg">
-            Colombiano, desarrollador de software y creador de Opita Code. Construyo tecnología práctica para negocios reales, hago streams en vivo sobre desarrollo y comparto lo que aprendo en el camino.
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <!-- Org statement -->
+        <div>
+          <h2 class="text-sm font-mono text-accent-primary-soft uppercase tracking-widest mb-3">&lt;about&gt;</h2>
+          <h3 class="text-2xl sm:text-3xl font-display font-black text-text-base mb-4">Software práctico para negocios reales.</h3>
+          <p class="text-text-muted leading-relaxed mb-6">
+            Opita Code es una organización de software fundada en Neiva, Huila, Colombia. Construimos infraestructura de governance para agentes de IA y productos verticales que la demuestran — con identidad local y ambición global.
           </p>
+          <div class="flex flex-wrap gap-3">
+            <span class="inline-flex items-center gap-2 font-mono text-xs bg-bg-surface border border-border-base rounded-md px-3 py-1.5 text-text-muted">
+              <svg class="w-4 h-4 text-accent-secondary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              Neiva, Huila 🇨🇴
+            </span>
+            <span class="inline-flex items-center gap-2 font-mono text-xs bg-bg-surface border border-border-base rounded-md px-3 py-1.5 text-text-muted">
+              <svg class="w-4 h-4 text-accent-primary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              open-source-first
+            </span>
+          </div>
+        </div>
+
+        <!-- Founder — 3 lines max -->
+        <div class="glass rounded-2xl p-6 sm:p-8">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 shrink-0 rounded-xl overflow-hidden border border-border-base">
+              <img src="/founder.jpg" alt="Juan Nicolás Urrutia Salcedo" class="w-full h-full object-cover" />
+            </div>
+            <div>
+              <p class="font-display font-bold text-text-base">Juan Nicolás Urrutia</p>
+              <p class="text-sm text-text-muted">Fundador & Desarrollador Principal</p>
+            </div>
+          </div>
+          <p class="text-sm text-text-muted leading-relaxed mb-4">
+            Construyo sistemas que se auditan a sí mismos. En vivo, en público y desde el sur global.
+          </p>
+          <a href="https://www.linkedin.com/in/nicourrutia98/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 font-mono text-xs text-accent-primary-soft hover:text-text-base transition-colors">
+            linkedin <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
     </div>
