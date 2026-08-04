@@ -488,16 +488,85 @@ const releases = await getReleases(3);
   </section>
 
   <!-- Contact Section -->
-  <section id="contact" class="py-24 bg-bg-base relative">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="mb-12">
-        <h2 class="text-3xl font-bold mb-4 text-text-base">Trabajemos juntos</h2>
-        <p class="text-text-muted text-lg">Déjanos un mensaje sobre el problema que quieres resolver. Responderemos en menos de 24 horas.</p>
+  <section id="contact" class="py-24 bg-bg-base relative overflow-hidden">
+    <div class="absolute inset-0 dot-grid opacity-20 [mask-image:radial-gradient(ellipse_50%_40%_at_50%_100%,#000_60%,transparent_100%)] pointer-events-none"></div>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <!-- Left: pitch + contact info -->
+        <div>
+          <h2 class="text-sm font-mono text-accent-primary-soft uppercase tracking-widest mb-3">&lt;contact&gt;</h2>
+          <h3 class="text-3xl sm:text-4xl font-display font-black text-text-base mb-4">Trabajemos juntos</h3>
+          <p class="text-text-muted text-lg leading-relaxed mb-8">
+            ¿Un agente que necesite governance? ¿Un producto que demuestre el kernel? Contanos el problema — respondemos en menos de 24 horas.
+          </p>
+
+          <div class="space-y-4 mb-10">
+            <a href="mailto:owner@opitacode.com" class="flex items-center gap-3 text-text-muted hover:text-text-base transition-colors group">
+              <span class="w-10 h-10 rounded-lg glass flex items-center justify-center group-hover:border-accent-primary/40 transition-colors">
+                <svg class="w-5 h-5 text-accent-primary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              </span>
+              <span class="font-mono text-sm">owner@opitacode.com</span>
+            </a>
+            <a href="https://wa.me/573126126085" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-text-muted hover:text-text-base transition-colors group">
+              <span class="w-10 h-10 rounded-lg glass flex items-center justify-center group-hover:border-accent-primary/40 transition-colors">
+                <svg class="w-5 h-5 text-accent-secondary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              </span>
+              <span class="font-mono text-sm">WhatsApp · +57 312 612 6085</span>
+            </a>
+            <div class="flex items-center gap-3 text-text-muted">
+              <span class="w-10 h-10 rounded-lg glass flex items-center justify-center">
+                <svg class="w-5 h-5 text-status-online" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              </span>
+              <span class="font-mono text-sm">Neiva, Huila, Colombia</span>
+            </div>
+          </div>
+
+          <!-- Social proof badges -->
+          <div class="flex flex-wrap gap-3">
+            <a href="https://github.com/Opita-Code" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-mono text-xs bg-bg-surface border border-border-base rounded-md px-3 py-1.5 text-text-muted hover:border-accent-primary/40 transition-colors">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              GitHub org
+            </a>
+            <a href="https://www.npmjs.com/package/@opitacode/ocais" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-mono text-xs bg-bg-surface border border-border-base rounded-md px-3 py-1.5 text-text-muted hover:border-accent-primary/40 transition-colors">
+              <svg class="w-4 h-4 text-yellow-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+              @opitacode/ocais en npm
+            </a>
+            <span class="inline-flex items-center gap-2 font-mono text-xs bg-accent-primary-dim border border-accent-primary/30 rounded-md px-3 py-1.5 text-accent-primary-soft">
+              built with vibe-flow
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <div class="glass rounded-2xl p-6 sm:p-8 neon-border">
+          <ContactForm client:load lang="es" />
+        </div>
       </div>
-      
-      <div class="bg-bg-muted p-8 rounded-2xl border border-border-base shadow-xl shadow-corporate-900/5">
-        <ContactForm client:load lang="es" />
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="relative overflow-hidden py-24 border-t border-border-base">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.18),transparent_65%)] pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border-base)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border-base)_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20 pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <h2 class="text-3xl sm:text-5xl font-display font-black text-text-base mb-4">
+        Construí con <span class="glow-text text-accent-primary-soft">governance</span>.
+      </h2>
+      <p class="text-lg text-text-muted max-w-2xl mx-auto mb-10 leading-relaxed">
+        Integrá dark-memory en tu stack de agentes, o colaborá con el kernel open-source. Sin humo, con juez y con rastro.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+        <a href="https://github.com/Opita-Code/dark-memory-mcp" target="_blank" rel="noopener noreferrer" class="px-8 py-3.5 rounded-md bg-accent-primary text-white font-mono font-bold transition-all hover:bg-accent-primary-hover hover:scale-105 active:scale-95 shadow-[0_0_25px_rgba(139,92,246,0.4)] w-full sm:w-auto text-center">
+          STAR_EN_GITHUB();
+        </a>
+        <a href="https://cal.com" target="_blank" rel="noopener noreferrer" class="px-8 py-3.5 rounded-md bg-zinc-800/80 border border-zinc-700 text-text-base font-mono transition-all hover:border-accent-primary/50 hover:shadow-[0_0_15px_rgba(139,92,246,0.3)] w-full sm:w-auto text-center">
+          AGENDAR_DEMO();
+        </a>
       </div>
+      <p class="mt-8 font-mono text-xs text-text-faint">
+        dark-memory-mcp v2.11.0 · 49 tools · open-source · MIT
+      </p>
     </div>
   </section>
 </Layout>
