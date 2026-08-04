@@ -146,149 +146,104 @@ import { ContactForm } from '../../components/ContactForm';
     </div>
   </section>
 
-  <!-- Ecosystem Grid -->
-  <section id="ecosystem" class="py-24 bg-bg-muted border-b border-border-base">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Ecosystem Grid — Kernel + Vertical products -->
+  <section id="ecosystem" class="py-24 bg-bg-surface/30 border-b border-border-base relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.06),transparent_60%)] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center mb-16">
-        <h2 class="text-sm font-mono text-corporate-700 uppercase tracking-widest mb-3">Ecosistema</h2>
-        <h3 class="text-3xl font-bold text-corporate-900">Productos Destacados</h3>
-        <p class="mt-4 text-corporate-700 max-w-2xl mx-auto">Nuestra infraestructura central y plataformas públicas diseñadas con los mismos estándares de calidad que aplicamos a nuestros clientes.</p>
+        <h2 class="text-sm font-mono text-accent-primary-soft uppercase tracking-widest mb-3">&lt;ecosystem&gt;</h2>
+        <h3 class="text-3xl sm:text-4xl font-display font-black text-text-base">Un kernel, muchos productos.</h3>
+        <p class="mt-4 text-text-muted max-w-2xl mx-auto text-lg">Todo lo que construimos consume el mismo sistema nervioso: governance, memoria y vibe-flow.</p>
       </div>
-      
-      <!-- Developer Tools & Core -->
-      <div class="mb-16">
-        <div class="flex items-center gap-4 mb-8">
-          <div class="h-px bg-border-base flex-1"></div>
-          <h4 class="text-sm font-mono text-corporate-600 uppercase tracking-widest px-4">Infraestructura & DevTools</h4>
-          <div class="h-px bg-border-base flex-1"></div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Vibe Studio Premium Card -->
-          <a href="https://vibe.opitacode.com" target="_blank" rel="noopener noreferrer" class="group relative overflow-hidden bg-[#09090b] p-8 rounded-xl border border-white/10 dark:border-white/20 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-purple-500/20 dark:shadow-2xl dark:shadow-black/50">
-            
-            <!-- Animated gradient background -->
-            <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
-            <!-- Spinning glowing border effect on hover -->
-            <div class="absolute inset-[-100%] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,rgba(168,85,247,0.3)_50%,transparent_100%)] animate-spin opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-            <div class="absolute inset-[1px] bg-[#09090b] rounded-xl z-0 transition-colors duration-500 group-hover:bg-[#09090b]/90"></div>
 
-            <!-- Ambient blur spot in the corner -->
-            <div class="absolute -top-12 -right-12 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl group-hover:bg-purple-500/30 transition-colors duration-700 z-0 pointer-events-none"></div>
-            
-            <!-- Card Content -->
-            <div class="relative z-10 flex flex-col h-full">
-              <div class="w-14 h-14 rounded-xl mb-6 overflow-hidden bg-black/50 border border-white/10 shadow-[0_8px_32px_rgba(168,85,247,0.15)] group-hover:shadow-[0_8px_32px_rgba(168,85,247,0.3)] group-hover:border-purple-500/40 transition-all duration-500 transform group-hover:scale-110 group-hover:-rotate-3">
-                <img src="/vibe-logo.svg" alt="Opita Vibe Studio" class="w-full h-full object-cover scale-105" />
-              </div>
-              
-              <div class="flex items-center gap-3 mb-2">
-                <h4 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 group-hover:to-white transition-colors duration-300">Opita Vibe Studio</h4>
-                <span class="text-[9px] font-bold tracking-widest bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 px-2.5 py-1 rounded-full border border-purple-500/30 backdrop-blur-md">FLAGSHIP</span>
-              </div>
-              
-              <p class="text-purple-400 font-mono text-[11px] uppercase tracking-[0.2em] mb-4 opacity-80 group-hover:opacity-100 transition-opacity">El código fluye.</p>
-              
-              <p class="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors duration-300 mt-auto">
-                Entorno de desarrollo Vibe-coding en español para crear aplicaciones de producción asistidas por IA gobernada.
-              </p>
-            </div>
-          </a>
-
-          <!-- Opita OS Premium Card -->
-          <a href="#" class="group relative overflow-hidden bg-[#020617] p-8 rounded-xl border border-slate-800 dark:border-slate-700 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/20 dark:shadow-2xl dark:shadow-black/50">
-            
-            <!-- Subtle cyan radial glow -->
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.1),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-            
-            <!-- Spinning cyan-grey glowing border -->
-            <div class="absolute inset-[-100%] bg-[conic-gradient(from_180deg_at_50%_50%,transparent_0%,rgba(6,182,212,0.4)_50%,transparent_100%)] animate-spin [animation-play-state:paused] group-hover:[animation-play-state:running] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"></div>
-            <div class="absolute inset-[1px] bg-[#020617] rounded-xl z-0 transition-colors duration-500 group-hover:bg-[#020617]/90"></div>
-
-            <!-- Ambient blur spot in opposite corner -->
-            <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-slate-600/20 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-colors duration-700 z-0 pointer-events-none"></div>
-            
-            <!-- Card Content -->
-            <div class="relative z-10 flex flex-col h-full">
-              <div class="w-14 h-14 rounded-xl mb-6 flex items-center justify-center bg-slate-900/80 border border-slate-700/50 shadow-[0_8px_32px_rgba(6,182,212,0.1)] group-hover:shadow-[0_8px_32px_rgba(6,182,212,0.25)] group-hover:border-cyan-500/40 transition-all duration-500 transform group-hover:scale-110">
-                <!-- Brand glyph: `>_` terminal prompt (typographic, no graphical logo) -->
-                <span class="brand-prompt text-xl text-cyan-300"><span class="prompt-caret">&gt;_</span></span>
-              </div>
-              
-              <div class="flex items-center gap-3 mb-2">
-                <h4 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-500 group-hover:to-slate-300 transition-colors duration-300">Opita OS</h4>
-                <span class="text-[9px] font-bold tracking-widest bg-gradient-to-r from-cyan-500/20 to-slate-500/20 text-cyan-300 px-2.5 py-1 rounded-full border border-cyan-500/30 backdrop-blur-md">CORE</span>
-              </div>
-              
-              <p class="text-cyan-400 font-mono text-[11px] uppercase tracking-[0.2em] mb-4 opacity-80 group-hover:opacity-100 transition-opacity">La base de todo.</p>
-              
-              <p class="text-slate-400 text-sm leading-relaxed group-hover:text-slate-300 transition-colors duration-300 mt-auto">
-                El sistema operativo interno de la organización. Centraliza la fuente de la verdad (OpenSpec), el motor de marca, SSO y facturación del ecosistema.
-              </p>
-            </div>
-          </a>
-
-          <!-- Opita Studio (Hermano Mayor) -->
-          <div class="group relative overflow-hidden bg-[#0a0a0a] p-8 rounded-xl border border-neutral-800 dark:border-neutral-700 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/10 dark:shadow-2xl dark:shadow-black/50">
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.15),transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-            
-            <!-- Moving gold border -->
-            <div class="absolute inset-[-100%] bg-[conic-gradient(from_45deg_at_50%_50%,transparent_0%,rgba(245,158,11,0.3)_50%,transparent_100%)] animate-spin [animation-play-state:paused] group-hover:[animation-play-state:running] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" style="animation-duration: 8s;"></div>
-            <div class="absolute inset-[1px] bg-[#0a0a0a] rounded-xl z-0 transition-colors duration-500 group-hover:bg-[#0a0a0a]/95"></div>
-            
-            <div class="relative z-10 flex flex-col h-full">
-              <div class="w-14 h-14 rounded-xl mb-6 flex items-center justify-center bg-neutral-900/80 border border-neutral-700/50 shadow-[0_8px_32px_rgba(245,158,11,0.1)] group-hover:shadow-[0_8px_32px_rgba(245,158,11,0.25)] group-hover:border-amber-500/40 transition-all duration-500 transform group-hover:scale-110">
-                <span class="text-2xl font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-br from-amber-400 to-amber-600">S</span>
-              </div>
-              
-              <div class="flex items-center gap-3 mb-2">
-                <h4 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 to-neutral-500 group-hover:to-neutral-100 transition-colors duration-300">Opita Studio</h4>
-                <span class="text-[9px] font-bold tracking-widest bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 px-2.5 py-1 rounded-full border border-amber-500/30 backdrop-blur-md">ENTERPRISE</span>
-              </div>
-              
-              <p class="text-amber-500/80 font-mono text-[11px] uppercase tracking-[0.2em] mb-4 opacity-80 group-hover:opacity-100 transition-opacity">El hermano mayor.</p>
-              
-              <p class="text-neutral-400 text-sm leading-relaxed group-hover:text-neutral-300 transition-colors duration-300 mt-auto">
-                Orquestador enterprise para equipos de desarrollo. Integra flujos de IA gobernada y automatizaciones CI/CD en la nube.
-              </p>
-            </div>
+      <!-- Kernel row (4 cards) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <!-- dark-memory-mcp -->
+        <a href="https://github.com/Opita-Code/dark-memory-mcp" target="_blank" rel="noopener noreferrer" class="group glass neon-border rounded-xl p-6 flex flex-col hover:-translate-y-1 transition-all duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <span class="brand-prompt text-2xl"><span class="prompt-caret">&gt;_</span></span>
+            <span class="text-[9px] font-bold tracking-widest bg-accent-primary-dim text-accent-primary-soft px-2.5 py-1 rounded-full border border-accent-primary/30">KERNEL</span>
           </div>
+          <h4 class="font-display font-bold text-text-base mb-1">dark-memory-mcp</h4>
+          <p class="text-accent-primary-soft font-mono text-[11px] uppercase tracking-[0.2em] mb-3">v2.11.0 · 49 tools</p>
+          <p class="text-text-muted text-sm leading-relaxed mt-auto">Governance + memory + research como un set unificado de herramientas MCP. Cada artefacto se audita antes de publicarse.</p>
+        </a>
+
+        <!-- dark-research-mcp -->
+        <a href="https://github.com/Opita-Code/dark-research-mcp" target="_blank" rel="noopener noreferrer" class="group glass rounded-xl p-6 flex flex-col hover:-translate-y-1 transition-all duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <svg class="w-7 h-7 text-accent-secondary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <span class="text-[9px] font-bold tracking-widest bg-cyan-500/10 text-accent-secondary-soft px-2.5 py-1 rounded-full border border-cyan-500/30">KERNEL</span>
+          </div>
+          <h4 class="font-display font-bold text-text-base mb-1">dark-research-mcp</h4>
+          <p class="text-accent-secondary-soft font-mono text-[11px] uppercase tracking-[0.2em] mb-3">13 backends OSINT</p>
+          <p class="text-text-muted text-sm leading-relaxed mt-auto">CVE, dominios, IPs, papers, noticias, dark web. Investigación primaria con fuentes verificables.</p>
+        </a>
+
+        <!-- ocais -->
+        <a href="https://github.com/Opita-Code/ocais" target="_blank" rel="noopener noreferrer" class="group glass rounded-xl p-6 flex flex-col hover:-translate-y-1 transition-all duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <svg class="w-7 h-7 text-yellow-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <span class="text-[9px] font-bold tracking-widest bg-yellow-500/10 text-yellow-200 px-2.5 py-1 rounded-full border border-yellow-500/30">SDK</span>
+          </div>
+          <h4 class="font-display font-bold text-text-base mb-1">ocais</h4>
+          <p class="text-yellow-200 font-mono text-[11px] uppercase tracking-[0.2em] mb-3">npm v3.0.1</p>
+          <p class="text-text-muted text-sm leading-relaxed mt-auto">SDK de streaming IA para AWS Lambda. Zero deps, TypeScript-first. El puente entre LLMs y serverless.</p>
+        </a>
+
+        <!-- opita-os (private) -->
+        <div class="glass rounded-xl p-6 flex flex-col opacity-80">
+          <div class="flex items-center justify-between mb-4">
+            <svg class="w-7 h-7 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            <span class="text-[9px] font-bold tracking-widest bg-zinc-500/10 text-text-muted px-2.5 py-1 rounded-full border border-zinc-500/30">CORE · PRIVADO</span>
+          </div>
+          <h4 class="font-display font-bold text-text-base mb-1">opita-os</h4>
+          <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-3">SSOT · vault · SSO</p>
+          <p class="text-text-muted text-sm leading-relaxed mt-auto">El runtime privado: OpenSpec, Brand Engine, vault cifrado y SSO que sostienen a todo el ecosistema.</p>
         </div>
       </div>
 
-      <!-- Business & Marketplaces -->
-      <div>
-        <div class="flex items-center gap-4 mb-8">
-          <div class="h-px bg-border-base flex-1"></div>
-          <h4 class="text-sm font-mono text-corporate-600 uppercase tracking-widest px-4">Marketplaces & Soluciones B2B</h4>
-          <div class="h-px bg-border-base flex-1"></div>
-        </div>
+      <!-- Vertical products row (4 cards) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Vibe Studio -->
+        <a href="https://vibe.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-xl p-6 flex flex-col hover:-translate-y-1 transition-all duration-300 border-t-2 border-t-accent-primary/50">
+          <div class="w-11 h-11 rounded-lg mb-4 overflow-hidden bg-bg-muted border border-border-base flex items-center justify-center">
+            <img src="/vibe-logo.svg" alt="Vibe Studio" class="w-7 h-7 object-contain" />
+          </div>
+          <h4 class="font-display font-bold text-text-base mb-1">Vibe Studio</h4>
+          <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-3">vibe.opitacode.com</p>
+          <p class="text-text-muted text-sm leading-relaxed mt-auto">IDE de vibe-coding en español. Cada generación gobernada por el kernel.</p>
+        </a>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Opita Barber -->
-          <a href="#" class="group relative overflow-hidden bg-bg-base dark:bg-bg-muted/50 p-8 rounded-xl border border-border-base dark:border-white/10 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:border-corporate-300 dark:hover:border-corporate-700 dark:shadow-xl dark:shadow-black/40">
-            
-            <div class="absolute inset-0 bg-gradient-to-br from-corporate-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 dark:from-corporate-900/20"></div>
-            
-            <div class="relative z-10 flex flex-col h-full">
-              <div class="w-14 h-14 rounded-xl mb-6 flex items-center justify-center bg-bg-muted border border-border-base transition-all duration-500 transform group-hover:scale-110 group-hover:bg-corporate-50 dark:group-hover:bg-corporate-900/50">
-                <svg class="w-6 h-6 text-text-muted group-hover:text-corporate-600 dark:group-hover:text-corporate-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"></path></svg>
-              </div>
-              
-              <div class="flex items-center gap-3 mb-2">
-                <h4 class="text-2xl font-bold text-text-base group-hover:text-corporate-900 transition-colors duration-300 dark:group-hover:text-white">Opita Barber</h4>
-                <span class="text-[9px] font-bold tracking-widest bg-corporate-100 text-corporate-800 px-2.5 py-1 rounded-full dark:bg-corporate-900/50 dark:text-corporate-200 border border-corporate-200 dark:border-corporate-800">MARKETPLACE</span>
-              </div>
-              
-              <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-4">Conectando Estilos.</p>
-              
-              <p class="text-text-muted text-sm leading-relaxed mt-auto">
-                Marketplace inteligente para barberías. Descubre profesionales, reserva turnos y permite a las barberías gestionar todo su negocio desde una sola app.
-              </p>
-            </div>
-          </a>
-        </div>
+        <!-- Opita Market -->
+        <a href="https://market.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-xl p-6 flex flex-col hover:-translate-y-1 transition-all duration-300 border-t-2 border-t-accent-secondary/50">
+          <div class="w-11 h-11 rounded-lg mb-4 bg-bg-muted border border-border-base flex items-center justify-center">
+            <svg class="w-6 h-6 text-accent-secondary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          </div>
+          <h4 class="font-display font-bold text-text-base mb-1">Opita Market</h4>
+          <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-3">market.opitacode.com</p>
+          <p class="text-text-muted text-sm leading-relaxed mt-auto">Marketplace B2B+B2C colombiano con compliance Ley 1581 desde el día uno.</p>
+        </a>
+
+        <!-- Sociedad Opita -->
+        <a href="https://sociedad.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-xl p-6 flex flex-col hover:-translate-y-1 transition-all duration-300 border-t-2 border-t-emerald-500/50">
+          <div class="w-11 h-11 rounded-lg mb-4 bg-bg-muted border border-border-base flex items-center justify-center">
+            <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          </div>
+          <h4 class="font-display font-bold text-text-base mb-1">Sociedad Opita</h4>
+          <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-3">sociedad.opitacode.com</p>
+          <p class="text-text-muted text-sm leading-relaxed mt-auto">Monumento digital vivo del opita. Dialecto, memoria y 41 perfiles psicométricos.</p>
+        </a>
+
+        <!-- Developer Web -->
+        <a href="https://developer.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-xl p-6 flex flex-col hover:-translate-y-1 transition-all duration-300 border-t-2 border-t-violet-400/50">
+          <div class="w-11 h-11 rounded-lg mb-4 bg-bg-muted border border-border-base flex items-center justify-center">
+            <span class="brand-prompt text-lg"><span class="prompt-caret">&gt;_</span></span>
+          </div>
+          <h4 class="font-display font-bold text-text-base mb-1">Developer</h4>
+          <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-3">developer.opitacode.com</p>
+          <p class="text-text-muted text-sm leading-relaxed mt-auto">Identidad del Opita Developer. Terminal interactiva y arquitectura en vivo.</p>
+        </a>
       </div>
     </div>
   </section>
