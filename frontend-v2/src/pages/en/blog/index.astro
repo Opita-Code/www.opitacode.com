@@ -1,0 +1,61 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getReleases, formatDate, relativeDate, excerpt } from '../../../lib/releases';
+
+const releases = await getReleases(10);
+---
+
+<Layout
+  title="Changelog | Opita Code"
+  description="Releases and changes from Opita Code open-source products: dark-memory-mcp, dark-research-mcp and ocais."
+  lang="en"
+>
+  <!-- Blog / Changelog -->
+  <section class="py-20 sm:py-24 bg-bg-base relative overflow-hidden">
+    <div class="absolute inset-0 dot-grid opacity-30 [mask-image:radial-gradient(ellipse_50%_30%_at_50%_0%,#000_60%,transparent_100%)] pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="mb-14">
+        <h2 class="text-sm font-mono text-accent-primary-soft uppercase tracking-widest mb-3">&lt;changelog&gt;</h2>
+        <h1 class="text-4xl sm:text-5xl font-display font-black text-text-base mb-4">Releases</h1>
+        <p class="text-text-muted text-lg leading-relaxed">
+          Everything we ship, with its trace. <span class="font-mono text-accent-primary-soft">dark-memory-mcp</span> releases sync directly from GitHub.
+        </p>
+        <div class="flex items-center gap-3 mt-6 font-mono text-xs text-text-faint">
+          <span class="flex h-2 w-2 rounded-full bg-status-online animate-pulse"></span>
+          source: github.com/Opita-Code · public API
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        {releases.map((r) => (
+          <article class="glass rounded-xl p-6 sm:p-8 hover:border-accent-primary/40 transition-colors">
+            <div class="flex flex-wrap items-center gap-3 mb-3">
+              <h2 class="font-display font-bold text-xl text-text-base">
+                <a href={r.html_url} target="_blank" rel="noopener noreferrer" class="hover:text-accent-primary-soft transition-colors font-mono">
+                  {r.tag_name}
+                </a>
+              </h2>
+              <span class="text-xs font-mono text-text-faint bg-bg-muted border border-border-base px-2 py-0.5 rounded">
+                {formatDate(r.published_at, "en")} · {relativeDate(r.published_at, "en")}
+              </span>
+            </div>
+            <p class="text-text-muted text-sm leading-relaxed">
+              {excerpt(r.body) || "Release without notes."}
+            </p>
+            <a href={r.html_url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-4 font-mono text-xs text-accent-primary-soft hover:text-text-base transition-colors">
+              view release on GitHub <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <!-- RSS -->
+      <div class="mt-12 text-center">
+        <a href="/feed.xml" class="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-text-base transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.18 15.64a2.18 2.18 0 01-.89 3.82 2.18 2.18 0 01-.89-3.82 2.18 2.18 0 011.78 0zM2 4.27v3.53c10.44 0 18.2 7.76 18.2 18.2h3.53C23.73 11.7 12.3.27 2 4.27zm0 7.06v3.53c6.02 0 10.96 4.94 10.96 10.96h3.53C16.49 14.62 9.38 7.51 2 11.33z"/></svg>
+          Subscribe to the RSS feed
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
