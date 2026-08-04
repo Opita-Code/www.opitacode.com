@@ -95,6 +95,87 @@ jobs:
             echo "::warning::HTTPS via grey-cloud CNAME requires an ACM cert with www.opitacode.com in its SAN."
           fi
 
+      # ── ACM + CloudFront fix (idempotent, one-time) ──
+
+      - name: Verify ACM cert covers www.opitacode.com
+        id: acm
+        if: steps.cf.outputs.acm-arn != ''
+        run: |
+          set -euo pipefail
+          ACM_ARN="${{ steps.cf.outputs.acm-arn }}"
+          echo "acm-arn=$ACM_ARN" >> "$GITHUB_OUTPUT"
+
+          ACM_PRIMARY=$(aws acm describe-certificate \
+            --certificate-arn "$ACM_ARN" \
+            --query "Certificate.DomainName" --output text)
+          ACM_SANS=$(aws acm describe-certificate \
+            --certificate-arn "$ACM_ARN" \
+            --query "Certificate.SubjectAlternativeNames[]" --output text 2>/dev/null || echo "")
+          ACM_ALL="$ACM_PRIMARY $ACM_SANS"
+
+          echo "ACM primary domain: $ACM_PRIMARY"
+          echo "ACM SANs: $ACM_SANS"
+          echo "acm-sans=$ACM_SANS" >> "$GITHUB_OUTPUT"
+
+          WWW_COVERED=false
+          for d in $ACM_ALL; do
+            if [ "$d" = "www.opitacode.com" ] || [ "$d" = "*.opitacode.com" ]; then
+              echo "✅ ACM cert covers www.opitacode.com (via $d)"
+              WWW_COVERED=true
+              break
+            fi
+          done
+          echo "www-covered=$WWW_COVERED" >> "$GITHUB_OUTPUT"
+
+          if [ "$WWW_COVERED" = "false" ]; then
+            echo "::error::ACM cert does NOT cover www.opitacode.com."
+            echo "::error::CNAME won't work until you re-issue the cert with www.opitacode.com or *.opitacode.com in the SAN list."
+            echo "::error::Request a new cert: aws acm request-certificate --domain-name opitacode.com --subject-alternative-names www.opitacode.com --validation-method DNS"
+            echo "::error::Then add the validation CNAME to Cloudflare, wait for issuance, and re-run this workflow."
+          fi
+
+      - name: Add www.opitacode.com to CloudFront Alternate Domain Names
+        id: fix-cf
+        if: steps.acm.outputs.www-covered == 'true'
+        run: |
+          set -euo pipefail
+          DIST_ID="${{ steps.cf.outputs.distribution-id }}"
+          CF_DOMAIN="${{ steps.cf.outputs.cf-domain }}"
+
+          echo "ACM cert covers www — updating CloudFront Aliases..."
+
+          # Get current config + ETag
+          aws cloudfront get-distribution-config --id "$DIST_ID" > /tmp/cf-orig.json
+          ETAG=$(jq -r '.ETag' /tmp/cf-orig.json)
+          echo "CF ETag: $ETAG"
+
+          # Check if www is already in the list
+          HAS_WWW=$(jq -r '.DistributionConfig.Aliases.Items | contains(["www.opitacode.com"])' /tmp/cf-orig.json)
+          if [ "$HAS_WWW" = "true" ]; then
+            echo "✅ www.opitacode.com is already in CloudFront Aliases — no change needed."
+            exit 0
+          fi
+
+          # Shallow-merge: add www to existing aliases + ensure Quantity matches
+          jq '.DistributionConfig' /tmp/cf-orig.json > /tmp/cf-dist-config.json
+          jq --arg d www.opitacode.com \
+            '.Aliases.Items = ([.Aliases.Items[]] + [$d] | unique) | .Aliases.Quantity = (.Aliases.Items | length)' \
+            /tmp/cf-dist-config.json > /tmp/cf-updated.json
+
+          echo "Updating CloudFront distribution $DIST_ID..."
+          UPDATE=$(aws cloudfront update-distribution \
+            --id "$DIST_ID" \
+            --distribution-config "file:///tmp/cf-updated.json" \
+            --if-match "$ETAG" 2>&1)
+          echo "$UPDATE" | head -5
+
+          echo ""
+          echo "✅ CloudFront Aliases updated to include www.opitacode.com"
+          echo "   Full list: $(jq -r '.Aliases.Items | join(", ")' /tmp/cf-updated.json)"
+          echo "   The change takes ~5-15 minutes to propagate globally."
+
+          echo "cf-aliases-updated=true" >> "$GITHUB_OUTPUT"
+
       # ── Deploy ──
 
       - name: Deploy to S3
@@ -187,17 +268,47 @@ jobs:
           CF_DOMAIN="${{ steps.cf.outputs.cf-domain }}"
           ACM_ARN="${{ steps.cf.outputs.acm-arn }}"
           ALT_NAMES="${{ steps.cf.outputs.alternate-domain-names }}"
+          WWW_COVERED="${{ steps.acm.outputs.www-covered || 'unknown' }}"
+          CF_FIXED="${{ steps.fix-cf.outputs.cf-aliases-updated || 'false' }}"
 
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "  DNS SETUP (one-time, operator action required)"
+          echo "  DNS SETUP STATUS"
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo ""
-          echo "  Target CloudFront domain: $CF_DOMAIN"
-          echo "  ACM certificate:         ${ACM_ARN:-<NONE — needs provisioning>}"
-          echo "  Alternate domains:       ${ALT_NAMES:-<NONE>}"
+          echo "  CloudFront domain:        $CF_DOMAIN"
+          echo "  ACM cert:                 ${ACM_ARN:-<MISSING>}"
+          echo "  ACM covers www:           $WWW_COVERED"
+          echo "  CF Aliases updated:       $CF_FIXED"
           echo ""
-          echo "  In Cloudflare dashboard (dash.cloudflare.com → opitacode.com → DNS):"
+
+          if [ "$WWW_COVERED" = "true" ] && [ "$CF_FIXED" = "true" ]; then
+            echo "  ✅ ACM cert covers www + CloudFront Aliases updated."
+            echo "     DNS change is the last step."
+          elif [ "$WWW_COVERED" = "true" ] && [ "$CF_FIXED" = "false" ]; then
+            echo "  ✅ ACM cert covers www."
+            echo "  ⏳ CloudFront Aliases updated this run (propagating ~15 min)."
+            echo "     Wait 15 min before changing DNS."
+          elif [ "$WWW_COVERED" = "false" ]; then
+            echo "  ❌ ACM cert does NOT cover www.opitacode.com."
+            echo "     Re-issue the cert FIRST, then re-run this workflow."
+            echo ""
+            echo "     aws acm request-certificate \\"
+            echo "       --domain-name opitacode.com \\"
+            echo "       --subject-alternative-names www.opitacode.com \\"
+            echo "       --validation-method DNS \\"
+            echo "       --region us-east-1"
+            echo ""
+            echo "     Then add the validation CNAME to Cloudflare."
+          else
+            echo "  ⚠️  ACM cert check skipped (no cert ARN found)."
+            echo "     Verify in AWS Console that the cert covers www.opitacode.com."
+          fi
+
+          echo ""
+          echo "  ── Cloudflare DNS change (do this LAST, after ACM + CF are ready) ──"
+          echo ""
+          echo "  In Cloudflare (dash.cloudflare.com → opitacode.com → DNS):"
           echo ""
           echo "  1. Delete ALL existing A/AAAA records for 'www'"
           echo "     (currently: orange-cloud A → 104.21.9.207, 172.67.131.7)"
@@ -208,11 +319,7 @@ jobs:
           echo "     Target: $CF_DOMAIN"
           echo "     Proxy:  OFF (grey cloud / DNS only)"
           echo ""
-          echo "  3. Wait ~1 min for DNS propagation, then verify:"
+          echo "  3. Wait ~1 min, then verify:"
           echo "     curl -sL https://www.opitacode.com/es/ | grep 'audita'"
-          echo ""
-          echo "  If ACM cert is missing: create one in ACM (us-east-1) for"
-          echo "  www.opitacode.com, add the validation CNAME to Cloudflare,"
-          echo "  and attach it to CloudFront distribution EO2EU8EVU2RVR."
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
