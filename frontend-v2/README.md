@@ -22,7 +22,7 @@ Ver `package.json` y `astro.config.mjs` para detalle.
 frontend-v2/
 ├── astro.config.mjs                  Astro + React + Tailwind (Vite plugin)
 ├── playwright.config.ts              config Playwright
-├── public/                           logos, favicons, founder, og-image
+├── public/                           founder, og-image, vibe-logo (sin logos gráficos — marca tipográfica `>_`)
 ├── src/
 │   ├── layouts/Layout.astro         layout base con i18n + SEO + OG
 │   ├── pages/
