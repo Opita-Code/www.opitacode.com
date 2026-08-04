@@ -247,6 +247,98 @@ import { ContactForm } from '../../components/ContactForm';
       </div>
     </div>
   </section>
+  <!-- The Kernel — governance-as-code deep-dive -->
+  <section id="kernel" class="py-24 bg-bg-base border-b border-border-base relative overflow-hidden">
+    <div class="absolute inset-0 dot-grid opacity-30 [mask-image:radial-gradient(ellipse_50%_40%_at_50%_0%,#000_60%,transparent_100%)] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center mb-16">
+        <h2 class="text-sm font-mono text-accent-primary-soft uppercase tracking-widest mb-3">&lt;kernel&gt;</h2>
+        <h3 class="text-3xl sm:text-4xl font-display font-black text-text-base">A nervous system for agents.</h3>
+        <p class="mt-4 text-text-muted max-w-2xl mx-auto text-lg">dark-memory-mcp is not another library: it is the backbone of how we write code. Governance-as-code, not governance-as-policy.</p>
+      </div>
+
+      <!-- 3 visual steps: spec → judge → publish -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
+        <!-- Step 1: Spec -->
+        <div class="glass rounded-xl p-6 relative overflow-hidden group">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-accent-primary-dim border border-accent-primary/30 flex items-center justify-center">
+              <svg class="w-5 h-5 text-accent-primary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <span class="font-mono text-xs text-text-faint">01</span>
+          </div>
+          <h4 class="font-display font-bold text-text-base mb-2">You write the spec</h4>
+          <p class="text-text-muted text-sm leading-relaxed">Before a single line of code, the intent is documented in OpenSpec with tasks, dependencies, and acceptance criteria.</p>
+          <div class="mt-4 font-mono text-xs bg-[#0d0d12] border border-border-base rounded-lg p-3 overflow-x-auto">
+            <span class="text-accent-primary-soft">dark_memory</span>.<span class="text-yellow-200">vibe_spec</span>(&#123; vibe_case: <span class="text-status-online">'C1'</span>, tasks: <span class="text-text-faint">[...]</span> &#125;)
+          </div>
+        </div>
+
+        <!-- Step 2: Judge -->
+        <div class="glass neon-border rounded-xl p-6 relative overflow-hidden group">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-accent-primary-dim border border-accent-primary/30 flex items-center justify-center">
+              <svg class="w-5 h-5 text-accent-primary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0L6 7m3-1L6 7m0 0L3 6m6-1L6 7m0 0L3 6m9 1h6m-6 4h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <span class="font-mono text-xs text-text-faint">02</span>
+          </div>
+          <h4 class="font-display font-bold text-text-base mb-2">A judge audits the artifact</h4>
+          <p class="text-text-muted text-sm leading-relaxed">LLM-as-judge, not LLM-as-author. Every artifact is compared against its spec and gets a verdict: aligned, drift_detected, or needs_human.</p>
+          <div class="mt-4 font-mono text-xs bg-[#0d0d12] border border-border-base rounded-lg p-3 overflow-x-auto">
+            <span class="text-text-faint">// verdict persisted to judgment_history</span><br/>
+            <span class="text-accent-secondary-soft">verdict</span>: <span class="text-status-online">'aligned'</span> · conf <span class="text-yellow-200">0.98</span>
+          </div>
+        </div>
+
+        <!-- Step 3: Publish -->
+        <div class="glass rounded-xl p-6 relative overflow-hidden group">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-status-online/10 border border-status-online/30 flex items-center justify-center">
+              <svg class="w-5 h-5 text-status-online" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <span class="font-mono text-xs text-text-faint">03</span>
+          </div>
+          <h4 class="font-display font-bold text-text-base mb-2">You publish with transparency</h4>
+          <p class="text-text-muted text-sm leading-relaxed">The whole cycle lands in write_audit: who wrote, which spec, which judge, which verdict. Nothing ships without a trace.</p>
+          <div class="mt-4 font-mono text-xs bg-[#0d0d12] border border-border-base rounded-lg p-3 overflow-x-auto">
+            <span class="text-status-online">✓ drift: aligned</span> · <span class="text-text-faint">write_audit #5572</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live metrics strip -->
+      <div class="glass rounded-2xl p-6 sm:p-8">
+        <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+          <div class="text-center">
+            <p class="font-mono text-3xl font-bold text-text-base">49</p>
+            <p class="text-xs font-mono text-text-faint uppercase tracking-widest mt-1">canonical tools</p>
+          </div>
+          <div class="w-px h-10 bg-border-base hidden sm:block"></div>
+          <div class="text-center">
+            <p class="font-mono text-3xl font-bold text-text-base">v2.11.0</p>
+            <p class="text-xs font-mono text-text-faint uppercase tracking-widest mt-1">current release</p>
+          </div>
+          <div class="w-px h-10 bg-border-base hidden sm:block"></div>
+          <div class="text-center">
+            <p class="font-mono text-3xl font-bold text-text-base">schema 25</p>
+            <p class="text-xs font-mono text-text-faint uppercase tracking-widest mt-1">data version</p>
+          </div>
+          <div class="w-px h-10 bg-border-base hidden sm:block"></div>
+          <div class="text-center">
+            <p class="font-mono text-3xl font-bold text-text-base">320+</p>
+            <p class="text-xs font-mono text-text-faint uppercase tracking-widest mt-1">tests on main</p>
+          </div>
+          <div class="w-px h-10 bg-border-base hidden sm:block"></div>
+          <div class="text-center">
+            <p class="font-mono text-3xl font-bold text-text-base">13</p>
+            <p class="text-xs font-mono text-text-faint uppercase tracking-widest mt-1">OSINT backends</p>
+          </div>
+        </div>
+        <p class="text-center text-xs font-mono text-text-faint mt-6">build-time metrics · GitHub API in T11</p>
+      </div>
+    </div>
+  </section>
+
   <!-- About / Founder Section -->
   <section id="about" class="py-24 bg-bg-muted border-b border-border-base">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
