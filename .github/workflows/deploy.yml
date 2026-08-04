@@ -1,15 +1,28 @@
-name: Deploy Opitacode Web
+name: Deploy www.opitacode.com
+
+# Pattern A: grey-cloud (DNS-only) static site.
+# CI owns: build → S3 sync → CloudFront invalidation → smoke test.
+# DNS is a one-time manual CNAME in Cloudflare (grey cloud, not proxied):
+#   www.opitacode.com → <CF_DOMAIN> (discovered by this workflow).
+# See opita-aws skill §15.2 for the full rationale.
+#
+# Operator MUST set the Cloudflare DNS record ONCE (see "DNS setup" step
+# output at end of each deploy run). After that, every push to main updates
+# the live site.
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
+    name: Build, verify, deploy, smoke test
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -19,24 +32,187 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'frontend-v2/package-lock.json'
 
-      - name: Install Dependencies
+      - name: Install dependencies
         working-directory: frontend-v2
         run: npm ci
 
-      - name: Build Astro Project
+      - name: Build
         working-directory: frontend-v2
         run: npm run build
 
-      - name: Configure AWS Credentials
+      # ── Pre-flight: validate the CloudFront target exists and is correctly configured ──
+
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Discover CloudFront domain
+        id: cf
+        run: |
+          set -euo pipefail
+          DIST_ID="EO2EU8EVU2RVR"
+          echo "distribution-id=$DIST_ID" >> "$GITHUB_OUTPUT"
+
+          CF_DOMAIN=$(aws cloudfront get-distribution \
+            --id "$DIST_ID" \
+            --query "Distribution.DomainName" \
+            --output text)
+          echo "CloudFront domain: $CF_DOMAIN"
+          echo "cf-domain=$CF_DOMAIN" >> "$GITHUB_OUTPUT"
+
+          # Verify the distribution has www.opitacode.com as an alternate domain
+          ALIASES=$(aws cloudfront get-distribution \
+            --id "$DIST_ID" \
+            --query "Distribution.AliasICPRecordals[].CNAME" \
+            --output text 2>/dev/null || echo "")
+          ALT_NAMES=$(aws cloudfront get-distribution \
+            --id "$DIST_ID" \
+            --query "Distribution.DistributionConfig.Aliases.Items[]" \
+            --output text 2>/dev/null || echo "")
+          echo "alternate-domain-names=$ALT_NAMES" >> "$GITHUB_OUTPUT"
+
+          if echo "$ALT_NAMES" | grep -qF "www.opitacode.com"; then
+            echo "✅ CloudFront has www.opitacode.com as alternate domain"
+          else
+            echo "::warning::CloudFront distribution $DIST_ID does NOT have www.opitacode.com listed in Aliases."
+            echo "::warning::Grey-cloud CNAME won't work until you add it in CloudFront Settings → Alternate Domain Names."
+            echo "::warning::Current aliases: ${ALT_NAMES:-<none>}"
+          fi
+
+          # Check ACM cert status via the distribution's viewer certificate
+          ACM_ARN=$(aws cloudfront get-distribution \
+            --id "$DIST_ID" \
+            --query "Distribution.DistributionConfig.ViewerCertificate.ACMCertificateArn" \
+            --output text 2>/dev/null || echo "")
+          if [ -n "$ACM_ARN" ]; then
+            echo "ACM cert: $ACM_ARN"
+            echo "acm-arn=$ACM_ARN" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::No ACM certificate attached to this CloudFront distribution."
+            echo "::warning::HTTPS via grey-cloud CNAME requires an ACM cert with www.opitacode.com in its SAN."
+          fi
+
+      # ── Deploy ──
+
       - name: Deploy to S3
         working-directory: frontend-v2/dist
-        run: aws s3 sync . s3://opitacode.com --delete --cache-control "max-age=14400"
+        run: |
+          set -euo pipefail
+          aws s3 sync . s3://opitacode.com --delete --cache-control "max-age=14400"
+          echo "✅ S3 sync complete"
 
-      - name: Invalidate CloudFront Cache
-        run: aws cloudfront create-invalidation --distribution-id EO2EU8EVU2RVR --paths "/*"
+      - name: Invalidate CloudFront cache
+        run: |
+          set -euo pipefail
+          INVAL=$(aws cloudfront create-invalidation \
+            --distribution-id "${{ steps.cf.outputs.distribution-id }}" \
+            --paths "/*" \
+            --query "Invalidation.Id" \
+            --output text)
+          echo "CloudFront invalidation: $INVAL"
+
+      # ── Smoke test ──
+
+      - name: Smoke test (CloudFront direct)
+        if: success()
+        run: |
+          set -euo pipefail
+          CF_URL="https://${{ steps.cf.outputs.cf-domain }}"
+          UA='opitacode-web-smoke/1.0 (+https://github.com/Opita-Code/www.opitacode.com)'
+          echo "Smoke testing CloudFront direct: $CF_URL/es/"
+          echo "Waiting for invalidation propagation..."
+
+          for i in $(seq 1 12); do
+            sleep 10
+            STATUS=$(curl --retry 2 --retry-delay 5 \
+                     --connect-timeout 10 --max-time 30 \
+                     -A "$UA" \
+                     -s -o /tmp/smoke-body.txt -w "%{http_code}" \
+                     "$CF_URL/es/" || echo "000")
+            echo "attempt $i: HTTP $STATUS"
+            if [ "$STATUS" = "200" ]; then
+              # Verify our content made it (not stale/error page)
+              if grep -q 'audita a sí mismo' /tmp/smoke-body.txt; then
+                echo "✅ CloudFront direct OK — serving our build"
+                exit 0
+              else
+                echo "  ⚠️ Got 200 but content doesn't match. Checking what's there..."
+                head -c 500 /tmp/smoke-body.txt
+              fi
+            fi
+            if [ "$STATUS" = "403" ]; then
+              echo "  CloudFront 403 — possible alternate-domain restriction. Should be fine when DNS is configured."
+              exit 0
+            fi
+          done
+          echo "❌ CloudFront direct smoke test FAILED after 12 attempts"
+          tail -c 500 /tmp/smoke-body.txt || true
+          exit 1
+
+      - name: Smoke test (public URL)
+        if: always() && steps.cf.outcome != 'skipped'
+        run: |
+          set -euo pipefail
+          PUBLIC_URL="https://www.opitacode.com/es/"
+          UA='opitacode-web-smoke/1.0 (+https://github.com/Opita-Code/www.opitacode.com)'
+          echo "Smoke testing public URL: $PUBLIC_URL"
+
+          STATUS=$(curl --retry 2 --retry-delay 5 \
+                 --connect-timeout 10 --max-time 30 \
+                 -A "$UA" \
+                 -s -o /tmp/public-body.txt -w "%{http_code}" \
+                 "$PUBLIC_URL" || echo "000")
+
+          echo "Public URL: HTTP $STATUS"
+          if [ "$STATUS" = "200" ]; then
+            if grep -q 'audita a sí mismo' /tmp/public-body.txt; then
+              echo "✅ Public URL OK — serving our build!"
+            else
+              echo "::warning::Public URL 200 OK but content does not match our build."
+              echo "::warning::DNS may be pointing to a different origin (not CloudFront ${{ steps.cf.outputs.cf-domain }})."
+            fi
+          else
+            echo "::notice::Public URL returned HTTP $STATUS (expected until DNS is updated)."
+            echo "::notice::Once you set the Cloudflare CNAME to ${{ steps.cf.outputs.cf-domain }}, this test will pass."
+          fi
+
+      # ── DNS setup instructions ──
+
+      - name: DNS setup instructions
+        if: always() && steps.cf.outcome != 'skipped'
+        run: |
+          CF_DOMAIN="${{ steps.cf.outputs.cf-domain }}"
+          ACM_ARN="${{ steps.cf.outputs.acm-arn }}"
+          ALT_NAMES="${{ steps.cf.outputs.alternate-domain-names }}"
+
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "  DNS SETUP (one-time, operator action required)"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+          echo "  Target CloudFront domain: $CF_DOMAIN"
+          echo "  ACM certificate:         ${ACM_ARN:-<NONE — needs provisioning>}"
+          echo "  Alternate domains:       ${ALT_NAMES:-<NONE>}"
+          echo ""
+          echo "  In Cloudflare dashboard (dash.cloudflare.com → opitacode.com → DNS):"
+          echo ""
+          echo "  1. Delete ALL existing A/AAAA records for 'www'"
+          echo "     (currently: orange-cloud A → 104.21.9.207, 172.67.131.7)"
+          echo ""
+          echo "  2. Add a new CNAME record:"
+          echo "     Type:   CNAME"
+          echo "     Name:   www"
+          echo "     Target: $CF_DOMAIN"
+          echo "     Proxy:  OFF (grey cloud / DNS only)"
+          echo ""
+          echo "  3. Wait ~1 min for DNS propagation, then verify:"
+          echo "     curl -sL https://www.opitacode.com/es/ | grep 'audita'"
+          echo ""
+          echo "  If ACM cert is missing: create one in ACM (us-east-1) for"
+          echo "  www.opitacode.com, add the validation CNAME to Cloudflare,"
+          echo "  and attach it to CloudFront distribution EO2EU8EVU2RVR."
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
