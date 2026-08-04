@@ -18,9 +18,14 @@ const { title, description, lang, schema } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#09090b" />
-    <!-- Brand favicon: `>_` terminal prompt in violet (no graphical logo) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22 fill=%22%238b5cf6%22 font-family=%22monospace%22 font-weight=%22bold%22>>_</text></svg>" />
+    <meta name="theme-color" content="#111827" />
+    <!-- Brand favicon: SVG `>_` prompt in corporate token -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22 fill=%22%23D1D5DB%22 font-family=%22monospace%22 font-weight=%22bold%22>>_</text></svg>" />
+
+    <!-- Variable fonts — preload critical editorial display + body (anti-AI-slop §1) -->
+    <link rel="preload" href="/fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin />
+
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
@@ -78,7 +83,7 @@ const { title, description, lang, schema } = Astro.props;
             GitHub
           </a>
           <div class="h-4 w-px bg-border-base"></div>
-          <a href="https://cuenta.opitacode.com" class="px-5 py-2 rounded-md bg-zinc-800/80 hover:bg-zinc-700 border border-zinc-700 font-mono text-xs text-white transition-all hover:border-corporate-700/30">{lang === 'es' ? 'Mi Cuenta' : 'My Account'}</a>
+          <a href="https://cuenta.opitacode.com" class="px-5 py-2 rounded-sm border border-border-strong text-text-base font-mono text-xs hover:border-corporate-700/50">{lang === 'es' ? 'Mi Cuenta' : 'My Account'}</a>
         </nav>
         <div class="flex items-center gap-4">
           <div class="text-xs font-mono bg-bg-muted px-2 py-1 rounded text-text-muted border border-border-base flex items-center h-full">

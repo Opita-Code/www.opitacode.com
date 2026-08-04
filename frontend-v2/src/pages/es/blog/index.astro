@@ -28,22 +28,22 @@ const releases = await getReleases(10);
 
       <div class="space-y-6">
         {releases.map((r) => (
-          <article class="glass rounded-xl p-6 sm:p-8 hover:border-corporate-700/30 transition-colors">
+          <article class="glass rounded-sm p-6 sm:p-8 hover:border-corporate-700/40">
             <div class="flex flex-wrap items-center gap-3 mb-3">
               <h2 class="font-display font-bold text-xl text-text-base">
-                <a href={r.html_url} target="_blank" rel="noopener noreferrer" class="hover:text-corporate-800 transition-colors font-mono">
+                <a href={r.html_url} target="_blank" rel="noopener noreferrer" class="hover:text-corporate-800 font-mono">
                   {r.tag_name}
                 </a>
               </h2>
-              <span class="text-xs font-mono text-text-faint bg-bg-muted border border-border-base px-2 py-0.5 rounded">
+              <span class="text-xs font-mono text-text-faint bg-bg-muted border border-border-base px-2 py-0.5 rounded-sm">
                 {formatDate(r.published_at)} · {relativeDate(r.published_at)}
               </span>
             </div>
             <p class="text-text-muted text-sm leading-relaxed">
               {excerpt(r.body) || "Release sin notas."}
             </p>
-            <a href={r.html_url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-4 font-mono text-xs text-corporate-800 hover:text-text-base transition-colors">
-              ver release en GitHub <span aria-hidden="true">→</span>
+            <a href={r.html_url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-4 font-mono text-xs text-corporate-800 hover:text-text-base">
+              ver release en GitHub →
             </a>
           </article>
         ))}
@@ -51,7 +51,7 @@ const releases = await getReleases(10);
 
       <!-- RSS -->
       <div class="mt-12 text-center">
-        <a href="/feed.xml" class="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-text-base transition-colors">
+        <a href="/feed.xml" class="inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-text-base">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.18 15.64a2.18 2.18 0 01-.89 3.82 2.18 2.18 0 01-.89-3.82 2.18 2.18 0 011.78 0zM2 4.27v3.53c10.44 0 18.2 7.76 18.2 18.2h3.53C23.73 11.7 12.3.27 2 4.27zm0 7.06v3.53c6.02 0 10.96 4.94 10.96 10.96h3.53C16.49 14.62 9.38 7.51 2 11.33z"/></svg>
           Suscribite al feed RSS
         </a>
