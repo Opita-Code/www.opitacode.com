@@ -128,15 +128,93 @@ jobs:
           echo "www-covered=$WWW_COVERED" >> "$GITHUB_OUTPUT"
 
           if [ "$WWW_COVERED" = "false" ]; then
-            echo "::error::ACM cert does NOT cover www.opitacode.com."
-            echo "::error::CNAME won't work until you re-issue the cert with www.opitacode.com or *.opitacode.com in the SAN list."
-            echo "::error::Request a new cert: aws acm request-certificate --domain-name opitacode.com --subject-alternative-names www.opitacode.com --validation-method DNS"
-            echo "::error::Then add the validation CNAME to Cloudflare, wait for issuance, and re-run this workflow."
+            echo "::warning::ACM cert does NOT cover www.opitacode.com."
+            echo "::warning::Current domains: $ACM_ALL"
+            echo "cert-needs-reissue=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "cert-needs-reissue=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Request new ACM cert (www.opitacode.com SAN)
+        id: request-cert
+        if: steps.acm.outputs.cert-needs-reissue == 'true'
+        run: |
+          set -euo pipefail
+          echo "Requesting new ACM cert with www.opitacode.com in SANs..."
+
+          CERT_ARN=$(aws acm request-certificate \
+            --domain-name opitacode.com \
+            --subject-alternative-names www.opitacode.com \
+            --validation-method DNS \
+            --region us-east-1 \
+            --query "CertificateArn" \
+            --output text)
+
+          echo "new-cert-arn=$CERT_ARN" >> "$GITHUB_OUTPUT"
+          echo "✅ New cert requested: $CERT_ARN"
+          echo ""
+
+          # Wait briefly and then fetch the validation CNAME records
+          sleep 3
+          echo "Validation DNS records to add to Cloudflare:"
+          echo ""
+          aws acm describe-certificate \
+            --certificate-arn "$CERT_ARN" \
+            --query "Certificate.DomainValidationOptions[].ResourceRecord" \
+            --output table
+
+          echo ""
+          echo "::notice::Add the above CNAME record(s) to Cloudflare DNS (grey cloud / DNS only)."
+          echo "::notice::Wait for the cert to be issued (check: aws acm describe-certificate --certificate-arn $CERT_ARN --query Certificate.Status)"
+          echo "::notice::Then re-run this workflow — it will detect the new cert and update CloudFront."
+
+      - name: Update CloudFront to use new ACM cert
+        id: swap-cert
+        if: steps.request-cert.outcome == 'success'
+        run: |
+          set -euo pipefail
+          NEW_CERT_ARN="${{ steps.request-cert.outputs.new-cert-arn }}"
+          DIST_ID="${{ steps.cf.outputs.distribution-id }}"
+
+          echo "Polling for cert issuance..."
+          for i in $(seq 1 30); do
+            STATUS=$(aws acm describe-certificate \
+              --certificate-arn "$NEW_CERT_ARN" \
+              --query "Certificate.Status" --output text)
+            echo "  attempt $i: cert status = $STATUS"
+            if [ "$STATUS" = "ISSUED" ]; then
+              echo "✅ Cert issued!"
+              break
+            fi
+            if [ "$i" -ge 30 ]; then
+              echo "::warning::Cert not issued after 5 min. Add the validation CNAME to Cloudflare and re-run."
+              exit 1
+            fi
+            sleep 10
+          done
+
+          echo "Updating CloudFront to use new cert..."
+          aws cloudfront get-distribution-config --id "$DIST_ID" > /tmp/cf-cert-orig.json
+          ETAG=$(jq -r '.ETag' /tmp/cf-cert-orig.json)
+
+          # Merge: replace ACM cert ARN, keep same SSL method
+          jq --arg arn "$NEW_CERT_ARN" \
+            '.DistributionConfig.ViewerCertificate.ACMCertificateArn = $arn | .DistributionConfig.ViewerCertificate.CertificateSource = "acm"' \
+            /tmp/cf-cert-orig.json > /tmp/cf-cert-swapped.json
+
+          jq '.DistributionConfig' /tmp/cf-cert-swapped.json > /tmp/cf-dist-config.json
+
+          aws cloudfront update-distribution \
+            --id "$DIST_ID" \
+            --distribution-config "file:///tmp/cf-dist-config.json" \
+            --if-match "$ETAG" > /dev/null
+
+          echo "✅ CloudFront now uses new cert: $NEW_CERT_ARN"
+          echo "new-cert-active=true" >> "$GITHUB_OUTPUT"
 
       - name: Add www.opitacode.com to CloudFront Alternate Domain Names
         id: fix-cf
-        if: steps.acm.outputs.www-covered == 'true'
+        if: steps.acm.outputs.www-covered == 'true' || steps.swap-cert.outputs.new-cert-active == 'true'
         run: |
           set -euo pipefail
           DIST_ID="${{ steps.cf.outputs.distribution-id }}"
