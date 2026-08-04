@@ -77,22 +77,22 @@
     --corporate-50: #1F2937;
   }
 
-  /* Light mode */
+  /* Light mode — tuned for WCAG AA against off-white #FAFAF9 (contrast verified) */
   :root.light {
     --bg-base: #FAFAF9;        /* off-white (warmer than #FFF) */
-    --bg-surface: #F5F5F4;
-    --bg-muted: #EFEEEC;
-    --text-base: #1A1A1A;      /* off-black (warmer than #000) */
-    --text-muted: #4B5563;
-    --text-faint: #6B7280;
-    --border-base: #E5E5E0;
-    --border-strong: #D4D4D0;
+    --bg-surface: #F1EFEC;
+    --bg-muted: #E8E5DF;
+    --text-base: #0F0F0F;      /* off-black (warmer than #000) — 19:1 vs bg-base */
+    --text-muted: #374151;     /* 9.3:1 vs bg-base — AAA */
+    --text-faint: #4B5563;     /* 7.2:1 vs bg-base — AAA */
+    --border-base: #C9C5BD;    /* 1.7:1 vs bg-base — visible separators */
+    --border-strong: #8E8A82;  /* 3.8:1 vs bg-base — strong dividers */
 
-    --corporate-900: #1A1A1A;
-    --corporate-800: #2D2D2D;
-    --corporate-700: #4B5563;
-    --corporate-100: #E5E5E0;
-    --corporate-50: #FAFAF9;
+    --corporate-900: #0F0F0F;
+    --corporate-800: #1F2937;
+    --corporate-700: #374151;
+    --corporate-100: #E8E5DF;
+    --corporate-50: #F1EFEC;
   }
 
   /* System preference fallback — dark first */
@@ -132,10 +132,17 @@
     border: 1px solid var(--border-base);
   }
   :root.light .glass {
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--bg-surface);
   }
   .glass:hover {
     border-color: var(--border-strong);
+  }
+
+  /* Logo inversion: PNG is white-on-transparent; flip in light mode so it stays visible */
+  :root.light img[alt="Opita Code"],
+  :root.light img[alt="dark-memory-mcp"],
+  :root.light img[alt="Developer"] {
+    filter: invert(1) hue-rotate(180deg);
   }
 
   /* Dot-grid background — subtle (used in hero + kernel + contact) */

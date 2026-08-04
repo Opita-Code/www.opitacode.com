@@ -108,7 +108,7 @@ export function ContactForm({ lang }: { lang: 'es' | 'en' }) {
           minLength={2}
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-4 py-2 bg-bg-base text-text-base border border-border-base rounded-md focus:outline-none focus:border-corporate-900 disabled:opacity-50" 
+          className="w-full px-4 py-2 bg-bg-base text-text-base border border-border-base rounded-sm focus:outline-none focus:border-corporate-900 focus:ring-1 focus:ring-corporate-900/20 disabled:opacity-50 transition-colors" 
           placeholder={t.name}
           disabled={status === 'loading'}
         />
@@ -121,7 +121,7 @@ export function ContactForm({ lang }: { lang: 'es' | 'en' }) {
           required
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full px-4 py-2 bg-bg-base text-text-base border border-border-base rounded-md focus:outline-none focus:border-corporate-900 disabled:opacity-50" 
+          className="w-full px-4 py-2 bg-bg-base text-text-base border border-border-base rounded-sm focus:outline-none focus:border-corporate-900 focus:ring-1 focus:ring-corporate-900/20 disabled:opacity-50 transition-colors" 
           placeholder={t.email} 
           disabled={status === 'loading'}
         />
@@ -137,7 +137,7 @@ export function ContactForm({ lang }: { lang: 'es' | 'en' }) {
           minLength={10}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full px-4 py-2 bg-bg-base text-text-base border border-border-base rounded-md focus:outline-none focus:border-corporate-900 disabled:opacity-50" 
+          className="w-full px-4 py-2 bg-bg-base text-text-base border border-border-base rounded-sm focus:outline-none focus:border-corporate-900 focus:ring-1 focus:ring-corporate-900/20 disabled:opacity-50 transition-colors" 
           placeholder={t.message}
           disabled={status === 'loading'}
         ></textarea>
@@ -145,7 +145,7 @@ export function ContactForm({ lang }: { lang: 'es' | 'en' }) {
       <button 
         type="submit" 
         disabled={status === 'loading'}
-        className="bg-corporate-900 text-bg-base px-6 py-3 rounded-md font-medium hover:bg-corporate-800 transition-colors mt-2 disabled:opacity-70 flex justify-center items-center gap-2"
+        className="bg-corporate-900 text-bg-base px-6 py-3 rounded-sm font-medium hover:bg-corporate-800 focus:outline-none focus:ring-2 focus:ring-corporate-900/30 transition-colors mt-2 disabled:opacity-70 flex justify-center items-center gap-2"
       >
         {status === 'loading' ? (
           <>

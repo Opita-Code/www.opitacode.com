@@ -35,7 +35,7 @@ const releases = await getReleases(10);
                   {r.tag_name}
                 </a>
               </h2>
-              <span class="text-xs font-mono text-text-faint bg-bg-muted border border-border-base px-2 py-0.5 rounded-sm">
+              <span class="text-xs font-mono text-text-faint bg-bg-muted border border-border-strong px-2 py-0.5 rounded-sm">
                 {formatDate(r.published_at, "en")} · {relativeDate(r.published_at, "en")}
               </span>
             </div>

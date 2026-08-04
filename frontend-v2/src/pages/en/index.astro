@@ -29,12 +29,12 @@ const orgSchema = {
 >
 <!-- Hero Section -->
   <section class="relative min-h-[92vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden pt-24 pb-20">
-    <!-- Dot grid -->
-    <div class="absolute inset-0 dot-grid opacity-40 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
+    <!-- Dot grid — uniform subtle pattern (mask removed: was creating a top-center glow band) -->
+    <div class="absolute inset-0 dot-grid opacity-[0.15] pointer-events-none"></div>
 
     <div class="max-w-4xl mx-auto w-full relative z-10 text-center">
       <!-- Eyebrow — release announcement -->
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-corporate-100 border border-corporate-700/30 text-corporate-800 font-mono text-sm mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-corporate-100 border border-corporate-700/30 text-corporate-800 font-mono text-sm mb-8">
         <span class="w-2 h-2 rounded-full bg-corporate-700"></span>
         dark-memory v2.11.0 · 49 tools · live governance
       </div>
@@ -102,7 +102,7 @@ const orgSchema = {
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Custom Development -->
         <div class="bg-bg-base p-8 rounded-sm border border-border-base">
-          <div class="w-12 h-12 bg-bg-muted border border-border-base rounded-sm mb-6 flex items-center justify-center text-text-muted">
+          <div class="w-12 h-12 bg-bg-muted border border-border-strong rounded-sm mb-6 flex items-center justify-center text-text-muted">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
             </svg>
@@ -115,7 +115,7 @@ const orgSchema = {
 
         <!-- Automation -->
         <div class="bg-bg-base p-8 rounded-sm border border-border-base">
-          <div class="w-12 h-12 bg-bg-muted border border-border-base rounded-sm mb-6 flex items-center justify-center text-text-muted">
+          <div class="w-12 h-12 bg-bg-muted border border-border-strong rounded-sm mb-6 flex items-center justify-center text-text-muted">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
             </svg>
@@ -130,7 +130,7 @@ const orgSchema = {
   </section>
 
   <!-- How We Build — vibe-flow pipeline -->
-  <section id="how-we-build" class="py-24 bg-bg-surface/30 border-b border-border-base relative overflow-hidden">
+  <section id="how-we-build" class="py-24 bg-bg-surface/60 border-b border-border-base relative overflow-hidden">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center mb-16">
         <h2 class="text-sm font-mono text-corporate-800 uppercase tracking-widest mb-3">&lt;how_we_build&gt;</h2>
@@ -241,7 +241,7 @@ const orgSchema = {
           <article class="glass rounded-sm p-6 flex flex-col hover:border-corporate-700/30">
             <div class="flex items-center justify-between mb-3">
               <h4 class="font-mono font-bold text-lg text-text-base">{r.tag_name}</h4>
-              <span class="text-[10px] font-mono text-text-faint bg-bg-muted border border-border-base px-2 py-0.5 rounded-sm">
+              <span class="text-[10px] font-mono text-text-faint bg-bg-muted border border-border-strong px-2 py-0.5 rounded-sm">
                 {relativeDate(r.published_at, "en")}
               </span>
             </div>
@@ -258,7 +258,7 @@ const orgSchema = {
   </section>
 
   <!-- Ecosystem Grid — Kernel + Vertical products -->
-  <section id="ecosystem" class="py-24 bg-bg-surface/30 border-b border-border-base relative overflow-hidden">
+  <section id="ecosystem" class="py-24 bg-bg-surface/60 border-b border-border-base relative overflow-hidden">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center mb-16">
         <h2 class="text-sm font-mono text-corporate-800 uppercase tracking-widest mb-3">&lt;ecosystem&gt;</h2>
@@ -317,7 +317,7 @@ const orgSchema = {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Vibe Studio -->
         <a href="https://vibe.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40 border-t-2 border-t-corporate-700">
-          <div class="w-11 h-11 rounded-sm mb-4 overflow-hidden bg-bg-muted border border-border-base flex items-center justify-center">
+          <div class="w-11 h-11 rounded-sm mb-4 overflow-hidden bg-bg-muted border border-border-strong flex items-center justify-center">
             <img src="/vibe-logo.svg" alt="Vibe Studio" class="w-7 h-7 object-contain" />
           </div>
           <h4 class="font-display font-bold text-text-base mb-1">Vibe Studio</h4>
@@ -327,7 +327,7 @@ const orgSchema = {
 
         <!-- Opita Market -->
         <a href="https://market.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40 border-t-2 border-t-corporate-700">
-          <div class="w-11 h-11 rounded-sm mb-4 bg-bg-muted border border-border-base flex items-center justify-center">
+          <div class="w-11 h-11 rounded-sm mb-4 bg-bg-muted border border-border-strong flex items-center justify-center">
             <svg class="w-6 h-6 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
           </div>
           <h4 class="font-display font-bold text-text-base mb-1">Opita Market</h4>
@@ -337,7 +337,7 @@ const orgSchema = {
 
         <!-- Sociedad Opita -->
         <a href="https://sociedad.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40 border-t-2 border-t-corporate-700">
-          <div class="w-11 h-11 rounded-sm mb-4 bg-bg-muted border border-border-base flex items-center justify-center">
+          <div class="w-11 h-11 rounded-sm mb-4 bg-bg-muted border border-border-strong flex items-center justify-center">
             <svg class="w-6 h-6 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
           </div>
           <h4 class="font-display font-bold text-text-base mb-1">Sociedad Opita</h4>
@@ -347,7 +347,7 @@ const orgSchema = {
 
         <!-- Developer Web -->
         <a href="https://developer.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40 border-t-2 border-t-corporate-700">
-          <div class="w-11 h-11 rounded-sm mb-4 bg-bg-muted border border-border-base flex items-center justify-center">
+          <div class="w-11 h-11 rounded-sm mb-4 bg-bg-muted border border-border-strong flex items-center justify-center">
             <img src="/opita-code-stacked-white-v4.png" alt="Developer" class="h-6 w-auto" />
           </div>
           <h4 class="font-display font-bold text-text-base mb-1">Developer</h4>
@@ -357,9 +357,9 @@ const orgSchema = {
       </div>
     </div>
   </section>
-  <!-- The Kernel — governance-as-code deep-dive -->
+<!-- The Kernel — governance-as-code deep-dive -->
   <section id="kernel" class="py-24 bg-bg-base border-b border-border-base relative overflow-hidden">
-    <div class="absolute inset-0 dot-grid opacity-30 [mask-image:radial-gradient(ellipse_50%_40%_at_50%_0%,#000_60%,transparent_100%)] pointer-events-none"></div>
+    <div class="absolute inset-0 dot-grid opacity-[0.10] pointer-events-none"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center mb-16">
         <h2 class="text-sm font-mono text-corporate-800 uppercase tracking-widest mb-3">&lt;kernel&gt;</h2>
@@ -495,7 +495,7 @@ const orgSchema = {
 
 <!-- Contact Section -->
   <section id="contact" class="py-24 bg-bg-base relative overflow-hidden">
-    <div class="absolute inset-0 dot-grid opacity-20 [mask-image:radial-gradient(ellipse_50%_40%_at_50%_100%,#000_60%,transparent_100%)] pointer-events-none"></div>
+    <div class="absolute inset-0 dot-grid opacity-[0.10] pointer-events-none"></div>
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <!-- Left: pitch + contact info -->
