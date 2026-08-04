@@ -3,141 +3,90 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* Accent — Violet (primary, from developer.opitacode.com brand) */
-  --color-accent-primary: #8b5cf6;   /* violet-500 */
-  --color-accent-primary-hover: #7c3aed; /* violet-600 */
-  --color-accent-primary-soft: #a78bfa;  /* violet-400 */
-  --color-accent-primary-dim: rgba(139, 92, 246, 0.12);
-
-  /* Accent — Cyan (secondary) */
-  --color-accent-secondary: #06b6d4; /* cyan-500 */
-  --color-accent-secondary-soft: #22d3ee; /* cyan-400 */
-
-  /* Surface — near-black editorial (dark default) */
-  --color-bg-base: #09090b;
-  --color-bg-surface: #0d0d12;
-  --color-bg-muted: #18181b;
-  --color-bg-elevated: #1f1f23;
-
-  /* Text */
-  --color-text-base: #fafafa;
-  --color-text-muted: #a1a1aa;
-  --color-text-faint: #71717a;
-
-  /* Borders — zinc family */
-  --color-border-base: #27272a;
-  --color-border-strong: #3f3f46;
-
-  /* Status */
-  --color-status-online: #22c55e;
-  --color-status-warn: #eab308;
-
-  /* Legacy corporate aliases — remapped to the new violet/zinc system.
-     Kept so pre-rebuild pages (hero, cards, forms, dashboard) render
-     correctly until T2-T9 replace them with the new class names. */
+  /* ── Opita Code corporate palette — grayscale, minimal, enterprise ── */
   --color-corporate-900: var(--corporate-900);
   --color-corporate-800: var(--corporate-800);
   --color-corporate-700: var(--corporate-700);
-  --color-corporate-600: var(--corporate-600);
-  --color-corporate-500: var(--corporate-500);
-  --color-corporate-400: var(--corporate-400);
-  --color-corporate-300: var(--corporate-300);
-  --color-corporate-200: var(--corporate-200);
   --color-corporate-100: var(--corporate-100);
   --color-corporate-50: var(--corporate-50);
+
+  /* Surface — near-black editorial (dark default, matches legacy brand) */
+  --color-bg-base: var(--bg-base);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-muted: var(--bg-muted);
+
+  /* Text */
+  --color-text-base: var(--text-base);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+
+  /* Borders — zinc family */
+  --color-border-base: var(--border-base);
+  --color-border-strong: var(--border-strong);
+
+  /* Status — kept for status indicators */
+  --color-status-online: #22c55e;
+  --color-status-warn: #eab308;
 
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-
-  /* Motion tokens — from opita design system */
-  --ease-opita-quick: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @layer base {
-  /* Dark mode is the DEFAULT — terminal aesthetic */
+  /* Dark mode — Opita Code default */
   :root.dark {
-    --bg-base: #09090b;
-    --bg-surface: #0d0d12;
-    --bg-muted: #18181b;
-    --bg-elevated: #1f1f23;
-    --text-base: #fafafa;
-    --text-muted: #a1a1aa;
-    --text-faint: #71717a;
-    --border-base: #27272a;
-    --border-strong: #3f3f46;
-    --accent-primary: #8b5cf6;
-    --accent-primary-hover: #7c3aed;
-    --accent-secondary: #06b6d4;
+    --bg-base: #111827;
+    --bg-surface: #1f2937;
+    --bg-muted: #1a2332;
+    --text-base: #F9FAFB;
+    --text-muted: #D1D5DB;
+    --text-faint: #9CA3AF;
+    --border-base: #374151;
+    --border-strong: #4B5563;
 
-    /* corporate aliases — dark */
-    --corporate-900: #fafafa;
-    --corporate-800: #e4e4e7;
-    --corporate-700: #a1a1aa;
-    --corporate-600: #8b5cf6;
-    --corporate-500: #a78bfa;
-    --corporate-400: #c4b5fd;
-    --corporate-300: #ddd6fe;
-    --corporate-200: #3f3f46;
-    --corporate-100: #27272a;
-    --corporate-50: #18181b;
+    --corporate-900: #F9FAFB;
+    --corporate-800: #E5E7EB;
+    --corporate-700: #D1D5DB;
+    --corporate-100: #374151;
+    --corporate-50: #1F2937;
   }
 
-  /* Light mode — paper/ink inversion, same accents */
+  /* Light mode */
   :root.light {
-    --bg-base: #fafaf8;
-    --bg-surface: #ffffff;
-    --bg-muted: #f4f4f2;
-    --bg-elevated: #ffffff;
-    --text-base: #111110;
-    --text-muted: #52525b;
-    --text-faint: #a1a1aa;
-    --border-base: #e4e4e7;
-    --border-strong: #d4d4d8;
-    --accent-primary: #7c3aed;
-    --accent-primary-hover: #6d28d9;
-    --accent-secondary: #0891b2;
+    --bg-base: #FFFFFF;
+    --bg-surface: #F9FAFB;
+    --bg-muted: #F3F4F6;
+    --text-base: #111827;
+    --text-muted: #4B5563;
+    --text-faint: #9CA3AF;
+    --border-base: #E5E7EB;
+    --border-strong: #D1D5DB;
 
-    /* corporate aliases — light */
-    --corporate-900: #111110;
-    --corporate-800: #27272a;
-    --corporate-700: #52525b;
-    --corporate-600: #7c3aed;
-    --corporate-500: #8b5cf6;
-    --corporate-400: #a78bfa;
-    --corporate-300: #c4b5fd;
-    --corporate-200: #d4d4d8;
-    --corporate-100: #e4e4e7;
-    --corporate-50: #f4f4f2;
+    --corporate-900: #111827;
+    --corporate-800: #1F2937;
+    --corporate-700: #374151;
+    --corporate-100: #E5E7EB;
+    --corporate-50: #F9FAFB;
   }
 
-  /* System preference fallback — dark first (brand default) */
+  /* System preference fallback — dark first */
   @media (prefers-color-scheme: dark) {
     :root:not(.light) {
-      --bg-base: #09090b;
-      --bg-surface: #0d0d12;
-      --bg-muted: #18181b;
-      --bg-elevated: #1f1f23;
-      --text-base: #fafafa;
-      --text-muted: #a1a1aa;
-      --text-faint: #71717a;
-      --border-base: #27272a;
-      --border-strong: #3f3f46;
-      --accent-primary: #8b5cf6;
-      --accent-primary-hover: #7c3aed;
-      --accent-secondary: #06b6d4;
+      --bg-base: #111827;
+      --bg-surface: #1f2937;
+      --bg-muted: #1a2332;
+      --text-base: #F9FAFB;
+      --text-muted: #D1D5DB;
+      --text-faint: #9CA3AF;
+      --border-base: #374151;
+      --border-strong: #4B5563;
 
-      /* corporate aliases — dark */
-      --corporate-900: #fafafa;
-      --corporate-800: #e4e4e7;
-      --corporate-700: #a1a1aa;
-      --corporate-600: #8b5cf6;
-      --corporate-500: #a78bfa;
-      --corporate-400: #c4b5fd;
-      --corporate-300: #ddd6fe;
-      --corporate-200: #3f3f46;
-      --corporate-100: #27272a;
-      --corporate-50: #18181b;
+      --corporate-900: #F9FAFB;
+      --corporate-800: #E5E7EB;
+      --corporate-700: #D1D5DB;
+      --corporate-100: #374151;
+      --corporate-50: #1F2937;
     }
   }
 
@@ -145,43 +94,29 @@
     @apply bg-bg-base text-text-base antialiased font-sans;
   }
 
-  /* Terminal brand glyphs — `>_` prompt in violet */
-  .brand-prompt {
-    @apply font-mono font-black tracking-tighter;
-  }
-  .brand-prompt .prompt-caret {
-    color: var(--accent-primary);
-  }
-
-  /* Glass card — from developer.opitacode.com */
+  /* Glass card — subtle, corporate */
   .glass {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
     border: 1px solid var(--border-base);
   }
   .glass:hover {
-    border-color: color-mix(in srgb, var(--accent-primary) 50%, var(--border-base));
+    border-color: var(--border-strong);
   }
 
-  /* Neon border glow — violet */
-  .neon-border {
-    border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border-base));
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.12), inset 0 0 12px rgba(139, 92, 246, 0.04);
-  }
-
-  /* Dot-grid background */
+  /* Dot-grid background — subtle */
   .dot-grid {
-    background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.08) 1px, transparent 0);
+    background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.04) 1px, transparent 0);
     background-size: 24px 24px;
   }
 
-  /* Glow text — violet neon (dev-site language) */
-  .glow-text {
-    text-shadow: 0 0 30px rgba(139, 92, 246, 0.45), 0 0 60px rgba(139, 92, 246, 0.15);
+  /* Accent text — uses corporate palette */
+  .accent-text {
+    color: var(--corporate-900);
   }
 
   ::selection {
-    background: var(--accent-primary);
-    color: #ffffff;
+    background: var(--corporate-700);
+    color: var(--bg-base);
   }
 }
