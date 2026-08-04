@@ -4,12 +4,28 @@ import { ContactForm } from '../../components/ContactForm';
 import { getReleases, relativeDate, excerpt } from '../../lib/releases';
 
 const releases = await getReleases(3);
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Opita Code',
+  url: 'https://www.opitacode.com',
+  logo: 'https://www.opitacode.com/og-image.svg',
+  description: 'Infraestructura de governance para agentes de IA. Ecosistema open-source construido desde Colombia.',
+  foundingLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: 'Neiva', addressRegion: 'Huila', addressCountry: 'CO' } },
+  sameAs: [
+    'https://github.com/Opita-Code',
+    'https://vibe.opitacode.com',
+    'https://developer.opitacode.com',
+  ],
+};
 ---
 
 <Layout 
-  title="Opita Code | Software práctico para negocios reales"
-  description="Construido desde Colombia con identidad local y ambición global. Ecosistema de productos de software."
+  title="Opita Code | Governance para agentes de IA, desde Colombia"
+  description="dark-memory-mcp: infraestructura de governance para agentes de IA. Cada artefacto se audita antes de publicarse. Ecosistema open-source construido desde Neiva, Huila, Colombia."
   lang="es"
+  schema={orgSchema}
 >
   <!-- Hero Section -->
   <section class="relative min-h-[92vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden pt-24 pb-20">

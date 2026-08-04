@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background: near-black editorial -->
+  <rect width="1200" height="630" fill="#09090b"/>
+
+  <!-- Ambient glow: violet top-left -->
+  <circle cx="200" cy="120" r="300" fill="#8b5cf6" opacity="0.10"/>
+  <!-- Ambient glow: cyan bottom-right -->
+  <circle cx="1050" cy="540" r="280" fill="#06b6d4" opacity="0.08"/>
+
+  <!-- Dot grid -->
+  <g fill="#ffffff" opacity="0.06">
+    <circle cx="60" cy="60" r="2"/><circle cx="120" cy="60" r="2"/><circle cx="180" cy="60" r="2"/>
+    <circle cx="240" cy="60" r="2"/><circle cx="300" cy="60" r="2"/><circle cx="360" cy="60" r="2"/>
+    <circle cx="420" cy="60" r="2"/><circle cx="480" cy="60" r="2"/><circle cx="540" cy="60" r="2"/>
+    <circle cx="600" cy="60" r="2"/><circle cx="660" cy="60" r="2"/><circle cx="720" cy="60" r="2"/>
+    <circle cx="780" cy="60" r="2"/><circle cx="840" cy="60" r="2"/><circle cx="900" cy="60" r="2"/>
+    <circle cx="960" cy="60" r="2"/><circle cx="1020" cy="60" r="2"/><circle cx="1080" cy="60" r="2"/>
+    <circle cx="1140" cy="60" r="2"/>
+    <circle cx="60" cy="120" r="2"/><circle cx="120" cy="120" r="2"/><circle cx="180" cy="120" r="2"/>
+    <circle cx="240" cy="120" r="2"/><circle cx="300" cy="120" r="2"/><circle cx="360" cy="120" r="2"/>
+    <circle cx="420" cy="120" r="2"/><circle cx="480" cy="120" r="2"/><circle cx="540" cy="120" r="2"/>
+    <circle cx="600" cy="120" r="2"/><circle cx="660" cy="120" r="2"/><circle cx="720" cy="120" r="2"/>
+    <circle cx="780" cy="120" r="2"/><circle cx="840" cy="120" r="2"/><circle cx="900" cy="120" r="2"/>
+    <circle cx="960" cy="120" r="2"/><circle cx="1020" cy="120" r="2"/><circle cx="1080" cy="120" r="2"/>
+    <circle cx="1140" cy="120" r="2"/>
+    <circle cx="60" cy="510" r="2"/><circle cx="120" cy="510" r="2"/><circle cx="180" cy="510" r="2"/>
+    <circle cx="240" cy="510" r="2"/><circle cx="300" cy="510" r="2"/><circle cx="360" cy="510" r="2"/>
+    <circle cx="420" cy="510" r="2"/><circle cx="480" cy="510" r="2"/><circle cx="540" cy="510" r="2"/>
+    <circle cx="600" cy="510" r="2"/><circle cx="660" cy="510" r="2"/><circle cx="720" cy="510" r="2"/>
+    <circle cx="780" cy="510" r="2"/><circle cx="840" cy="510" r="2"/><circle cx="900" cy="510" r="2"/>
+    <circle cx="960" cy="510" r="2"/><circle cx="1020" cy="510" r="2"/><circle cx="1080" cy="510" r="2"/>
+    <circle cx="1140" cy="510" r="2"/>
+    <circle cx="60" cy="570" r="2"/><circle cx="120" cy="570" r="2"/><circle cx="180" cy="570" r="2"/>
+    <circle cx="240" cy="570" r="2"/><circle cx="300" cy="570" r="2"/><circle cx="360" cy="570" r="2"/>
+    <circle cx="420" cy="570" r="2"/><circle cx="480" cy="570" r="2"/><circle cx="540" cy="570" r="2"/>
+    <circle cx="600" cy="570" r="2"/><circle cx="660" cy="570" r="2"/><circle cx="720" cy="570" r="2"/>
+    <circle cx="780" cy="570" r="2"/><circle cx="840" cy="570" r="2"/><circle cx="900" cy="570" r="2"/>
+    <circle cx="960" cy="570" r="2"/><circle cx="1020" cy="570" r="2"/><circle cx="1080" cy="570" r="2"/>
+    <circle cx="1140" cy="570" r="2"/>
+  </g>
+
+  <!-- Brand: >_ OPITA CODE -->
+  <text x="600" y="290" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="96" font-weight="700" fill="#fafafa" text-anchor="middle" letter-spacing="-2">OPITA&nbsp;CODE</text>
+  <text x="330" y="290" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="96" font-weight="700" fill="#8b5cf6" text-anchor="middle">>_</text>
+
+  <!-- Tagline -->
+  <text x="600" y="370" font-family="'Inter', system-ui, sans-serif" font-size="34" fill="#a1a1aa" text-anchor="middle" letter-spacing="1">SOFTWARE QUE SE AUDITA A SÍ MISMO</text>
+
+  <!-- Sub-line -->
+  <text x="600" y="425" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="22" fill="#71717a" text-anchor="middle">governance · memory · vibe-flow — desde Colombia</text>
+
+  <!-- Bottom brand mark -->
+  <text x="600" y="540" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="20" fill="#8b5cf6" text-anchor="middle">opitacode.com</text>
+</svg>
