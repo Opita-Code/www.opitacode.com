@@ -113,36 +113,100 @@ import { ContactForm } from '../../components/ContactForm';
     </div>
   </section>
 
-  <!-- Process Section -->
-  <section id="proceso" class="py-24 bg-bg-base border-b border-border-base relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- How We Build — vibe-flow pipeline -->
+  <section id="como-construimos" class="py-24 bg-bg-surface/30 border-b border-border-base relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(6,182,212,0.05),transparent_60%)] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center mb-16">
-        <h2 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-3">Proceso</h2>
-        <h3 class="text-3xl font-bold text-text-base">Cómo trabajamos</h3>
-        <p class="mt-4 text-text-muted max-w-2xl mx-auto text-lg">Tres pasos. De la idea al producto funcionando.</p>
+        <h2 class="text-sm font-mono text-accent-secondary-soft uppercase tracking-widest mb-3">&lt;how_we_build&gt;</h2>
+        <h3 class="text-3xl sm:text-4xl font-display font-black text-text-base">Vibe-Flow: el pipeline.</h3>
+        <p class="mt-4 text-text-muted max-w-2xl mx-auto text-lg">Cada producto de la organización nace del mismo ciclo de 5 etapas. Nada se salta el proceso, ni siquiera esta página.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-        <div class="hidden md:block absolute top-1/2 left-0 w-full h-px bg-border-base -translate-y-1/2 z-0"></div>
+      <!-- 5-stage pipeline -->
+      <div class="relative">
+        <!-- Connector line (desktop) -->
+        <div class="hidden lg:block absolute top-8 left-0 right-0 h-px bg-gradient-to-r from-accent-primary/0 via-accent-primary/40 to-accent-secondary/0"></div>
         
-        <div class="bg-bg-base relative z-10 p-8 rounded-xl border border-border-base shadow-sm text-center">
-          <div class="w-12 h-12 bg-corporate-900 text-bg-base rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">1</div>
-          <h4 class="text-xl font-bold mb-3 text-text-base">Escuchamos</h4>
-          <p class="text-text-muted leading-relaxed">Entendemos tu negocio y el problema real que necesitas resolver. Sin jerga técnica, sin suposiciones.</p>
-        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <!-- Stage 1: Spec -->
+          <div class="flex flex-col items-center text-center group">
+            <div class="w-16 h-16 rounded-2xl glass border border-accent-primary/30 flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-shadow">
+              <svg class="w-7 h-7 text-accent-primary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <span class="font-mono text-xs text-accent-primary-soft mb-1">01</span>
+            <h4 class="font-display font-bold text-text-base mb-1">Spec</h4>
+            <p class="text-text-muted text-xs leading-relaxed">La intención se documenta antes del código.</p>
+          </div>
 
-        <div class="bg-bg-base relative z-10 p-8 rounded-xl border border-border-base shadow-sm text-center">
-          <div class="w-12 h-12 bg-corporate-900 text-bg-base rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">2</div>
-          <h4 class="text-xl font-bold mb-3 text-text-base">Construimos</h4>
-          <p class="text-text-muted leading-relaxed">Desarrollamos en ciclos cortos con hitos claros. Siempre sabes en qué punto estamos y qué sigue.</p>
-        </div>
+          <!-- Stage 2: Artifact -->
+          <div class="flex flex-col items-center text-center group">
+            <div class="w-16 h-16 rounded-2xl glass border border-border-base flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.2)] transition-shadow">
+              <svg class="w-7 h-7 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+            </div>
+            <span class="font-mono text-xs text-text-muted mb-1">02</span>
+            <h4 class="font-display font-bold text-text-base mb-1">Artifact</h4>
+            <p class="text-text-muted text-xs leading-relaxed">Se construye y se loggea con rastro completo.</p>
+          </div>
 
-        <div class="bg-bg-base relative z-10 p-8 rounded-xl border border-border-base shadow-sm text-center">
-          <div class="w-12 h-12 bg-corporate-900 text-bg-base rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">3</div>
-          <h4 class="text-xl font-bold mb-3 text-text-base">Entregamos</h4>
-          <p class="text-text-muted leading-relaxed">Sistema funcionando, documentado y listo para escalar. Con soporte continuo y sin misterios.</p>
+          <!-- Stage 3: Drift -->
+          <div class="flex flex-col items-center text-center group">
+            <div class="w-16 h-16 rounded-2xl glass neon-border flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.35)] transition-shadow">
+              <svg class="w-7 h-7 text-accent-primary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0L6 7m3-1L6 7m0 0L3 6m6-1L6 7m0 0L3 6m9 1h6m-6 4h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <span class="font-mono text-xs text-accent-primary-soft mb-1">03</span>
+            <h4 class="font-display font-bold text-text-base mb-1">Drift</h4>
+            <p class="text-text-muted text-xs leading-relaxed">El juez compara artefacto contra spec.</p>
+          </div>
+
+          <!-- Stage 4: Reconcile -->
+          <div class="flex flex-col items-center text-center group">
+            <div class="w-16 h-16 rounded-2xl glass border border-border-base flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-shadow">
+              <svg class="w-7 h-7 text-accent-secondary-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            </div>
+            <span class="font-mono text-xs text-accent-secondary-soft mb-1">04</span>
+            <h4 class="font-display font-bold text-text-base mb-1">Reconcile</h4>
+            <p class="text-text-muted text-xs leading-relaxed">Si hay drift, se corrige y se re-audita.</p>
+          </div>
+
+          <!-- Stage 5: Publish -->
+          <div class="flex flex-col items-center text-center group">
+            <div class="w-16 h-16 rounded-2xl glass border border-status-online/30 flex items-center justify-center mb-4 group-hover:shadow-[0_0_20px_rgba(34,197,94,0.25)] transition-shadow">
+              <svg class="w-7 h-7 text-status-online" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <span class="font-mono text-xs text-status-online mb-1">05</span>
+            <h4 class="font-display font-bold text-text-base mb-1">Publish</h4>
+            <p class="text-text-muted text-xs leading-relaxed">Solo sale a producción con verdict aligned.</p>
+          </div>
         </div>
       </div>
+
+      <!-- Process metrics -->
+      <div class="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+        <div class="text-center">
+          <p class="font-mono text-3xl font-bold text-text-base">300+</p>
+          <p class="text-xs font-mono text-text-faint uppercase tracking-widest mt-1">specs creadas</p>
+        </div>
+        <div class="w-px h-10 bg-border-base hidden sm:block"></div>
+        <div class="text-center">
+          <p class="font-mono text-3xl font-bold text-text-base">800+</p>
+          <p class="text-xs font-mono text-text-faint uppercase tracking-widest mt-1">drift reports</p>
+        </div>
+        <div class="w-px h-10 bg-border-base hidden sm:block"></div>
+        <div class="text-center">
+          <p class="font-mono text-3xl font-bold text-text-base">12</p>
+          <p class="text-xs font-mono text-text-faint uppercase tracking-widest mt-1">releases en 2026</p>
+        </div>
+        <div class="w-px h-10 bg-border-base hidden sm:block"></div>
+        <div class="text-center">
+          <p class="font-mono text-3xl font-bold text-text-base">1</p>
+          <p class="text-xs font-mono text-text-faint uppercase tracking-widest mt-1">juez para todo</p>
+        </div>
+      </div>
+
+      <blockquote class="mt-12 text-center font-mono text-sm text-text-faint">
+        "LLM-as-judge, not LLM-as-author."
+      </blockquote>
     </div>
   </section>
 
