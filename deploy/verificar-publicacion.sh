@@ -16,9 +16,24 @@ ok()   { printf "  \033[32mOK\033[0m   %s\n" "$1"; }
 fail() { printf "  \033[31mFALLA\033[0m %s\n" "$1"; FALLOS=$((FALLOS+1)); }
 aviso(){ printf "  \033[33mAVISO\033[0m %s\n" "$1"; }
 
+# resolver un nombre: getent en Linux, nslookup en Windows con Git Bash.
+resolver() {
+  local h="$1" ips=""
+  if command -v getent >/dev/null 2>&1; then
+    ips=$(getent hosts "$h" 2>/dev/null | awk '{print $1}' | tr '\n' ' ')
+  fi
+  if [ -z "$ips" ] && command -v nslookup >/dev/null 2>&1; then
+    ips=$(nslookup "$h" 2>/dev/null | awk '/^Address: /{print $2}' | tr '\n' ' ')
+  fi
+  if [ -z "$ips" ] && command -v dig >/dev/null 2>&1; then
+    ips=$(dig +short "$h" 2>/dev/null | tr '\n' ' ')
+  fi
+  echo "$ips"
+}
+
 echo "== 1. Resolucion DNS =="
 for h in "$DOMAIN" "$WWW"; do
-  ips=$(getent hosts "$h" 2>/dev/null | awk '{print $1}' | tr '\n' ' ')
+  ips=$(resolver "$h")
   if [ -n "$ips" ]; then ok "$h -> $ips"; else aviso "$h no resuelve todavia"; fi
 done
 

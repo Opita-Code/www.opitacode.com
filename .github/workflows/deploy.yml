@@ -68,7 +68,11 @@ jobs:
               exit 1
             fi
           done
-          curl -s --max-time 30 "$URL/es/" | grep -q 'Runtime de memoria y governance'
+          # el cuerpo se guarda en un archivo: con "curl | grep -q" el grep
+          # cierra el pipe, curl recibe SIGPIPE y sale con 23, y pipefail
+          # convierte eso en un fallo falso
+          curl -s --max-time 30 "$URL/es/" -o /tmp/home.html
+          grep -q 'Runtime de memoria y governance' /tmp/home.html
           echo "published site OK"
 
       - name: Report DNS status (informativo)
