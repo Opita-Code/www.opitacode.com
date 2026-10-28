@@ -107,7 +107,15 @@
 
     /* Accent — same hue; on the light surface #c2410c is 4.9:1, AA sin tinta clara */
     --accent: #c2410c;
-    --accent-ink: #c2410c;
+    /* La tinta de acento sobre superficie clara necesita el paso oscuro del
+       mismo tono: #c2410c sobre #E8E5DF da 4,1:1 y no pasa AA como texto
+       pequeno. #9a3412 da 7,1:1 sobre #FAFAF9 y 5,9:1 sobre #E8E5DF. */
+    --accent-ink: #9a3412;
+
+    /* Estados — los de @theme estan pensados para la superficie oscura.
+       Sobre superficie clara hay que oscurecerlos: #eab308 daba 1,8:1. */
+    --color-status-online: #15803d;   /* 4,9:1 sobre #FAFAF9 */
+    --color-status-warn: #a16207;    /* 4,8:1 sobre #FAFAF9 */
   }
 
   /* System preference fallback — dark first */
@@ -131,6 +139,32 @@
       --accent: #c2410c;
       --accent-ink: #f07c46;
     }
+  }
+
+  /* Superficie oscura — terminal y bloques de codigo.
+     Estas superficies son oscuras por diseno en los dos temas, asi que su
+     texto NO puede tomar los tokens de tema: en tema claro, --text-base es
+     #0F0F0F sobre el fondo #0B0D12, que da una relacion de 1,01:1
+     (ilegible). Se redefinen las variables --color-*, no las --text-*: las
+     --color-* las consume directamente cada utilidad (.text-text-base usa
+     var(--color-text-base)), mientras que las --text-* se sustituyen en el
+     elemento donde se declaran (:root) y heredan ya resueltas, de modo que
+     redefinirlas en el hijo no tendria efecto.
+     Relaciones sobre #0B0D12: #F9FAFB 18,0:1 · #D1D5DB 13,2:1 · #9CA3AF 7,4:1
+     · #f07c46 5,7:1 · #22c55e 9,4:1 · #eab308 10,7:1. */
+  .surface-dark {
+    background-color: #0b0d12;
+    --color-bg-surface: #111827;
+    --color-bg-muted: #1a2332;
+    --color-text-base: #f9fafb;
+    --color-text-muted: #d1d5db;
+    --color-text-faint: #9ca3af;
+    --color-border-base: #374151;
+    --color-border-strong: #4b5563;
+    --color-accent: #c2410c;
+    --color-accent-ink: #f07c46;
+    --color-status-online: #22c55e;
+    --color-status-warn: #eab308;
   }
 
   body {

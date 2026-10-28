@@ -1,0 +1,307 @@
+{
+  "generado": "28-10-2026 20:14 UTC",
+  "n_hallazgos": 4,
+  "hallazgos": [
+    {
+      "criterio": "E-04",
+      "severidad": "MEDIA",
+      "donde": "http://127.0.0.1:8732/es/index.html [dark / 1362 px]",
+      "detalle": "23 parrafos de lectura con longitud de linea fuera de 45 a 90 caracteres",
+      "evidencia": {
+        "casos": [
+          {
+            "texto": "La memoria entra como contexto y ninguna herramien",
+            "caracteres": 200,
+            "lineas": 5,
+            "caracteres_por_linea": 40,
+            "ancho_px": 474,
+            "fuente_px": 20,
+            "interlineado": 32.5
+          },
+          {
+            "texto": "MIT · Go 1.26 · 419 commits · 243 de 243 contribuc",
+            "caracteres": 75,
+            "lineas": 2,
+            "caracteres_por_linea": 38,
+            "ancho_px": 474,
+            "fuente_px": 11.5,
+            "interlineado": 18.69
+          },
+          {
+            "texto": "Antes de una línea de código, la intención queda d",
+            "caracteres": 124,
+            "lineas": 3,
+            "caracteres_por_linea": 41,
+            "ancho_px": 342,
+            "fuente_px": 15,
+            "interlineado": 24.38
+          },
+          {
+            "texto": "Quién escribió, contra qué spec, con qué juez y co",
+            "caracteres": 103,
+            "lineas": 3,
+            "caracteres_por_linea": 34,
+            "ancho_px": 342,
+            "fuente_px": 15,
+            "interlineado": 24.38
+          },
+          {
+            "texto": "El runtime en el que las herramientas se componen ",
+            "caracteres": 129,
+            "lineas": 3,
+            "caracteres_por_linea": 43,
+            "ancho_px": 342,
+            "fuente_px": 14,
+            "interlineado": 22.75
+          },
+          {
+            "texto": "Memoria persistente, governance y workflow como un",
+            "caracteres": 125,
+            "lineas": 3,
+            "caracteres_por_linea": 42,
+            "ancho_px": 342,
+            "fuente_px": 14,
+            "interlineado": 22.75
+          }
+        ]
+      },
+      "responsable": "Diseno",
+      "accion": "limitar el ancho de medida o ajustar el tamano del cuerpo",
+      "esfuerzo_min": 20,
+      "ocurrencias": [
+        "http://127.0.0.1:8732/es/index.html [dark / 1362 px]",
+        "http://127.0.0.1:8732/es/index.html [light / 1362 px]",
+        "http://127.0.0.1:8732/en/index.html [dark / 1362 px]",
+        "http://127.0.0.1:8732/en/index.html [light / 1362 px]"
+      ]
+    },
+    {
+      "criterio": "E-08",
+      "severidad": "MEDIA",
+      "donde": "http://127.0.0.1:8732/es/index.html [dark / 390 px]",
+      "detalle": "9 objetivos tactiles por debajo de 44 px en movil (recomendacion, no norma)",
+      "evidencia": {
+        "casos": [
+          {
+            "tag": "a",
+            "texto": "OPITA CODE",
+            "w": 54,
+            "h": 32,
+            "nivel": "recomendado-44",
+            "vecinos_en_24px": 0
+          },
+          {
+            "tag": "button",
+            "texto": "",
+            "w": 38,
+            "h": 38,
+            "nivel": "recomendado-44",
+            "vecinos_en_24px": 0
+          },
+          {
+            "tag": "a",
+            "texto": "owner@opitacode.com",
+            "w": 358,
+            "h": 36,
+            "nivel": "recomendado-44",
+            "vecinos_en_24px": 0
+          },
+          {
+            "tag": "a",
+            "texto": "WhatsApp · +57 312 612 6085",
+            "w": 358,
+            "h": 36,
+            "nivel": "recomendado-44",
+            "vecinos_en_24px": 0
+          },
+          {
+            "tag": "a",
+            "texto": "GitHub org",
+            "w": 117,
+            "h": 31,
+            "nivel": "recomendado-44",
+            "vecinos_en_24px": 0
+          },
+          {
+            "tag": "a",
+            "texto": "@opitacode/ocais en npm",
+            "w": 185,
+            "h": 31,
+            "nivel": "recomendado-44",
+            "vecinos_en_24px": 0
+          },
+          {
+            "tag": "input",
+            "texto": "",
+            "w": 308,
+            "h": 42,
+            "nivel": "recomendado-44",
+            "vecinos_en_24px": 0
+          },
+          {
+            "tag": "input",
+            "texto": "",
+            "w": 308,
+            "h": 42,
+            "nivel": "recomendado-44",
+            "vecinos_en_24px": 0
+          }
+        ]
+      },
+      "responsable": "Diseno",
+      "accion": "agrandar el area clicable hasta 44 px",
+      "esfuerzo_min": 25,
+      "ocurrencias": [
+        "http://127.0.0.1:8732/es/index.html [dark / 390 px]",
+        "http://127.0.0.1:8732/es/index.html [light / 390 px]",
+        "http://127.0.0.1:8732/en/index.html [dark / 390 px]",
+        "http://127.0.0.1:8732/en/index.html [light / 390 px]"
+      ]
+    },
+    {
+      "criterio": "E-04",
+      "severidad": "MEDIA",
+      "donde": "http://127.0.0.1:8732/en/index.html [dark / 390 px]",
+      "detalle": "1 parrafos de lectura con longitud de linea fuera de 30 a 60 caracteres",
+      "evidencia": {
+        "casos": [
+          {
+            "texto": "Everything we build consumes the same nervous syst",
+            "caracteres": 87,
+            "lineas": 3,
+            "caracteres_por_linea": 29,
+            "ancho_px": 358,
+            "fuente_px": 18,
+            "interlineado": 29.25
+          }
+        ]
+      },
+      "responsable": "Diseno",
+      "accion": "limitar el ancho de medida o ajustar el tamano del cuerpo",
+      "esfuerzo_min": 20,
+      "ocurrencias": [
+        "http://127.0.0.1:8732/en/index.html [dark / 390 px]",
+        "http://127.0.0.1:8732/en/index.html [light / 390 px]"
+      ]
+    },
+    {
+      "criterio": "P-08",
+      "severidad": "BAJA",
+      "donde": "frontend-v2/dist/*/index.html",
+      "detalle": "estado: no hay captura de percepcion del usuario, el dato es 'sin dato' y no debe publicarse ninguna puntuacion",
+      "evidencia": {
+        "instrumento": "atractividad / usabilidad / deseabilidad; escala de adjetivos del SUS",
+        "estado": "sin dato",
+        "tipo": "estado_permanente"
+      },
+      "responsable": "Contenido",
+      "accion": "corregir segun la rubrica P-08",
+      "esfuerzo_min": 30,
+      "ocurrencias": [
+        "frontend-v2/dist/*/index.html"
+      ]
+    }
+  ],
+  "por_criterio": {
+    "E-04": 2,
+    "E-08": 1,
+    "P-08": 1
+  },
+  "por_severidad": {
+    "MEDIA": 3,
+    "BAJA": 1
+  },
+  "coocurrencia": [
+    {
+      "bloque": "http://127.0.0.1:8732/en/index.html [dark / 390 px]",
+      "n_hallazgos": 2,
+      "criterios": {
+        "E-08": 1,
+        "E-04": 1
+      }
+    },
+    {
+      "bloque": "http://127.0.0.1:8732/en/index.html [light / 390 px]",
+      "n_hallazgos": 2,
+      "criterios": {
+        "E-08": 1,
+        "E-04": 1
+      }
+    },
+    {
+      "bloque": "http://127.0.0.1:8732/es/index.html [dark / 1362 px]",
+      "n_hallazgos": 1,
+      "criterios": {
+        "E-04": 1
+      }
+    },
+    {
+      "bloque": "http://127.0.0.1:8732/es/index.html [light / 1362 px]",
+      "n_hallazgos": 1,
+      "criterios": {
+        "E-04": 1
+      }
+    },
+    {
+      "bloque": "http://127.0.0.1:8732/en/index.html [dark / 1362 px]",
+      "n_hallazgos": 1,
+      "criterios": {
+        "E-04": 1
+      }
+    },
+    {
+      "bloque": "http://127.0.0.1:8732/en/index.html [light / 1362 px]",
+      "n_hallazgos": 1,
+      "criterios": {
+        "E-04": 1
+      }
+    },
+    {
+      "bloque": "http://127.0.0.1:8732/es/index.html [dark / 390 px]",
+      "n_hallazgos": 1,
+      "criterios": {
+        "E-08": 1
+      }
+    },
+    {
+      "bloque": "http://127.0.0.1:8732/es/index.html [light / 390 px]",
+      "n_hallazgos": 1,
+      "criterios": {
+        "E-08": 1
+      }
+    },
+    {
+      "bloque": "frontend-v2/dist/*/index.html",
+      "n_hallazgos": 1,
+      "criterios": {
+        "P-08": 1
+      }
+    }
+  ],
+  "top5": [
+    {
+      "criterio": "E-04",
+      "severidad": "MEDIA",
+      "accion": "limitar el ancho de medida o ajustar el tamano del cuerpo",
+      "puntaje": 3.0
+    },
+    {
+      "criterio": "E-04",
+      "severidad": "MEDIA",
+      "accion": "limitar el ancho de medida o ajustar el tamano del cuerpo",
+      "puntaje": 3.0
+    },
+    {
+      "criterio": "E-08",
+      "severidad": "MEDIA",
+      "accion": "agrandar el area clicable hasta 44 px",
+      "puntaje": 2.4
+    },
+    {
+      "criterio": "P-08",
+      "severidad": "BAJA",
+      "accion": "corregir segun la rubrica P-08",
+      "puntaje": 1.0
+    }
+  ]
+}

@@ -43,7 +43,7 @@ const LINE_CLASS: Record<SessionLine['kind'], string> = {
 };
 ---
 
-<div class="border border-border-base rounded-sm bg-[#0b0d12] overflow-hidden">
+<div class="surface-dark border border-border-base rounded-sm overflow-hidden">
   <!-- Cabecera del terminal -->
   <div class="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-border-base bg-bg-surface/50">
     <div class="flex items-center gap-2.5 min-w-0">
@@ -74,7 +74,7 @@ const LINE_CLASS: Record<SessionLine['kind'], string> = {
 
   <!-- Pie -->
   <div class="px-4 py-3 border-t border-border-base bg-bg-surface/50">
-    <p class="text-[11.5px] text-text-muted leading-relaxed">{caption}</p>
-    <p class="text-[11.5px] text-text-faint leading-relaxed mt-1">{subject}</p>
+    <p class="text-[11.5px] text-text-muted leading-relaxed max-w-[68ch]">{caption}</p>
+    <p class="text-[11.5px] text-text-faint leading-relaxed mt-1 max-w-[68ch]">{subject}</p>
   </div>
 </div>

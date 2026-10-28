@@ -58,12 +58,12 @@ export const KERNEL: Metric[] = [
   {
     v: '73',
     label: { es: 'herramientas canónicas · 20 namespaces', en: 'canonical tools · 20 namespaces' },
-    src: { es: 'dark-memory v4.0.0-alpha.32', en: 'dark-memory v4.0.0-alpha.32' },
+    src: { es: 'dark-memory v4.0.0-alpha.32 · 28-10-2026', en: 'dark-memory v4.0.0-alpha.32 · 28-10-2026' },
   },
   {
     v: '32',
     label: { es: 'versión de esquema', en: 'schema version' },
-    src: { es: 'migración aplicada', en: 'migration applied' },
+    src: { es: 'migración aplicada · 28-10-2026', en: 'migration applied · 28-10-2026' },
   },
   {
     v: '38',
@@ -76,7 +76,7 @@ export const KERNEL: Metric[] = [
     src: { es: 'GitHub · 28-10-2026', en: 'GitHub · 28-10-2026' },
   },
   {
-    v: '1.494',
+    v: '15.000',
     label: { es: 'escrituras auditadas', en: 'audited writes' },
     src: { es: 'write_audit · 28-10-2026', en: 'write_audit · 28-10-2026' },
   },
