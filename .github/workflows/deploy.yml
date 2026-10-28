@@ -307,7 +307,7 @@ jobs:
             echo "attempt $i: HTTP $STATUS"
             if [ "$STATUS" = "200" ]; then
               # Verify our content made it (not stale/error page)
-              if grep -q 'audita a sí mismo' /tmp/smoke-body.txt; then
+              if grep -q 'Runtime de memoria y governance' /tmp/smoke-body.txt; then
                 echo "✅ CloudFront direct OK — serving our build"
                 exit 0
               else
@@ -340,7 +340,7 @@ jobs:
 
           echo "Public URL: HTTP $STATUS"
           if [ "$STATUS" = "200" ]; then
-            if grep -q 'audita a sí mismo' /tmp/public-body.txt; then
+            if grep -q 'Runtime de memoria y governance' /tmp/public-body.txt; then
               echo "✅ Public URL OK — serving our build!"
             else
               echo "::warning::Public URL 200 OK but content does not match our build."
@@ -411,6 +411,6 @@ jobs:
           echo "     Proxy:  OFF (grey cloud / DNS only)"
           echo ""
           echo "  3. Wait ~1 min, then verify:"
-          echo "     curl -sL https://www.opitacode.com/es/ | grep 'audita'"
+          echo "     curl -sL https://www.opitacode.com/es/ | grep 'Runtime de memoria'"
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

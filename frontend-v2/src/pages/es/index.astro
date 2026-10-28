@@ -1,7 +1,9 @@
 ﻿---
 import Layout from '../../layouts/Layout.astro';
 import { ContactForm } from '../../components/ContactForm';
+import SessionReplay from '../../components/SessionReplay.astro';
 import { getReleases, relativeDate, excerpt } from '../../lib/releases';
+import { EVIDENCE, KERNEL, SURFACE_LABELS, type SurfaceState } from '../../lib/metrics';
 
 const releases = await getReleases(3);
 
@@ -11,482 +13,666 @@ const orgSchema = {
   name: 'Opita Code',
   url: 'https://www.opitacode.com',
   logo: 'https://www.opitacode.com/og-image.svg',
-  description: 'Infraestructura de governance para agentes de IA. Ecosistema open-source construido desde Colombia.',
-  foundingLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: 'Neiva', addressRegion: 'Huila', addressCountry: 'CO' } },
+  description:
+    'Infraestructura de memoria y governance para agentes de IA. Ecosistema open-source construido desde Neiva, Huila, Colombia.',
+  foundingLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Neiva',
+      addressRegion: 'Huila',
+      addressCountry: 'CO',
+    },
+  },
   sameAs: [
     'https://github.com/Opita-Code',
-    'https://vibe.opitacode.com',
-    'https://developer.opitacode.com',
+    'https://www.npmjs.com/package/@opitacode/ocais',
+    'https://cuentas.opitacode.com',
   ],
 };
+
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'dark-memory-mcp',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Linux, macOS, Windows',
+  description:
+    'Servidor de memoria persistente y orquestación de flujo de trabajo para agentes de IA. 73 herramientas MCP en 20 namespaces, con juez de deriva anclado al artefacto.',
+  codeRepository: 'https://github.com/Opita-Code/dark-memory-mcp',
+  license: 'https://opensource.org/licenses/MIT',
+  author: { '@type': 'Organization', name: 'Opita Code' },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+
+const schema = [orgSchema, appSchema];
+
+const SESSION = [
+  {
+    kind: 'cmd',
+    segs: [
+      { t: 'accent', s: '$ ' },
+      { t: 'fn', s: 'dark_memory.session_start' },
+      { t: 'arg', s: '(operator="INV-1", project_id="default")' },
+    ],
+  },
+  {
+    kind: 'out',
+    segs: [
+      { t: 'val', s: '→ sess-4d5486aec8421a86' },
+      { t: 'dim', s: ' · constitution dark-agents/dark-mem@1.0.0 ✓' },
+    ],
+  },
+  {
+    kind: 'cmd',
+    segs: [
+      { t: 'accent', s: '$ ' },
+      { t: 'fn', s: 'dark_memory.vibe_spec' },
+      { t: 'arg', s: '(vibe_case="C2", tasks=[7])' },
+    ],
+  },
+  {
+    kind: 'out',
+    segs: [
+      { t: 'val', s: '→ spec 990' },
+      { t: 'dim', s: ' · 7 tareas · intent persistida en la fila' },
+    ],
+  },
+  {
+    kind: 'cmd',
+    segs: [
+      { t: 'accent', s: '$ ' },
+      { t: 'fn', s: 'dark_memory.vibe_publish' },
+      { t: 'arg', s: '(spec=990, artifact="src/pages/es/index.astro")' },
+    ],
+  },
+  {
+    kind: 'out',
+    segs: [
+      { t: 'val', s: '→ artifact 606' },
+      { t: 'dim', s: ' · drift 622' },
+    ],
+  },
+  {
+    kind: 'cmd',
+    segs: [
+      { t: 'accent', s: '$ ' },
+      { t: 'fn', s: 'dark_memory.judge' },
+      { t: 'arg', s: '(eval_type="drift_judge", artifact_ref=…, spec_intent=…)' },
+    ],
+  },
+  {
+    kind: 'out',
+    segs: [
+      { t: 'warn', s: '→ needs_human' },
+      { t: 'dim', s: ' · evaluation 1081 · "nli: provider unavailable"' },
+    ],
+  },
+  {
+    kind: 'cmd',
+    segs: [
+      { t: 'accent', s: '$ ' },
+      { t: 'fn', s: 'dark_memory.judge' },
+      { t: 'arg', s: '(eval_type="drift_judge", content=…, spec_intent=…)' },
+    ],
+  },
+  {
+    kind: 'out',
+    segs: [
+      { t: 'warn', s: '→ drift_detected' },
+      { t: 'dim', s: ' · conf 0.93 · evaluation 1083' },
+    ],
+  },
+  {
+    kind: 'out',
+    segs: [
+      { t: 'dim', s: '  "la página mostraba un veredicto de juez simulado" → corregido' },
+    ],
+  },
+  {
+    kind: 'out',
+    segs: [
+      { t: 'warn', s: '→ needs_human' },
+      { t: 'dim', s: ' · conf 0.95 · evaluation 1084' },
+    ],
+  },
+  {
+    kind: 'out',
+    segs: [
+      { t: 'dim', s: '  "falta revisar los archivos omitidos" → se incluyeron layout, tokens y métricas' },
+    ],
+  },
+  {
+    kind: 'meta',
+    segs: [
+      {
+        t: 'dim',
+        s: 'sesión real · 28-10-2026 · 990 specs · 605 artefactos · 1.078 evaluaciones del juez',
+      },
+    ],
+  },
+];
+
+const JUDGE = { verdict: 'drift_detected', confidence: '0.93', evaluation: '1083' };
+
+const SESSION_CAPTION = "Sesión real de dark-memory, capturada el 28 de octubre de 2026. Cada línea es una llamada y su respuesta, con los identificadores que devolvió el servidor. Lo que se ve incluye el hallazgo del juez sobre esta misma página y su corrección. Cuando el juez no puede decidir, el veredicto es que hace falta una persona y el proceso se detiene.";
+
+const SESSION_SUBJECT = "El artefacto juzgado es esta misma página. Los veredictos son las evaluaciones 1081, 1083 y 1084 de dark-memory.";
+
+
+const kernelProducts: {
+  name: string;
+  meta: string;
+  desc: string;
+  href: string;
+  tag: string;
+}[] = [
+  {
+    name: 'vibe-tools',
+    meta: 'Runtime · 4 de 10 loops cerrados',
+    desc: 'El runtime en el que las herramientas se componen entre sí y la memoria se inyecta como contexto. Es el producto en construcción.',
+    href: 'https://github.com/Opita-Code/opita-code',
+    tag: 'RUNTIME',
+  },
+
+  {
+    name: 'dark-memory-mcp',
+    meta: 'v4.0.0-alpha.32 · 73 herramientas',
+    desc: 'Memoria persistente, governance y workflow como un solo set de herramientas MCP. Cada artefacto se juzga antes de publicarse.',
+    href: 'https://github.com/Opita-Code/dark-memory-mcp',
+    tag: 'KERNEL',
+  },
+  {
+    name: 'dark-research-mcp',
+    meta: '13 backends OSINT',
+    desc: 'CVE, dominios, IPs, certificados, papers, noticias. Investigación primaria con fuentes verificables y fecha.',
+    href: 'https://github.com/Opita-Code/dark-research-mcp',
+    tag: 'KERNEL',
+  },
+  {
+    name: 'ocais',
+    meta: 'npm 3.0.1 · zero deps',
+    desc: 'SDK de streaming de IA para AWS Lambda. TypeScript primero. El puente entre los modelos y el serverless.',
+    href: 'https://www.npmjs.com/package/@opitacode/ocais',
+    tag: 'SDK',
+  },
+];
+
+const verticalProducts: {
+  name: string;
+  meta: string;
+  desc: string;
+  href: string;
+  state: SurfaceState;
+}[] = [
+  {
+    name: 'Opita Saldo',
+    meta: 'Billetera · saldo no retirable · L9',
+    desc: 'La billetera interna con saldo que no se puede retirar, para recargas, impulso semanal y pagos dentro de la plataforma.',
+    href: 'https://github.com/Opita-Code/opita-code/blob/main/docs/arquitectura/plan-iteracion-mvp.md',
+    state: 'building',
+  },
+
+  {
+    name: 'Vibe Studio',
+    meta: 'IDE de vibe-coding en español',
+    desc: 'Generación gobernada por el kernel: cada salida pasa por juez antes de llegar al usuario.',
+    href: 'https://github.com/Opita-Code/opita-vibe-studio',
+    state: 'building',
+  },
+  {
+    name: 'Opita Market',
+    meta: 'Marketplace B2B y B2C',
+    desc: 'Directorio y comparador con cumplimiento de la Ley 1581 desde el primer día.',
+    href: 'https://github.com/Opita-Code/opita-market',
+    state: 'building',
+  },
+  {
+    name: 'Sociedad Opita',
+    meta: 'Monumento digital vivo',
+    desc: 'Frontend Astro 6 y Tailwind 4 sobre un backend SST v3 con streaming propio.',
+    href: 'https://github.com/Opita-Code/sociedad-opita-app',
+    state: 'building',
+  },
+  {
+    name: 'Developer',
+    meta: 'Terminal y arquitectura en vivo',
+    desc: 'La identidad pública del developer: lo que se puede leer, lo que se puede correr, lo que falta.',
+    href: 'https://github.com/Opita-Code/opita-developer-web',
+    state: 'building',
+  },
+];
 ---
 
-<Layout 
-  title="Opita Code | Governance para agentes de IA, desde Colombia"
-  description="dark-memory-mcp: infraestructura de governance para agentes de IA. Cada artefacto se audita antes de publicarse. Ecosistema open-source construido desde Neiva, Huila, Colombia."
+<Layout
+  title="Opita Code | Runtime de memoria y governance para agentes de IA"
+  description="dark-memory-mcp: 73 herramientas open source para que los agentes de IA tengan memoria propia y cada entregable se juzgue antes de publicarse. Ecosistema construido desde Neiva, Huila, Colombia."
   lang="es"
-  schema={orgSchema}
+  schema={schema}
 >
-<!-- Hero Section -->
-  <section class="relative min-h-[92vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden pt-24 pb-20">
-    <!-- Dot grid — uniform subtle pattern (mask removed: was creating a top-center glow band) -->
-    <div class="absolute inset-0 dot-grid opacity-[0.15] pointer-events-none"></div>
+  <!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
+  <section class="relative overflow-hidden pt-28 pb-16 sm:pt-32 lg:pt-36 lg:pb-24">
+    <div class="absolute inset-0 dot-grid opacity-[0.14] pointer-events-none"></div>
 
-    <div class="max-w-4xl mx-auto w-full relative z-10 text-center">
-      <!-- Eyebrow — release announcement -->
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-corporate-100 border border-corporate-700/30 text-corporate-800 font-mono text-sm mb-8">
-        <span class="w-2 h-2 rounded-full bg-corporate-700"></span>
-        dark-memory v2.11.0 · 49 tools · governance en vivo
-      </div>
-
-      <h1 class="text-5xl sm:text-6xl md:text-7xl font-display font-black text-text-base tracking-tight mb-6 leading-[1.05]">
-        Software que se<br class="hidden sm:block" />
-        <em class="font-display not-italic text-corporate-800">audita a sí mismo.</em>
-      </h1>
-
-      <p class="text-lg sm:text-xl text-text-muted max-w-2xl mx-auto mb-10 leading-relaxed">
-        Infraestructura de governance para agentes de IA. Cada artefacto pasa por un juez antes de publicarse. Construido desde Colombia.
-      </p>
-
-      <!-- CTAs -->
-      <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
-        <a href="#ecosystem" class="px-8 py-3.5 rounded-sm bg-corporate-700 text-white font-mono font-bold hover:bg-corporate-900 w-full sm:w-auto text-center">
-          EXPLORAR EL KERNEL →
-        </a>
-        <a href="https://github.com/Opita-Code" target="_blank" rel="noopener noreferrer" class="px-8 py-3.5 rounded-sm border border-border-strong text-text-base font-mono hover:border-corporate-700/50 w-full sm:w-auto text-center flex justify-center items-center gap-2 group">
-          <svg class="w-5 h-5 text-text-muted group-hover:text-corporate-800" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
-          VER EN GITHUB
-        </a>
-      </div>
-
-      <!-- Code snippet — live judge call -->
-      <div class="mt-16 text-left">
-        <div class="glass rounded-sm overflow-hidden bg-bg-surface/90 border border-border-base">
-          <div class="flex items-center justify-between border-b border-border-base bg-bg-muted/60 px-4 py-3">
-            <div class="flex items-center gap-2">
-              <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-              <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-              <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-            </div>
-            <span class="font-mono text-xs text-text-faint">judge.ts — drift_judge</span>
-            <span class="font-mono text-xs text-status-online">● aligned</span>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
+        <!-- Columna de texto -->
+        <div class="lg:col-span-5">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1.5 border border-accent/30 bg-accent/10 rounded-sm font-mono text-[11px] text-accent-ink mb-7"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+            v4.0.0-alpha.32 · 73 herramientas · MIT
           </div>
-          <div class="p-5 sm:p-6 font-mono text-sm leading-relaxed text-text-muted overflow-x-auto bg-[#0d0d12]">
-            <span class="text-corporate-800">const</span> <span class="text-yellow-200">verdict</span> = <span class="text-corporate-800">await</span> dark_memory.<span class="text-yellow-200">judge</span>(&#123;<br/>
-            <span class="pl-4"></span>&nbsp;&nbsp;eval_type: <span class="text-status-online">'drift_judge'</span>,<br/>
-            <span class="pl-4"></span>&nbsp;&nbsp;artifact: <span class="text-status-online">'spec-793 · hero'</span>,<br/>
-            <span class="pl-4"></span>&nbsp;&nbsp;against: <span class="text-status-online">'spec-793'</span><br/>
-            <span class="pl-4"></span>&#125;);<br/><br/>
-            <span class="text-text-faint">// → verdict persistido en judgment_history</span><br/>
-            <span class="text-corporate-800">verdict</span>: <span class="text-status-online">'aligned'</span>,<br/>
-            <span class="text-corporate-800">confidence</span>: <span class="text-yellow-200">0.98</span>,<br/>
-            <span class="text-corporate-800">drift</span>: <span class="text-text-faint">null</span><br/>
-            <span class="inline-block w-2 h-4 bg-corporate-700 mt-2 animate-pulse"></span>
+
+          <h1
+            class="font-display font-black text-text-base tracking-tight leading-[1.03] text-[2.55rem] sm:text-[3.4rem] lg:text-[3.75rem] mb-7"
+          >
+            Runtime de memoria y governance para agentes de IA.
+          </h1>
+
+          <p class="text-lg sm:text-xl text-text-muted leading-relaxed mb-9 max-w-xl">
+            La memoria entra como contexto y ninguna herramienta puede leerla. Cada entregable se juzga contra su
+            especificación antes de publicarse. Código abierto, escrito en Go, desde Neiva, Huila.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 mb-8">
+            <a
+              href="https://github.com/Opita-Code/dark-memory-mcp"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-sm bg-accent text-white font-mono font-bold hover:brightness-110 transition-colors"
+            >
+              Explorar el kernel →
+            </a>
+            <a
+              href="#contacto"
+              class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-sm border border-border-strong text-text-base font-mono hover:border-accent-ink/60 transition-colors"
+            >
+              Hablar con el equipo
+            </a>
           </div>
+
+          <p class="font-mono text-[11.5px] text-text-faint leading-relaxed">
+            MIT · Go 1.26 · 419 commits · 243 de 243 contribuciones de una sola persona
+          </p>
+        </div>
+
+        <!-- Columna del terminal: la salida real del producto -->
+        <div class="lg:col-span-7" data-reveal>
+          <SessionReplay lines={SESSION} caption={SESSION_CAPTION} subject={SESSION_SUBJECT} />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Services Section -->
-  <section id="servicios" class="py-24 bg-bg-muted border-b border-border-base">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-3">Servicios</h2>
-        <h3 class="text-3xl font-bold text-text-base">Qué hacemos</h3>
-        <p class="mt-4 text-text-muted max-w-2xl mx-auto text-lg">
-          Convertimos necesidades reales en sistemas funcionales. Estas son nuestras líneas de trabajo.
+  <!-- ══ EVIDENCIA ══════════════════════════════════════════════════════════ -->
+  <section class="border-y border-border-base bg-bg-surface/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <p class="font-mono text-[11px] text-text-faint uppercase tracking-[0.18em] mb-8">
+        El estado de este proyecto no se afirma: se mide
+      </p>
+      <dl class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-8">
+        {
+          EVIDENCE.map((m) => (
+            <div data-reveal>
+              <dd class="font-display text-[2.6rem] leading-none font-bold text-text-base tabular-nums mb-2">{m.v}</dd>
+              <dt class="text-[13px] text-text-muted leading-snug mb-1.5">{m.label.es}</dt>
+              <p class="font-mono text-[10.5px] text-text-faint leading-snug">{m.src.es}</p>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- ══ KERNEL ═════════════════════════════════════════════════════════════ -->
+  <section id="kernel" class="py-24 bg-bg-base border-b border-border-base relative overflow-hidden">
+    <div class="absolute inset-0 dot-grid opacity-[0.10] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="max-w-3xl mb-14" data-reveal>
+        <p class="font-mono text-[11px] text-accent-ink uppercase tracking-[0.18em] mb-4">&lt;kernel&gt;</p>
+        <h2 class="font-display font-black text-3xl sm:text-4xl text-text-base leading-[1.08] mb-5">
+          Un sistema nervioso para agentes.
+        </h2>
+        <p class="text-lg text-text-muted leading-relaxed">
+          dark-memory-mcp es la columna vertebral con la que escribimos software. Governance-as-code, no
+          governance-as-policy: la regla se escribe, se ejecuta y queda registrada.
         </p>
       </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Desarrollo a Medida -->
-        <div class="bg-bg-base p-8 rounded-sm border border-border-base">
-          <div class="w-12 h-12 bg-bg-muted border border-border-strong rounded-sm mb-6 flex items-center justify-center text-text-muted">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-            </svg>
-          </div>
-          <h4 class="text-xl font-bold mb-3 text-text-base font-display">Desarrollo a Medida</h4>
-          <p class="text-text-muted leading-relaxed">
-            Aplicaciones web, paneles administrativos, APIs, integraciones y plataformas digitales diseñadas para tu operación.
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+        <article class="border border-border-base rounded-sm p-6 bg-bg-surface/40" data-reveal>
+          <p class="font-mono text-[11px] text-text-faint mb-3">01</p>
+          <h3 class="font-display font-bold text-lg text-text-base mb-2.5">Escribe la spec</h3>
+          <p class="text-[15px] text-text-muted leading-relaxed mb-5">
+            Antes de una línea de código, la intención queda documentada con tareas, dependencias y criterios de
+            aceptación.
           </p>
-        </div>
-
-        <!-- Automatización -->
-        <div class="bg-bg-base p-8 rounded-sm border border-border-base">
-          <div class="w-12 h-12 bg-bg-muted border border-border-strong rounded-sm mb-6 flex items-center justify-center text-text-muted">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
+          <div class="font-mono text-[11.5px] leading-[1.9] bg-[#0b0d12] border border-border-base rounded-sm p-3.5 overflow-x-auto">
+            <span class="text-accent-ink">dark_memory</span>.<span class="text-text-base">vibe_spec</span>(<br />
+            &nbsp;&nbsp;vibe_case: <span class="text-status-online">'C1'</span>,<br />
+            &nbsp;&nbsp;tasks: <span class="text-text-faint">[…]</span><br />
+            )<br />
+            <span class="text-text-faint">→ spec 990 · 7 tareas</span>
           </div>
-          <h4 class="text-xl font-bold mb-3 text-text-base font-display">Automatización</h4>
-          <p class="text-text-muted leading-relaxed">
-            Conectamos tus herramientas, eliminamos tareas repetitivas y creamos flujos de trabajo eficientes que ahorran tiempo y reducen errores.
+        </article>
+
+        <article class="border border-border-base rounded-sm p-6 bg-bg-surface/40" data-reveal style="--reveal-delay: 90ms">
+          <p class="font-mono text-[11px] text-text-faint mb-3">02</p>
+          <h3 class="font-display font-bold text-lg text-text-base mb-2.5">Un juez audita el artefacto</h3>
+          <p class="text-[15px] text-text-muted leading-relaxed mb-5">
+            LLM-as-judge, no LLM-as-author. El veredicto es aligned, drift_detected o needs_human; cuando el juez no
+            puede decidir, el proceso se detiene hasta que alguien responda.
           </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How We Build — vibe-flow pipeline -->
-  <section id="como-construimos" class="py-24 bg-bg-surface/60 border-b border-border-base relative overflow-hidden">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="text-center mb-16">
-        <h2 class="text-sm font-mono text-corporate-800 uppercase tracking-widest mb-3">&lt;how_we_build&gt;</h2>
-        <h3 class="text-3xl sm:text-4xl font-display font-black text-text-base">Vibe-Flow: el pipeline.</h3>
-        <p class="mt-4 text-text-muted max-w-2xl mx-auto text-lg">Cada producto de la organización nace del mismo ciclo de 5 etapas. Nada se salta el proceso, ni siquiera esta página.</p>
-      </div>
-
-      <!-- 5-stage pipeline -->
-      <div class="relative">
-        <!-- Connector line (desktop) -->
-        <div class="hidden lg:block absolute top-8 left-0 right-0 h-px bg-gradient-to-r from-corporate-700/0 via-corporate-700/30 to-corporate-700/0"></div>
-        
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          <!-- Stage 1: Spec -->
-          <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-sm glass border border-corporate-700/30 flex items-center justify-center mb-4">
-              <svg class="w-7 h-7 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </div>
-            <span class="font-mono text-xs text-corporate-800 mb-1">[01]</span>
-            <h4 class="font-display font-bold text-text-base mb-1">Spec</h4>
-            <p class="text-text-muted text-xs leading-relaxed">La intención se documenta antes del código.</p>
+          <div class="font-mono text-[11.5px] leading-[1.9] bg-[#0b0d12] border border-border-base rounded-sm p-3.5 overflow-x-auto">
+            <span class="text-accent-ink">dark_memory</span>.<span class="text-text-base">judge</span>(<br />
+            &nbsp;&nbsp;eval_type: <span class="text-status-online">'drift_judge'</span>,<br />
+            &nbsp;&nbsp;artifact_ref: <span class="text-text-faint">[…]</span>,<br />
+            &nbsp;&nbsp;spec_intent: <span class="text-text-faint">[…]</span><br />
+            )<br />
+            <span class="text-status-warn">→ {JUDGE.verdict}</span>{' '}
+            <span class="text-text-faint">· conf {JUDGE.confidence} · eval {JUDGE.evaluation}</span>
           </div>
+        </article>
 
-          <!-- Stage 2: Artifact -->
-          <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-sm glass border border-border-base flex items-center justify-center mb-4">
-              <svg class="w-7 h-7 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-            </div>
-            <span class="font-mono text-xs text-text-muted mb-1">[02]</span>
-            <h4 class="font-display font-bold text-text-base mb-1">Artifact</h4>
-            <p class="text-text-muted text-xs leading-relaxed">Se construye y se loggea con rastro completo.</p>
+        <article class="border border-border-base rounded-sm p-6 bg-bg-surface/40" data-reveal style="--reveal-delay: 180ms">
+          <p class="font-mono text-[11px] text-text-faint mb-3">03</p>
+          <h3 class="font-display font-bold text-lg text-text-base mb-2.5">Publica con rastro</h3>
+          <p class="text-[15px] text-text-muted leading-relaxed mb-5">
+            Quién escribió, contra qué spec, con qué juez y con qué veredicto. Nada sale a producción sin registro.
+          </p>
+          <div class="font-mono text-[11.5px] leading-[1.9] bg-[#0b0d12] border border-border-base rounded-sm p-3.5 overflow-x-auto">
+            <span class="text-accent-ink">dark_memory</span>.<span class="text-text-base">vibe_publish</span>(<br />
+            &nbsp;&nbsp;spec: <span class="text-text-faint">990</span>,<br />
+            &nbsp;&nbsp;artifact: <span class="text-text-faint">[…]</span><br />
+            )<br />
+            <span class="text-text-faint">→ artifact 606 · drift 622</span>
           </div>
-
-          <!-- Stage 3: Drift -->
-          <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-sm glass border border-border-base flex items-center justify-center mb-4">
-              <svg class="w-7 h-7 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0L6 7m3-1L6 7m0 0L3 6m6-1L6 7m0 0L3 6m9 1h6m-6 4h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </div>
-            <span class="font-mono text-xs text-corporate-800 mb-1">[03]</span>
-            <h4 class="font-display font-bold text-text-base mb-1">Drift</h4>
-            <p class="text-text-muted text-xs leading-relaxed">El juez compara artefacto contra spec.</p>
-          </div>
-
-          <!-- Stage 4: Reconcile -->
-          <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-sm glass border border-border-base flex items-center justify-center mb-4">
-              <svg class="w-7 h-7 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            </div>
-            <span class="font-mono text-xs text-corporate-800 mb-1">[04]</span>
-            <h4 class="font-display font-bold text-text-base mb-1">Reconcile</h4>
-            <p class="text-text-muted text-xs leading-relaxed">Si hay drift, se corrige y se re-audita.</p>
-          </div>
-
-          <!-- Stage 5: Publish -->
-          <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-sm glass border border-status-online/30 flex items-center justify-center mb-4">
-              <svg class="w-7 h-7 text-status-online" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <span class="font-mono text-xs text-status-online mb-1">[05]</span>
-            <h4 class="font-display font-bold text-text-base mb-1">Publish</h4>
-            <p class="text-text-muted text-xs leading-relaxed">Solo sale a producción con verdict aligned.</p>
-          </div>
-        </div>
+        </article>
       </div>
 
-      <!-- Process metrics — editorial asymmetric stat treatment -->
-      <dl class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-8 text-left max-w-4xl">
-        <div>
-          <dt class="font-mono text-xs text-text-faint uppercase tracking-widest mb-2">specs creadas</dt>
-          <dd class="font-display text-5xl font-bold text-text-base tabular-nums">300<span class="text-corporate-700">+</span></dd>
-        </div>
-        <div>
-          <dt class="font-mono text-xs text-text-faint uppercase tracking-widest mb-2">drift reports</dt>
-          <dd class="font-display text-5xl font-bold text-text-base tabular-nums">800<span class="text-corporate-700">+</span></dd>
-        </div>
-        <div>
-          <dt class="font-mono text-xs text-text-faint uppercase tracking-widest mb-2">releases en 2026</dt>
-          <dd class="font-display text-5xl font-bold text-text-base tabular-nums">12</dd>
-        </div>
-        <div>
-          <dt class="font-mono text-xs text-text-faint uppercase tracking-widest mb-2">juez para todo</dt>
-          <dd class="font-display text-5xl font-bold text-text-base tabular-nums">1</dd>
-        </div>
+      <dl class="border border-border-base rounded-sm p-6 sm:p-9 bg-bg-surface/40 grid grid-cols-2 md:grid-cols-5 gap-x-6 gap-y-8">
+        {
+          KERNEL.map((m) => (
+            <div>
+              <dd class="font-display text-[2.4rem] leading-none font-bold text-text-base tabular-nums mb-2">{m.v}</dd>
+              <dt class="text-[13px] text-text-muted leading-snug mb-1.5">{m.label.es}</dt>
+              <p class="font-mono text-[10.5px] text-text-faint leading-snug">{m.src.es}</p>
+            </div>
+          ))
+        }
       </dl>
-
-      <blockquote class="mt-12 text-center font-mono text-sm text-text-faint">
-        "LLM-as-judge, not LLM-as-author."
-      </blockquote>
     </div>
   </section>
 
-  <!-- Changelog preview — latest releases -->
-  <section class="py-20 bg-bg-base border-b border-border-base relative overflow-hidden">
+  <!-- ══ VIBE-FLOW ═══════════════════════════════════════════════════════════ -->
+  <section id="vibe-flow" class="py-24 bg-bg-muted border-b border-border-base">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-12">
+      <div class="max-w-3xl mb-16" data-reveal>
+        <p class="font-mono text-[11px] text-accent-ink uppercase tracking-[0.18em] mb-4">&lt;vibe-flow&gt;</p>
+        <h2 class="font-display font-black text-3xl sm:text-4xl text-text-base leading-[1.08] mb-5">
+          Cómo se construye aquí.
+        </h2>
+        <p class="text-lg text-text-muted leading-relaxed">
+          Cada producto de la organización nace del mismo ciclo de cinco etapas. Nada se salta el proceso. Esta
+          página tampoco.
+        </p>
+      </div>
+
+      <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-5">
+        {
+          [
+            { n: '01', t: 'Spec', d: 'La intención se documenta antes del código.', accent: false },
+            { n: '02', t: 'Artifact', d: 'Se construye y se registra con rastro completo.', accent: false },
+            { n: '03', t: 'Drift', d: 'El juez compara el artefacto contra su spec.', accent: false },
+            { n: '04', t: 'Reconcile', d: 'Si hay drift, se corrige y se vuelve a auditar.', accent: false },
+            { n: '05', t: 'Publish', d: 'Solo sale a producción con veredicto conforme.', accent: true },
+          ].map((s, i) => (
+            <li class="relative" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <div
+                class:list={[
+                  'w-11 h-11 rounded-sm border flex items-center justify-center font-mono text-[11px] mb-4',
+                  s.accent ? 'border-accent/50 text-accent-ink' : 'border-border-base text-text-faint',
+                ]}
+              >
+                {s.n}
+              </div>
+              <h3 class="font-display font-bold text-text-base mb-1.5">{s.t}</h3>
+              <p class="text-[14px] text-text-muted leading-relaxed">{s.d}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <p class="font-mono text-[12px] text-text-faint mt-14">LLM-as-judge, not LLM-as-author.</p>
+    </div>
+  </section>
+
+  <!-- ══ ECOSISTEMA ══════════════════════════════════════════════════════════ -->
+  <section id="ecosistema" class="py-24 bg-bg-base border-b border-border-base">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-14" data-reveal>
+        <p class="font-mono text-[11px] text-accent-ink uppercase tracking-[0.18em] mb-4">&lt;ecosistema&gt;</p>
+        <h2 class="font-display font-black text-3xl sm:text-4xl text-text-base leading-[1.08] mb-5">
+          Un kernel, muchos productos.
+        </h2>
+        <p class="text-lg text-text-muted leading-relaxed">
+          Todo lo que construimos consume el mismo sistema nervioso: memoria, governance y vibe-flow.
+        </p>
+      </div>
+
+      <!-- Kernel -->
+      <p class="font-mono text-[11px] text-text-faint uppercase tracking-[0.18em] mb-5">El kernel</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+        {
+          kernelProducts.map((p) => (
+            <a
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group border border-border-base rounded-sm p-6 hover:border-accent-ink/40 transition-colors bg-bg-surface/40"
+            >
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-display font-bold text-text-base">{p.name}</h3>
+                <span class="font-mono text-[9.5px] tracking-[0.16em] text-text-faint border border-border-base rounded-sm px-2 py-1">
+                  {p.tag}
+                </span>
+              </div>
+              <p class="font-mono text-[11px] text-accent-ink uppercase tracking-[0.14em] mb-3">{p.meta}</p>
+              <p class="text-[14px] text-text-muted leading-relaxed">{p.desc}</p>
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Productos verticales -->
+      <p class="font-mono text-[11px] text-text-faint uppercase tracking-[0.18em] mb-5">Productos verticales</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {
+          verticalProducts.map((p) => (
+            <a
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group border border-border-base rounded-sm p-6 hover:border-accent-ink/40 transition-colors bg-bg-surface/40 flex flex-col"
+            >
+              <div class="flex items-center justify-between mb-4 gap-2">
+                <h3 class="font-display font-bold text-text-base">{p.name}</h3>
+                <span
+                  class:list={[
+                    'font-mono text-[9.5px] tracking-[0.12em] border rounded-sm px-2 py-1 whitespace-nowrap',
+                    p.state === 'live'
+                      ? 'text-status-online border-status-online/40'
+                      : 'text-status-warn border-status-warn/40',
+                  ]}
+                >
+                  {SURFACE_LABELS[p.state].es}
+                </span>
+              </div>
+              <p class="font-mono text-[11px] text-accent-ink uppercase tracking-[0.14em] mb-3">{p.meta}</p>
+              <p class="text-[14px] text-text-muted leading-relaxed">{p.desc}</p>
+            </a>
+          ))
+        }
+      </div>
+      <p class="text-[13px] text-text-faint mt-6 leading-relaxed">
+        Estado verificado el 28 de octubre de 2026. Los proyectos en construcción enlazan a su código: los
+        subdominios públicos todavía no resuelven. Sociedad Opita, el monumento digital, sigue en el ecosistema;
+        Opita Saldo es el loop L9 del plan y todavía no existe como producto publicado.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ RELEASES ═══════════════════════════════════════════════════════════ -->
+  <section class="py-20 bg-bg-muted border-b border-border-base">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-12" data-reveal>
         <div>
-          <h2 class="text-sm font-mono text-corporate-800 uppercase tracking-widest mb-3">&lt;releases&gt;</h2>
-          <h3 class="text-2xl sm:text-3xl font-display font-black text-text-base">Estamos publicando. En serio.</h3>
-          <p class="mt-2 text-text-muted max-w-xl">Sincronizado de GitHub en cada build. Esta página también pasó por el pipeline.</p>
+          <p class="font-mono text-[11px] text-accent-ink uppercase tracking-[0.18em] mb-4">&lt;releases&gt;</p>
+          <h2 class="font-display font-black text-2xl sm:text-3xl text-text-base">Publicamos sin pausa.</h2>
+          <p class="mt-3 text-text-muted max-w-xl">
+            Sincronizado de GitHub en cada build. Esta página también pasó por el pipeline.
+          </p>
         </div>
-        <a href={`/es/blog`} class="font-mono text-xs text-corporate-800 hover:text-text-base transition-colors inline-flex items-center gap-1.5">
+        <a
+          href="/es/blog"
+          class="font-mono text-[12px] text-accent-ink hover:text-text-base transition-colors inline-flex items-center gap-1.5"
+        >
           ver todas las releases <span aria-hidden="true">→</span>
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {releases.map((r) => (
-          <article class="glass rounded-sm p-6 flex flex-col hover:border-corporate-700/30">
-            <div class="flex items-center justify-between mb-3">
-              <h4 class="font-mono font-bold text-lg text-text-base">{r.tag_name}</h4>
-              <span class="text-[10px] font-mono text-text-faint bg-bg-muted border border-border-strong px-2 py-0.5 rounded-sm">
-                {relativeDate(r.published_at)}
-              </span>
-            </div>
-            <p class="text-text-muted text-sm leading-relaxed flex-1">
-              {excerpt(r.body, 160)}
-            </p>
-            <a href={r.html_url} target="_blank" rel="noopener noreferrer" class="mt-4 font-mono text-xs text-corporate-800 hover:text-text-base inline-flex items-center gap-1.5">
-              github →
-            </a>
-          </article>
-        ))}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {
+          releases.map((r) => (
+            <article class="border border-border-base rounded-sm p-6 flex flex-col bg-bg-base/50">
+              <div class="flex items-center justify-between mb-3 gap-3">
+                <h3 class="font-mono font-bold text-text-base">{r.tag_name}</h3>
+                <span class="font-mono text-[10.5px] text-text-faint border border-border-base rounded-sm px-2 py-0.5">
+                  {relativeDate(r.published_at)}
+                </span>
+              </div>
+              <p class="text-[14px] text-text-muted leading-relaxed flex-1">{excerpt(r.body, 160, r.tag_name)}</p>
+              <a
+                href={r.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-4 font-mono text-[11px] text-accent-ink hover:text-text-base inline-flex items-center gap-1.5"
+              >
+                github →
+              </a>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
 
-  <!-- Ecosystem Grid — Kernel + Vertical products -->
-  <section id="ecosystem" class="py-24 bg-bg-surface/60 border-b border-border-base relative overflow-hidden">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="text-center mb-16">
-        <h2 class="text-sm font-mono text-corporate-800 uppercase tracking-widest mb-3">&lt;ecosystem&gt;</h2>
-        <h3 class="text-3xl sm:text-4xl font-display font-black text-text-base">Un kernel, muchos productos.</h3>
-        <p class="mt-4 text-text-muted max-w-2xl mx-auto text-lg">Todo lo que construimos consume el mismo sistema nervioso: governance, memoria y vibe-flow.</p>
+  <!-- ══ SERVICIOS ═══════════════════════════════════════════════════════════ -->
+  <section id="servicios" class="py-24 bg-bg-base border-b border-border-base">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-14" data-reveal>
+        <p class="font-mono text-[11px] text-accent-ink uppercase tracking-[0.18em] mb-4">&lt;servicios&gt;</p>
+        <h2 class="font-display font-black text-3xl sm:text-4xl text-text-base leading-[1.08] mb-5">
+          Cuando lo que necesitas es software hecho para tu operación.
+        </h2>
+        <p class="text-lg text-text-muted leading-relaxed">
+          El kernel es nuestro; el trabajo es tuyo. Desarrollamos, integramos y dejamos el sistema con reglas
+          escritas para que no dependa de una sola persona.
+        </p>
       </div>
 
-      <!-- Kernel row (4 cards) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        <!-- dark-memory-mcp -->
-        <a href="https://github.com/Opita-Code/dark-memory-mcp" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40">
-          <div class="flex items-center justify-between mb-4">
-            <img src="/opita-code-stacked-white-v4.png" alt="dark-memory-mcp" class="h-7 w-auto" />
-            <span class="text-[9px] font-bold tracking-widest bg-corporate-100 text-corporate-800 px-2.5 py-1 rounded-sm border border-corporate-700/30">KERNEL</span>
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-1">dark-memory-mcp</h4>
-          <p class="text-corporate-800 font-mono text-[11px] uppercase tracking-[0.2em] mb-3">v2.11.0 · 49 tools</p>
-          <p class="text-text-muted text-sm leading-relaxed mt-auto">Governance + memory + research como un set unificado de herramientas MCP. Cada artefacto se audita antes de publicarse.</p>
-        </a>
-
-        <!-- dark-research-mcp -->
-        <a href="https://github.com/Opita-Code/dark-research-mcp" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40">
-          <div class="flex items-center justify-between mb-4">
-            <svg class="w-7 h-7 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            <span class="text-[9px] font-bold tracking-widest bg-corporate-100 text-corporate-800 px-2.5 py-1 rounded-sm border border-corporate-700/30">KERNEL</span>
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-1">dark-research-mcp</h4>
-          <p class="text-corporate-800 font-mono text-[11px] uppercase tracking-[0.2em] mb-3">13 backends OSINT</p>
-          <p class="text-text-muted text-sm leading-relaxed mt-auto">CVE, dominios, IPs, papers, noticias, dark web. Investigación primaria con fuentes verificables.</p>
-        </a>
-
-        <!-- ocais -->
-        <a href="https://github.com/Opita-Code/ocais" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40">
-          <div class="flex items-center justify-between mb-4">
-            <svg class="w-7 h-7 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-            <span class="text-[9px] font-bold tracking-widest bg-corporate-100 text-corporate-800 px-2.5 py-1 rounded-sm border border-corporate-700/30">SDK</span>
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-1">ocais</h4>
-          <p class="text-corporate-800 font-mono text-[11px] uppercase tracking-[0.2em] mb-3">npm v3.0.1</p>
-          <p class="text-text-muted text-sm leading-relaxed mt-auto">SDK de streaming IA para AWS Lambda. Zero deps, TypeScript-first. El puente entre LLMs y serverless.</p>
-        </a>
-
-        <!-- opita-os (private) -->
-        <div class="glass rounded-sm p-6 flex flex-col opacity-80">
-          <div class="flex items-center justify-between mb-4">
-            <svg class="w-7 h-7 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-            <span class="text-[9px] font-bold tracking-widest bg-bg-muted text-text-muted px-2.5 py-1 rounded-sm border border-border-base">CORE · PRIVADO</span>
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-1">opita-os</h4>
-          <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-3">SSOT · vault · SSO</p>
-          <p class="text-text-muted text-sm leading-relaxed mt-auto">El runtime privado: OpenSpec, Brand Engine, vault cifrado y SSO que sostienen a todo el ecosistema.</p>
-        </div>
-      </div>
-
-      <!-- Vertical products row (4 cards) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Vibe Studio -->
-        <a href="https://vibe.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40 border-t-2 border-t-corporate-700">
-          <div class="w-11 h-11 rounded-sm mb-4 overflow-hidden bg-bg-muted border border-border-strong flex items-center justify-center">
-            <img src="/vibe-logo.svg" alt="Vibe Studio" class="w-7 h-7 object-contain" />
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-1">Vibe Studio</h4>
-          <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-3">vibe.opitacode.com</p>
-          <p class="text-text-muted text-sm leading-relaxed mt-auto">IDE de vibe-coding en español. Cada generación gobernada por el kernel.</p>
-        </a>
-
-        <!-- Opita Market -->
-        <a href="https://market.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40 border-t-2 border-t-corporate-700">
-          <div class="w-11 h-11 rounded-sm mb-4 bg-bg-muted border border-border-strong flex items-center justify-center">
-            <svg class="w-6 h-6 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-1">Opita Market</h4>
-          <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-3">market.opitacode.com</p>
-          <p class="text-text-muted text-sm leading-relaxed mt-auto">Marketplace B2B+B2C colombiano con compliance Ley 1581 desde el día uno.</p>
-        </a>
-
-        <!-- Sociedad Opita -->
-        <a href="https://sociedad.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40 border-t-2 border-t-corporate-700">
-          <div class="w-11 h-11 rounded-sm mb-4 bg-bg-muted border border-border-strong flex items-center justify-center">
-            <svg class="w-6 h-6 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-1">Sociedad Opita</h4>
-          <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-3">sociedad.opitacode.com</p>
-          <p class="text-text-muted text-sm leading-relaxed mt-auto">Monumento digital vivo del opita. Dialecto, memoria y 41 perfiles psicométricos.</p>
-        </a>
-
-        <!-- Developer Web -->
-        <a href="https://developer.opitacode.com" target="_blank" rel="noopener noreferrer" class="group glass rounded-sm p-6 flex flex-col hover:border-corporate-700/40 border-t-2 border-t-corporate-700">
-          <div class="w-11 h-11 rounded-sm mb-4 bg-bg-muted border border-border-strong flex items-center justify-center">
-            <img src="/opita-code-stacked-white-v4.png" alt="Developer" class="h-6 w-auto" />
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-1">Developer</h4>
-          <p class="text-text-muted font-mono text-[11px] uppercase tracking-[0.2em] mb-3">developer.opitacode.com</p>
-          <p class="text-text-muted text-sm leading-relaxed mt-auto">Identidad del Opita Developer. Terminal interactiva y arquitectura en vivo.</p>
-        </a>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {
+          [
+            {
+              t: 'Desarrollo a medida',
+              d: 'Aplicaciones web, paneles, APIs e integraciones diseñadas contra tu operación real, no contra una plantilla.',
+              items: ['Arquitectura y alcance', 'Desarrollo iterativo', 'Entrega con documentación'],
+            },
+            {
+              t: 'Automatización',
+              d: 'Conectamos tus herramientas y eliminamos las tareas repetitivas, con flujo de trabajo que se puede auditar.',
+              items: ['Mapeo del proceso', 'Integraciones', 'Trazabilidad por paso'],
+            },
+            {
+              t: 'Infraestructura de agentes',
+              d: 'Si tu agente necesita memoria propia, identidad o un juez antes de actuar, el kernel ya está escrito.',
+              items: ['Memoria persistente', 'Governance-as-code', 'Auditoría por artefacto'],
+            },
+          ].map((s, i) => (
+            <article
+              class="border border-border-base rounded-sm p-7 bg-bg-surface/40"
+              data-reveal
+              style={`--reveal-delay:${i * 80}ms`}
+            >
+              <h3 class="font-display font-bold text-xl text-text-base mb-3">{s.t}</h3>
+              <p class="text-[15px] text-text-muted leading-relaxed mb-5">{s.d}</p>
+              <ul class="space-y-2">
+                {s.items.map((it) => (
+                  <li class="flex items-start gap-2.5 text-[13.5px] text-text-muted">
+                    <span class="text-accent-ink mt-[3px]" aria-hidden="true">
+                      →
+                    </span>
+                    <span>{it}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
 
-  <!-- The Kernel — governance-as-code deep-dive -->
-  <section id="kernel" class="py-24 bg-bg-base border-b border-border-base relative overflow-hidden">
-    <div class="absolute inset-0 dot-grid opacity-[0.10] pointer-events-none"></div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="text-center mb-16">
-        <h2 class="text-sm font-mono text-corporate-800 uppercase tracking-widest mb-3">&lt;kernel&gt;</h2>
-        <h3 class="text-3xl sm:text-4xl font-display font-black text-text-base">Un sistema nervioso para agentes.</h3>
-        <p class="mt-4 text-text-muted max-w-2xl mx-auto text-lg">dark-memory-mcp no es una librería más: es la columna vertebral de cómo escribimos código. Governance-as-code, no governance-as-policy.</p>
-      </div>
-
-      <!-- 3 visual steps: spec → judge → publish -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
-        <!-- Step 1: Spec -->
-        <div class="glass rounded-sm p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-sm bg-corporate-100 border border-corporate-700/30 flex items-center justify-center">
-              <svg class="w-5 h-5 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </div>
-            <span class="font-mono text-xs text-text-faint">[01]</span>
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-2">Escribe la spec</h4>
-          <p class="text-text-muted text-sm leading-relaxed">Antes de una sola línea de código, la intención queda documentada en OpenSpec con tareas, dependencias y criterios de aceptación.</p>
-          <div class="mt-4 font-mono text-xs bg-[#0d0d12] border border-border-base rounded-sm p-3 overflow-x-auto">
-            <span class="text-corporate-800">dark_memory</span>.<span class="text-yellow-200">vibe_spec</span>(&#123; vibe_case: <span class="text-status-online">'C1'</span>, tasks: <span class="text-text-faint">[...]</span> &#125;)
-          </div>
-        </div>
-
-        <!-- Step 2: Judge -->
-        <div class="glass rounded-sm p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-sm bg-corporate-100 border border-corporate-700/30 flex items-center justify-center">
-              <svg class="w-5 h-5 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0L6 7m3-1L6 7m0 0L3 6m6-1L6 7m0 0L3 6m9 1h6m-6 4h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </div>
-            <span class="font-mono text-xs text-text-faint">[02]</span>
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-2">Un juez audita el artefacto</h4>
-          <p class="text-text-muted text-sm leading-relaxed">LLM-as-judge, no LLM-as-author. Cada artefacto se compara contra su spec y emite verdict: aligned, drift_detected o needs_human.</p>
-          <div class="mt-4 font-mono text-xs bg-[#0d0d12] border border-border-base rounded-sm p-3 overflow-x-auto">
-            <span class="text-text-faint">// verdict persistido en judgment_history</span><br/>
-            <span class="text-corporate-800">verdict</span>: <span class="text-status-online">'aligned'</span> · conf <span class="text-yellow-200">0.98</span>
-          </div>
-        </div>
-
-        <!-- Step 3: Publish -->
-        <div class="glass rounded-sm p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-sm bg-status-online/10 border border-status-online/30 flex items-center justify-center">
-              <svg class="w-5 h-5 text-status-online" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <span class="font-mono text-xs text-text-faint">[03]</span>
-          </div>
-          <h4 class="font-display font-bold text-text-base mb-2">Publica con transparencia</h4>
-          <p class="text-text-muted text-sm leading-relaxed">Todo el ciclo queda en write_audit: quién escribió, qué spec, qué juez, qué verdict. Nada se publica sin rastro.</p>
-          <div class="mt-4 font-mono text-xs bg-[#0d0d12] border border-border-base rounded-sm p-3 overflow-x-auto">
-            <span class="text-status-online">✓ drift: aligned</span> · <span class="text-text-faint">write_audit #5572</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Live metrics strip — editorial asymmetric stat treatment -->
-      <div class="glass rounded-sm p-6 sm:p-10">
-        <dl class="grid grid-cols-2 md:grid-cols-5 gap-x-6 gap-y-8 text-left">
-          <div>
-            <dt class="font-mono text-xs text-text-faint uppercase tracking-widest mb-2">tools canónicas</dt>
-            <dd class="font-display text-5xl font-bold text-text-base tabular-nums">49</dd>
-          </div>
-          <div>
-            <dt class="font-mono text-xs text-text-faint uppercase tracking-widest mb-2">release actual</dt>
-            <dd class="font-display text-3xl font-bold text-text-base tabular-nums">v2.11.0</dd>
-          </div>
-          <div>
-            <dt class="font-mono text-xs text-text-faint uppercase tracking-widest mb-2">versión de datos</dt>
-            <dd class="font-display text-5xl font-bold text-text-base tabular-nums">schema 25</dd>
-          </div>
-          <div>
-            <dt class="font-mono text-xs text-text-faint uppercase tracking-widest mb-2">tests en main</dt>
-            <dd class="font-display text-5xl font-bold text-text-base tabular-nums">320<span class="text-corporate-700">+</span></dd>
-          </div>
-          <div>
-            <dt class="font-mono text-xs text-text-faint uppercase tracking-widest mb-2">backends OSINT</dt>
-            <dd class="font-display text-5xl font-bold text-text-base tabular-nums">13</dd>
-          </div>
-        </dl>
-        <p class="text-left text-xs font-mono text-text-faint mt-8">métricas de build-time · GitHub API en T11</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- About — asymmetric 60/40 -->
+  <!-- ══ ABOUT ══════════════════════════════════════════════════════════════ -->
   <section id="about" class="py-24 bg-bg-muted border-b border-border-base">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-7 gap-10 items-start">
-        <!-- Org statement — 60% -->
-        <div class="md:col-span-4">
-          <h2 class="text-sm font-mono text-corporate-800 uppercase tracking-widest mb-3">&lt;about&gt;</h2>
-          <h3 class="text-2xl sm:text-4xl font-display font-black text-text-base mb-6 leading-[1.1]">Software práctico para negocios reales.</h3>
+      <div class="grid grid-cols-1 md:grid-cols-7 gap-12 items-start">
+        <div class="md:col-span-4" data-reveal>
+          <p class="font-mono text-[11px] text-accent-ink uppercase tracking-[0.18em] mb-4">&lt;acerca&gt;</p>
+          <h2 class="font-display font-black text-2xl sm:text-4xl text-text-base mb-6 leading-[1.1]">
+            Software práctico para negocios reales.
+          </h2>
           <p class="text-text-muted leading-relaxed text-lg mb-6">
-            <em class="font-display text-text-base">Soy Nico,</em> opita de Neiva. Construyo Opita Code con identidad local y ambición global: infraestructura de governance para agentes de IA, y productos verticales que la demuestran en serio.
+            <em class="font-display not-italic text-text-base">Soy Nico,</em> opita de Neiva. Construyo Opita Code con
+            identidad local y ambición global: la infraestructura de memoria y governance para agentes de IA, y los
+            productos verticales que la demuestran.
           </p>
           <p class="text-text-muted leading-relaxed mb-8">
-            Organizo software con el mismo principio con que se organiza una plaza: con juez, con rastro y con la gente que lo usa.
+            Organizo el software con el mismo principio con que se organiza una plaza: con juez, con rastro y con la
+            gente que lo usa.
           </p>
           <div class="flex flex-wrap gap-3">
-            <span class="inline-flex items-center gap-2 font-mono text-xs bg-bg-surface border border-border-base rounded-sm px-3 py-1.5 text-text-muted">
-              <svg class="w-4 h-4 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span class="inline-flex items-center gap-2 font-mono text-[11.5px] bg-bg-base border border-border-base rounded-sm px-3 py-1.5 text-text-muted">
               Neiva, Huila, Colombia
             </span>
-            <span class="inline-flex items-center gap-2 font-mono text-xs bg-bg-surface border border-border-base rounded-sm px-3 py-1.5 text-text-muted">
-              <svg class="w-4 h-4 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span class="inline-flex items-center gap-2 font-mono text-[11.5px] bg-bg-base border border-border-base rounded-sm px-3 py-1.5 text-text-muted">
               open-source-first
             </span>
           </div>
         </div>
 
-        <!-- Founder — 40% -->
-        <aside class="md:col-span-3 glass rounded-sm p-6 sm:p-8">
+        <aside class="md:col-span-3 border border-border-base rounded-sm p-7 bg-bg-base/50" data-reveal style="--reveal-delay: 90ms">
           <div class="flex items-center gap-4 mb-4">
             <div class="w-14 h-14 shrink-0 rounded-sm overflow-hidden border border-border-base">
               <img src="/founder.jpg" alt="Juan Nicolás Urrutia Salcedo" class="w-full h-full object-cover" />
             </div>
             <div>
               <p class="font-display font-bold text-text-base">Juan Nicolás Urrutia</p>
-              <p class="text-sm text-text-muted">Fundador &amp; Desarrollador</p>
+              <p class="text-sm text-text-muted">Fundador y desarrollador</p>
             </div>
           </div>
-          <p class="text-sm text-text-muted leading-relaxed mb-4">
+          <p class="text-[14.5px] text-text-muted leading-relaxed mb-4">
             Construyo sistemas que se auditan a sí mismos. En vivo, en público y desde el sur global.
           </p>
-          <a href="https://www.linkedin.com/in/nicourrutia98/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 font-mono text-xs text-corporate-800 hover:text-text-base">
+          <a
+            href="https://www.linkedin.com/in/nicourrutia98/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 font-mono text-[11.5px] text-accent-ink hover:text-text-base"
+          >
             linkedin →
           </a>
         </aside>
@@ -494,84 +680,90 @@ const orgSchema = {
     </div>
   </section>
 
-<!-- Contact Section -->
-  <section id="contact" class="py-24 bg-bg-base relative overflow-hidden">
+  <!-- ══ CONTACTO ════════════════════════════════════════════════════════════ -->
+  <section id="contacto" class="py-24 bg-bg-base relative overflow-hidden">
     <div class="absolute inset-0 dot-grid opacity-[0.10] pointer-events-none"></div>
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        <!-- Left: pitch + contact info -->
-        <div>
-          <h2 class="text-sm font-mono text-corporate-800 uppercase tracking-widest mb-3">&lt;contact&gt;</h2>
-          <h3 class="text-3xl sm:text-4xl font-display font-black text-text-base mb-4">Cuéntame qué necesitas</h3>
-          <p class="text-text-muted text-lg leading-relaxed mb-8">
-            ¿Un agente que necesite governance? ¿Un producto que demuestre el kernel? Te respondo en menos de 24 horas, sin formularios eternos.
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+        <div data-reveal>
+          <p class="font-mono text-[11px] text-accent-ink uppercase tracking-[0.18em] mb-4">&lt;contacto&gt;</p>
+          <h2 class="font-display font-black text-3xl sm:text-4xl text-text-base mb-5 leading-[1.08]">
+            Cuéntame qué hay que construir.
+          </h2>
+          <p class="text-lg text-text-muted leading-relaxed mb-9">
+            ¿Un agente que necesite governance? ¿Un producto que demuestre el kernel? Respondo en menos de 24 horas,
+            sin formularios eternos.
           </p>
 
-          <div class="space-y-4 mb-10">
+          <div class="space-y-4 mb-9">
             <a href="mailto:owner@opitacode.com" class="flex items-center gap-3 text-text-muted hover:text-text-base group">
-              <span class="w-10 h-10 rounded-sm glass flex items-center justify-center group-hover:border-corporate-700/40">
-                <svg class="w-5 h-5 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              <span class="w-9 h-9 rounded-sm border border-border-base flex items-center justify-center group-hover:border-accent-ink/40">
+                <svg class="w-4 h-4 text-accent-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
               </span>
-              <span class="font-mono text-sm">owner@opitacode.com</span>
+              <span class="font-mono text-[13px]">owner@opitacode.com</span>
             </a>
             <a href="https://wa.me/573126126085" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-text-muted hover:text-text-base group">
-              <span class="w-10 h-10 rounded-sm glass flex items-center justify-center group-hover:border-corporate-700/40">
-                <svg class="w-5 h-5 text-corporate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              <span class="w-9 h-9 rounded-sm border border-border-base flex items-center justify-center group-hover:border-accent-ink/40">
+                <svg class="w-4 h-4 text-accent-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
               </span>
-              <span class="font-mono text-sm">WhatsApp · +57 312 612 6085</span>
+              <span class="font-mono text-[13px]">WhatsApp · +57 312 612 6085</span>
             </a>
             <div class="flex items-center gap-3 text-text-muted">
-              <span class="w-10 h-10 rounded-sm glass flex items-center justify-center">
-                <svg class="w-5 h-5 text-status-online" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              <span class="w-9 h-9 rounded-sm border border-border-base flex items-center justify-center">
+                <svg class="w-4 h-4 text-accent-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
               </span>
-              <span class="font-mono text-sm">Neiva, Huila, Colombia</span>
+              <span class="font-mono text-[13px]">Neiva, Huila, Colombia</span>
             </div>
           </div>
 
-          <!-- Social proof badges -->
           <div class="flex flex-wrap gap-3">
-            <a href="https://github.com/Opita-Code" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-mono text-xs bg-bg-surface border border-border-base rounded-sm px-3 py-1.5 text-text-muted hover:border-corporate-700/40">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+            <a href="https://github.com/Opita-Code" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-mono text-[11.5px] bg-bg-surface border border-border-base rounded-sm px-3 py-1.5 text-text-muted hover:border-accent-ink/40">
+              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
               GitHub org
             </a>
-            <a href="https://www.npmjs.com/package/@opitacode/ocais" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-mono text-xs bg-bg-surface border border-border-base rounded-sm px-3 py-1.5 text-text-muted hover:border-corporate-700/40">
-              <svg class="w-4 h-4 text-yellow-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+            <a href="https://www.npmjs.com/package/@opitacode/ocais" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-mono text-[11.5px] bg-bg-surface border border-border-base rounded-sm px-3 py-1.5 text-text-muted hover:border-accent-ink/40">
               @opitacode/ocais en npm
             </a>
-            <span class="inline-flex items-center gap-2 font-mono text-xs bg-corporate-100 border border-corporate-700/30 rounded-sm px-3 py-1.5 text-corporate-800">
+            <span class="inline-flex items-center gap-2 font-mono text-[11.5px] bg-accent/10 border border-accent/30 rounded-sm px-3 py-1.5 text-accent-ink">
               built with vibe-flow
             </span>
           </div>
         </div>
 
-        <!-- Right: form -->
-        <div class="glass rounded-sm p-6 sm:p-8">
+        <div class="border border-border-base rounded-sm p-6 sm:p-8 bg-bg-surface/40" data-reveal style="--reveal-delay: 90ms">
           <ContactForm client:load lang="es" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Final CTA -->
-  <section class="relative overflow-hidden py-24 border-t border-border-base">
-<div class="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border-base)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border-base)_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20 pointer-events-none"></div>
+  <!-- ══ CTA FINAL ═══════════════════════════════════════════════════════════ -->
+  <section class="relative overflow-hidden py-24 border-t border-border-base bg-bg-muted">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-      <h2 class="text-3xl sm:text-5xl font-display font-black text-text-base mb-4 leading-[1.05]">
-        Construye con <em class="font-display not-italic text-corporate-800">governance</em>.
+      <h2 class="font-display font-black text-3xl sm:text-5xl text-text-base mb-5 leading-[1.05]">
+        Construye con <em class="font-display not-italic text-accent-ink">governance</em>.
       </h2>
       <p class="text-lg text-text-muted max-w-2xl mx-auto mb-10 leading-relaxed">
-        Integra dark-memory en tu stack de agentes, o colabora con el kernel open-source. Sin humo, con juez y con rastro.
+        Integra dark-memory en tu stack de agentes, o adopta el kernel open-source. Sin humo, con juez y con rastro.
       </p>
-      <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
-        <a href="https://github.com/Opita-Code/dark-memory-mcp" target="_blank" rel="noopener noreferrer" class="px-8 py-3.5 rounded-sm bg-corporate-700 text-white font-mono font-bold hover:bg-corporate-900 w-full sm:w-auto text-center">
+      <div class="flex flex-col sm:flex-row items-center gap-3.5 justify-center">
+        <a
+          href="https://github.com/Opita-Code/dark-memory-mcp"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-7 py-3.5 rounded-sm bg-accent text-white font-mono font-bold hover:brightness-110 transition-colors w-full sm:w-auto text-center"
+        >
           Ver dark-memory-mcp en GitHub →
         </a>
-        <a href="https://cal.com" target="_blank" rel="noopener noreferrer" class="px-8 py-3.5 rounded-sm border border-border-strong text-text-base font-mono hover:border-corporate-700/50 w-full sm:w-auto text-center">
-          Agenda una llamada conmigo
+        <a
+          href="#contacto"
+          class="px-7 py-3.5 rounded-sm border border-border-strong text-text-base font-mono hover:border-accent-ink/60 transition-colors w-full sm:w-auto text-center"
+        >
+          Agenda una llamada
         </a>
       </div>
-      <p class="mt-8 font-mono text-xs text-text-faint">
-        dark-memory-mcp v2.11.0 · 49 tools · open-source · MIT
+      <p class="mt-8 font-mono text-[11.5px] text-text-faint">
+        dark-memory-mcp v4.0.0-alpha.32 · 73 herramientas · MIT · Go
       </p>
     </div>
   </section>

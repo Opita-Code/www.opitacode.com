@@ -51,6 +51,13 @@
   --color-status-online: #22c55e;
   --color-status-warn: #eab308;
 
+  /* Accent — single saturated hue, the official Opita Code brand token (brand.css).
+     One accent on the whole page: fills, rules, the live dot, the primary CTA.
+     `accent-ink` is the same hue at a lightness that passes WCAG AA as small
+     text on the dark surface (#111827): #c2410c alone is only 3.4:1 there. */
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+
   /* Typography — anti-AI-slop duo */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-display: 'Fraunces', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
@@ -75,6 +82,10 @@
     --corporate-700: #D1D5DB;
     --corporate-100: #374151;
     --corporate-50: #1F2937;
+
+    /* Accent — brand hue, two steps: the fill and the ink that reads as text */
+    --accent: #c2410c;
+    --accent-ink: #f07c46;   /* 6.4:1 sobre #111827 — AA para texto pequeño */
   }
 
   /* Light mode — tuned for WCAG AA against off-white #FAFAF9 (contrast verified) */
@@ -93,6 +104,10 @@
     --corporate-700: #374151;
     --corporate-100: #E8E5DF;
     --corporate-50: #F1EFEC;
+
+    /* Accent — same hue; on the light surface #c2410c is 4.9:1, AA sin tinta clara */
+    --accent: #c2410c;
+    --accent-ink: #c2410c;
   }
 
   /* System preference fallback — dark first */
@@ -112,6 +127,9 @@
       --corporate-700: #D1D5DB;
       --corporate-100: #374151;
       --corporate-50: #1F2937;
+
+      --accent: #c2410c;
+      --accent-ink: #f07c46;
     }
   }
 
@@ -166,13 +184,36 @@
 
   /* Craft signals — selection + focus + reduced motion (anti-AI-slop §1) */
   ::selection {
-    background: var(--corporate-700);
-    color: var(--bg-base);
+    background: var(--accent);
+    color: #FFFFFF;
   }
   :focus-visible {
-    outline: 2px solid var(--corporate-700);
+    outline: 2px solid var(--accent-ink);
     outline-offset: 3px;
     border-radius: 0;
+  }
+
+  /* Reveal — una entrada discreta por bloque, sin rebote.
+     DECISION DE SEGURIDAD: el reveal mueve SOLO transform, nunca opacity.
+     Una entrada que arranca en opacity 0 deja el contenido invisible si la
+     linea de tiempo de animacion no avanza (ventana sin pintar, pestaña en
+     segundo plano, ahorro de energia). Con transform, el peor caso es que el
+     bloque quede 10 px mas abajo de lo debido: nunca invisible.
+     El reveal se dispara con IntersectionObserver y tiene red de seguridad. */
+  [data-reveal] {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+  [data-reveal].is-revealed {
+    transform: none;
+    transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      transform: none;
+      transition: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

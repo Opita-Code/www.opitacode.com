@@ -10,6 +10,21 @@ interface Props {
 }
 
 const { title, description, lang, schema } = Astro.props;
+
+const nav = [
+  { href: '#kernel', label: { es: 'Kernel', en: 'Kernel' } },
+  { href: '#vibe-flow', label: { es: 'Cómo funciona', en: 'How it works' } },
+  { href: '#ecosystem', label: { es: 'Ecosistema', en: 'Ecosystem' } },
+  { href: lang === 'es' ? '#servicios' : '#services', label: { es: 'Servicios', en: 'Services' } },
+];
+
+const products = [
+  { href: 'https://github.com/Opita-Code/opita-vibe-studio', label: 'Vibe Studio' },
+  { href: 'https://github.com/Opita-Code/opita-market', label: 'Opita Market' },
+  { href: 'https://github.com/Opita-Code/sociedad-opita-app', label: 'Sociedad Opita' },
+  { href: 'https://github.com/Opita-Code/opita-developer-web', label: 'Developer' },
+  { href: 'https://cuentas.opitacode.com', label: { es: 'Cuentas', en: 'Accounts' } },
+];
 ---
 
 <!doctype html>
@@ -19,10 +34,9 @@ const { title, description, lang, schema } = Astro.props;
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#111827" />
-    <!-- Brand favicon: SVG `>_` prompt in corporate token -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22 fill=%22%23D1D5DB%22 font-family=%22monospace%22 font-weight=%22bold%22>>_</text></svg>" />
 
-    <!-- Variable fonts — preload critical editorial display + body (anti-AI-slop §1) -->
+    <!-- Variable fonts — preload critical editorial display + body -->
     <link rel="preload" href="/fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin />
 
@@ -46,16 +60,14 @@ const { title, description, lang, schema } = Astro.props;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL('/og-image.svg', Astro.site)} />
-    
+
     <!-- i18n Alternate Links -->
     <link rel="alternate" hreflang="es" href={new URL('/es', Astro.site)} />
     <link rel="alternate" hreflang="en" href={new URL('/en', Astro.site)} />
     <link rel="alternate" hreflang="x-default" href={new URL('/es', Astro.site)} />
 
     <!-- JSON-LD -->
-    {schema && (
-      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-    )}
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
     <!-- Theme Manager -->
     <script is:inline>
@@ -73,29 +85,48 @@ const { title, description, lang, schema } = Astro.props;
           <img src="/opita-code-stacked-white-v4.png" alt="Opita Code" class="h-8 w-auto" />
           <span class="text-text-base font-display font-bold transition-colors hidden sm:inline">OPITA&nbsp;CODE</span>
         </a>
-        <nav class="hidden md:flex gap-8 text-sm font-medium items-center">
-          <a href={`/${lang}#ecosystem`} class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Ecosistema' : 'Ecosystem'}</a>
-          <a href={`/${lang}#kernel`} class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Kernel' : 'Kernel'}</a>
-          <a href={`/${lang}/blog`} class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Blog' : 'Blog'}</a>
-          <a href={`/${lang}#contact`} class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Contacto' : 'Contact'}</a>
-          <a href={`https://github.com/Opita-Code`} target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors flex items-center gap-1.5">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+
+        <nav class="hidden md:flex gap-7 text-sm font-medium items-center">
+          {
+            nav.map((n) => (
+              <a href={`/${lang}${n.href}`} class="text-text-muted hover:text-text-base transition-colors">
+                {n.label[lang]}
+              </a>
+            ))
+          }
+          <a href={`/${lang}/blog`} class="text-text-muted hover:text-text-base transition-colors">
+            {lang === 'es' ? 'Blog' : 'Blog'}
+          </a>
+          <a
+            href="https://github.com/Opita-Code"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-text-muted hover:text-text-base transition-colors flex items-center gap-1.5"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 1.688 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
             GitHub
           </a>
-          <div class="h-4 w-px bg-border-base"></div>
-          <a href="https://cuenta.opitacode.com" class="px-5 py-2 rounded-sm border border-border-strong text-text-base font-mono text-xs hover:border-corporate-700/50">{lang === 'es' ? 'Mi Cuenta' : 'My Account'}</a>
         </nav>
-        <div class="flex items-center gap-4">
+
+        <div class="flex items-center gap-3">
           <div class="text-xs font-mono bg-bg-muted px-2 py-1 rounded-sm text-text-muted border border-border-strong flex items-center h-full">
             <a href="/es" class={lang === 'es' ? 'font-bold text-text-base' : ''}>ES</a>
             <span class="opacity-50 mx-1">/</span>
             <a href="/en" class={lang === 'en' ? 'font-bold text-text-base' : ''}>EN</a>
           </div>
           <ThemeToggle />
+          <a
+            href="https://github.com/Opita-Code/dark-memory-mcp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hidden sm:inline-flex items-center px-4 py-2 rounded-sm bg-accent text-white font-mono text-xs font-bold hover:brightness-110 transition-colors"
+          >
+            {lang === 'es' ? 'Explorar el kernel' : 'Explore the kernel'}
+          </a>
         </div>
       </div>
     </header>
-    
+
     <main class="flex-grow">
       <slot />
     </main>
@@ -114,29 +145,57 @@ const { title, description, lang, schema } = Astro.props;
             </p>
           </div>
           <div>
-            <h4 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-4">{lang === 'es' ? 'Productos' : 'Products'}</h4>
+            <h4 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-4">
+              {lang === 'es' ? 'Productos' : 'Products'}
+            </h4>
             <ul class="space-y-2.5 text-sm">
-              <li><a href="https://vibe.opitacode.com" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">Vibe Studio</a></li>
-              <li><a href="https://market.opitacode.com" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">Opita Market</a></li>
-              <li><a href="https://sociedad.opitacode.com" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">Sociedad Opita</a></li>
-              <li><a href="https://developer.opitacode.com" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">Developer</a></li>
+              {
+                products.map((p) => (
+                  <li>
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-text-muted hover:text-text-base transition-colors"
+                    >
+                      {typeof p.label === 'string' ? p.label : p.label[lang]}
+                    </a>
+                  </li>
+                ))
+              }
             </ul>
           </div>
           <div>
-            <h4 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-4">{lang === 'es' ? 'Open Source' : 'Open Source'}</h4>
+            <h4 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-4">Open Source</h4>
             <ul class="space-y-2.5 text-sm">
-              <li><a href="https://github.com/Opita-Code/dark-memory-mcp" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">dark-memory-mcp</a></li>
-              <li><a href="https://github.com/Opita-Code/dark-research-mcp" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">dark-research-mcp</a></li>
-              <li><a href="https://github.com/Opita-Code/ocais" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">ocais</a></li>
-              <li><a href="https://github.com/Opita-Code" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">GitHub Org →</a></li>
+              <li>
+                <a href="https://github.com/Opita-Code/dark-memory-mcp" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">dark-memory-mcp</a>
+              </li>
+              <li>
+                <a href="https://github.com/Opita-Code/dark-research-mcp" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">dark-research-mcp</a>
+              </li>
+              <li>
+                <a href="https://github.com/Opita-Code/ocais" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">ocais</a>
+              </li>
+              <li>
+                <a href="https://github.com/Opita-Code" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-text-base transition-colors">GitHub Org →</a>
+              </li>
             </ul>
           </div>
           <div>
-            <h4 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-4">{lang === 'es' ? 'Legal' : 'Legal'}</h4>
+            <h4 class="text-sm font-mono text-text-muted uppercase tracking-widest mb-4">
+              {lang === 'es' ? 'Legal' : 'Legal'}
+            </h4>
             <ul class="space-y-2.5 text-sm">
-              <li><a href="/legal/privacidad.html" class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
-              <li><a href="/legal/terminos.html" class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Términos' : 'Terms'}</a></li>
-              <li><a href="/legal/cookies.html" class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Cookies' : 'Cookies'}</a></li>
+              <li>
+                <a href="/legal/privacidad.html" class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a>
+              </li>
+              <li>
+                <a href="/legal/terminos.html" class="text-text-muted hover:text-text-base transition-colors">{lang === 'es' ? 'Términos' : 'Terms'}</a>
+              </li>
+              <li>
+                <a href="/legal/cookies.html" class="text-text-muted hover:text-text-base transition-colors">Cookies</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -145,12 +204,57 @@ const { title, description, lang, schema } = Astro.props;
             <img src="/opita-code-stacked-white-v4.png" alt="Opita Code" class="h-5 w-auto opacity-80" />
             <span class="text-sm text-text-muted font-medium">© {new Date().getFullYear()} Opita Code.</span>
           </div>
-          <div class="text-sm text-corporate-800">
-            {lang === 'es' ? 'Software práctico para negocios reales. Hecho en Colombia 🇨🇴' : 'Practical software for real businesses. Made in Colombia 🇨🇴'}
+          <div class="text-sm text-text-muted">
+            {lang === 'es'
+              ? 'Software práctico para negocios reales. Hecho en Colombia.'
+              : 'Practical software for real businesses. Made in Colombia.'}
           </div>
         </div>
       </div>
     </footer>
+
+    <!-- Reveal — una sola entrada por bloque, sin rebote. Se apaga con prefers-reduced-motion.
+         Red de seguridad incluida: si el observer no dispara, nada queda invisible. -->
+    <script is:inline>
+      (function () {
+        function init() {
+          var targets = document.querySelectorAll('[data-reveal]');
+          if (!targets.length) return;
+          if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            targets.forEach(function (el) { el.classList.add('is-revealed'); });
+            return;
+          }
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-revealed');
+                  io.unobserve(entry.target);
+                }
+              });
+            },
+            { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+          );
+          targets.forEach(function (el) { io.observe(el); });
+          // red de seguridad: lo que ya esta en pantalla se revela igual,
+          // aunque el observer no llegue a disparar
+          setTimeout(function () {
+            targets.forEach(function (el) {
+              var r = el.getBoundingClientRect();
+              if (r.top < window.innerHeight && r.bottom > 0) {
+                el.classList.add('is-revealed');
+                io.unobserve(el);
+              }
+            });
+          }, 400);
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else {
+          init();
+        }
+      })();
+    </script>
 
     <!-- Opita Telemetry -->
     <script is:inline>

@@ -10,29 +10,47 @@ export interface Release {
   html_url: string;
 }
 
-// Static fallback — last known-good releases (2026-08-04).
-// Updated manually only when the API fetch fails at build time.
+/**
+ * Resumen propio de las releases principales.
+ *
+ * Las alphas v4 publican su cuerpo como un único enlace de changelog, así que
+ * sin este resumen la home mostraría "Full Changelog: https://…" como si fuera
+ * la descripción. Cada línea resume commits verificados de la release.
+ */
+const RELEASE_SUMMARY: Record<string, string> = {
+  "v4.0.0-alpha.32":
+    "Fundación del compilador vibe-loop, autenticación OAuth (Gemini, Hugging Face Hub) con el juez conectado a los proveedores, bitácora de auditoría v4 y binarios para seis plataformas.",
+  "v4.0.0-alpha.31":
+    "Reescritura v4: arquitectura canónica, pipeline de veredicto anclado al artefacto, consenso, emisión de auditoría con persistencia de evaluaciones y runtime mínimo de vibe-loop.",
+  "v2.20.0":
+    "El drift_judge deja de aceptar contenido controlado por el llamador: exige un ArtifactRef, resuelve el artefacto, calcula su SHA-256 y puntúa el veredicto con un proveedor NLI.",
+};
+
+/**
+ * Static fallback — last known-good releases (2026-10-15).
+ * Updated manually only when the API fetch fails at build time.
+ */
 const FALLBACK_RELEASES: Release[] = [
   {
-    tag_name: "v2.11.0",
-    published_at: "2026-08-04T17:25:32Z",
-    name: "v2.11.0",
-    body: "Release estable: Error Observatory durable, de-hardcoding de herramientas, LLM-as-judge flexible (timeouts + retries + consensus paralelo). 49 herramientas canónicas, schema v25.",
-    html_url: "https://github.com/Opita-Code/dark-memory-mcp/releases/tag/v2.11.0",
+    tag_name: "v4.0.0-alpha.32",
+    published_at: "2026-10-15T02:36:17Z",
+    name: "v4.0.0-alpha.32",
+    body: RELEASE_SUMMARY["v4.0.0-alpha.32"],
+    html_url: "https://github.com/Opita-Code/dark-memory-mcp/releases/tag/v4.0.0-alpha.32",
   },
   {
-    tag_name: "v2.9.3-alpha",
-    published_at: "2026-08-03T14:47:58Z",
-    name: "v2.9.3-alpha",
-    body: "Wave 5C DelegationRouter MVP + fix de sweeper (sesiones ya no mueren a los 5 min).",
-    html_url: "https://github.com/Opita-Code/dark-memory-mcp/releases/tag/v2.9.3-alpha",
+    tag_name: "v4.0.0-alpha.31",
+    published_at: "2026-10-08T20:53:47Z",
+    name: "v4.0.0-alpha.31",
+    body: RELEASE_SUMMARY["v4.0.0-alpha.31"],
+    html_url: "https://github.com/Opita-Code/dark-memory-mcp/releases/tag/v4.0.0-alpha.31",
   },
   {
-    tag_name: "v2.9.2-alpha",
-    published_at: "2026-08-03T13:16:41Z",
-    name: "v2.9.2-alpha",
-    body: "Hardening de sesiones: closing_soon warning antes del cierre por inactividad.",
-    html_url: "https://github.com/Opita-Code/dark-memory-mcp/releases/tag/v2.9.2-alpha",
+    tag_name: "v2.20.0",
+    published_at: "2026-08-21T15:59:54Z",
+    name: "v2.20.0 — artifact-anchored drift_judge",
+    body: RELEASE_SUMMARY["v2.20.0"],
+    html_url: "https://github.com/Opita-Code/dark-memory-mcp/releases/tag/v2.20.0",
   },
 ];
 
@@ -93,7 +111,9 @@ export function relativeDate(iso: string, lang: "es" | "en" = "es"): string {
 }
 
 // First paragraph of a release body, cleaned of markdown markers.
-export function excerpt(body: string, maxLen = 220): string {
+// When the body is nothing but a changelog link, fall back to the curated
+// summary for that tag — otherwise the card would read "Full Changelog: …".
+export function excerpt(body: string, maxLen = 220, tag?: string): string {
   const clean = body
     .replace(/^#+\s+/gm, "")
     .replace(/\*\*/g, "")
@@ -103,5 +123,10 @@ export function excerpt(body: string, maxLen = 220): string {
     .map((l) => l.trim())
     .filter(Boolean)
     .join(" ");
-  return clean.length > maxLen ? clean.slice(0, maxLen - 1) + "…" : clean;
+
+  const changelogOnly = /^full changelog/i.test(clean) && clean.length < 160;
+  const summary = tag ? RELEASE_SUMMARY[tag] : undefined;
+  const text = changelogOnly && summary ? summary : clean;
+
+  return text.length > maxLen ? text.slice(0, maxLen - 1) + "…" : text;
 }
