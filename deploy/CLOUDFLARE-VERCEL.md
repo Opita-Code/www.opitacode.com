@@ -70,6 +70,49 @@ CloudFront (A `104.21.9.207` y `172.67.131.7` en `www`), borralos: si coexisten
 dos registros con el mismo nombre, Cloudflare usa el de la zona publica y el
 sitio sigue sin responder bien.
 
+## La misma config en formato API de Cloudflare
+
+Si en algun momento quieres crearlos por API en vez de a mano (el `zone_id`
+aparece en la URL de la zona en el panel; el token se crea en
+dash.cloudflare.com -> My Profile -> API Tokens -> Edit zone DNS token):
+
+```bash
+ZONE_ID="<zone id de opitacode.com>"
+TOKEN="<tu token de Cloudflare>"
+
+# www -> CNAME al host especifico del proyecto Vercel
+curl -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "type": "CNAME",
+    "name": "www",
+    "content": "90f17105bfb2b922.vercel-dns-017.com",
+    "ttl": 1,
+    "proxied": false,
+    "comment": "Vercel — proyecto opitacode-web"
+  }'
+
+# @ -> A a la direccion de Vercel
+curl -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "type": "A",
+    "name": "@",
+    "content": "76.76.21.21",
+    "ttl": 1,
+    "proxied": false,
+    "comment": "Vercel — proyecto opitacode-web"
+  }'
+```
+
+`ttl: 1` es "automatico" en la API de Cloudflare. `proxied: false` es nube
+gris: el certificado lo emite y lo sirve Vercel.
+
+Si prefieres la IP de mayor prioridad segun Vercel (`216.198.79.1` y
+`64.29.17.1`), crea el registro A con las dos; ambas sirven.
+
 ## Verificar
 
 ```bash
